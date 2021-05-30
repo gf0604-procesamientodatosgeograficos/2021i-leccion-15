@@ -1,0 +1,26 @@
+{
+  "articles": [
+    {
+      "path": "about.html",
+      "title": "About this site",
+      "description": "Some additional details about the website",
+      "author": [],
+      "contents": "\r\n\r\n\r\n\r\n",
+      "last_modified": "2021-05-30T16:57:04-06:00"
+    },
+    {
+      "path": "index.html",
+      "title": "GF0604 Procesamiento de datos geográficos 2021-I. Lecciones 15 - 30",
+      "description": "Curso GF0604 Procesamiento de datos geográficos. Escuela de Geografía, Universidad de Costa Rica. Primer ciclo lectivo 2021. Lecciones 15 - 30.\n",
+      "author": [
+        {
+          "name": "Manuel Vargas",
+          "url": "https://github.com/mfvargas"
+        }
+      ],
+      "contents": "\r\n\r\nContents\r\nResumen\r\nRecursos bibliográficos\r\nContenidos\r\n\r\nResumen\r\nEn estas lecciones, se cubren las capacidades geoespaciales del lenguaje de programación R.\r\nRecursos bibliográficos\r\nLovelace, R., Nowosad, J., & Muenchow, J. (2019). Geocomputation with R.\r\nContenidos\r\n01 El ecosistema espacial de R\r\n\r\n\r\n\r\n",
+      "last_modified": "2021-05-30T17:20:53-06:00"
+    }
+  ],
+  "collections": []
+}
