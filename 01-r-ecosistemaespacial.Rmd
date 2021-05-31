@@ -19,17 +19,14 @@ library(sf)
 library(rgdal)
 library(raster)
 library(ggplot2)
+library(leaflet)
 library(dplyr)
 ```
 
 ## Conjuntos de datos utilizados
 
-**Casos de COVID-19 en Costa Rica**  
-```{r}
-# Carga de datos desde un archivo CSV
-covid <-
-  read.csv(file = 'https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ministerio-salud/covid/ultimafecha_CSV_GENERAL.csv')
-```
+- [Provincias de Costa Rica](https://github.com/gf0604-procesamientodatosgeograficos/2021i-datos/blob/main/ign/delimitacion-territorial-administrativa/cr_provincias_simp_wgs84.geojson)
+- [Registros de presencia de Leopardus pardalis (manigordo) en Costa Rica](https://github.com/gf0604-procesamientodatosgeograficos/2021i-datos/blob/main/gbif/leopardus_pardalis-cr-registros.csv)
 
 # Introducción
 La comunidad de programadores de R ha desarrollado un conjunto de paquetes para el manejo de datos geoespaciales, tanto en formatos vectoriales como raster. Algunos de los principales de estos paquetes son:
@@ -65,7 +62,7 @@ sf provee acceso, desde un mismo paquete de R, a la funcionalidad de estas tres 
 
 En sf, los conjuntos de datos geoespaciales se almacenan en un data frame que contiene una columna especial para las geometrías. Esta columna se denomina generalmente ```geom``` o ```geometry```. El manejo de datos geoespaciales como data frames, permite manipularlos con las funciones ya desarrolladas para data frames y con la misma forma de referenciar las filas (observaciones) y las columnas (variables).
 
-#### Funciones
+#### Ejemplos de uso de funciones
 La función [st_read()](https://r-spatial.github.io/sf/reference/st_read.html) permite leer una fuenta de datos vectoriales (ej. archivo, base de datos) y recuperarlos en un [objeto sf](https://r-spatial.github.io/sf/reference/sf.html). Este tipo de objetos extiende los data frames con una columna de geometrías.
 
 ```{r}
@@ -81,21 +78,134 @@ La función [plot()](https://r-spatial.github.io/sf/reference/plot.html) muestra
 
 ```{r}
 # Mapeo de un objeto sf mediante plot()
-plot(
-  provincias["geometry"]
-)
+plot(provincias$geometry)
 
 # Mapeo de un objeto sf con argumentos adicionales de plot()
 plot(
-  provincias["geometry"],
+  provincias$geometry,
   extent = st_bbox(c(
     xmin = -86,
     xmax = -82,
-    ymax = 11,
+    ymax = 12,
     ymin = 8
   )),
+  main = "Provincias de Costa Rica",
   axes = TRUE,
   graticule = TRUE
 )
 ```
 
+```st_read()``` puede leer datos de varios formatos.
+
+```{r}
+# Lectura de una archivo CSV con columnas de coordenadas mediante st_read()
+registros_manigordos <-
+  st_read(
+    "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/gbif/leopardus_pardalis-cr-registros.csv",
+    options = c(
+      "X_POSSIBLE_NAMES=decimalLongitude",
+      "Y_POSSIBLE_NAMES=decimalLatitude"
+    ),
+    quiet = TRUE
+  )
+
+# Asignación del sistema de coordenadas
+st_crs(registros_manigordos) = 4326
+
+# Mapeo
+plot(
+  registros_manigordos$geometry,
+  extent = st_bbox(c(
+    xmin = -86,
+    xmax = -82,
+    ymax = 12,
+    ymin = 8
+  )),
+  main = "Registros de Leopardus pardalis (manigordo) en Costa Rica",
+  col = "orange",
+  axes = TRUE,
+  graticule = TRUE
+)
+```
+
+Los argumentos ```reset``` y ```add``` de la función ```plot()``` permiten construir un mapa con varias capas.
+
+```{r}
+# Primera capa del mapa
+plot(
+  provincias$geometry,
+  extent = st_bbox(c(
+    xmin = -86,
+    xmax = -82,
+    ymax = 12,
+    ymin = 8
+  )),
+  main = "Distribución de Leopardus pardalis (manigordo) en Costa Rica",
+  reset = FALSE,
+  axes = TRUE,
+  graticule = TRUE
+)
+
+# Segunda capa
+plot(registros_manigordos,
+     add = TRUE,
+     col = "orange")
+```
+
+La función [st_write()](https://r-spatial.github.io/sf/reference/st_write.html) guarda en el disco un objeto sf. Pueden utilizarse los [formatos vectoriales de GDAL](https://gdal.org/drivers/vector/).
+
+```{r eval=FALSE}
+# Especificación del directorio de trabajo (debe ser una ruta existente)
+setwd("C:/Users/mfvargas/Downloads")
+
+# Se guarda la capa de provincias
+provincias %>%
+  st_write("provincias.shp")
+
+# Se guarda la capa de registros de manigordos
+registros_manigordos %>%
+  st_write("registros_manigordos.kml")
+```
+
+#### Mapeo de objetos sf con otros paquetes
+
+##### ggplot2
+
+```{r}
+ggplot(data = provincias) +
+  geom_sf() +
+  geom_point(
+    data = registros_manigordos,
+    aes(x = decimalLongitude, y = decimalLatitude),
+    size = 2,
+    col = "orange",
+    fill = "orange"
+  ) +
+  coord_sf(xlim = c(-86, -82),
+           ylim = c(8, 12),
+           expand = FALSE) +
+  ggtitle("Distribución de Leopardus pardalis (manigordo) en Costa Rica") +
+  xlab("Longitud") +
+  ylab("Latitud")
+```
+
+##### leaflet
+
+```{r}
+leaflet() %>%
+  addTiles() %>%
+  addPolygons(
+    data = provincias,
+    color = "black",
+    fillColor = "transparent",
+    stroke = TRUE,
+    weight = 1.0,
+  ) %>%
+  addCircleMarkers(
+    data = registros_manigordos,
+    stroke = F,
+    radius = 4,
+    fillColor = 'orange',
+    fillOpacity = 1
+  )
+```
