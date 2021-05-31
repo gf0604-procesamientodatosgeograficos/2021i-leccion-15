@@ -2460,7 +2460,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <ul>
 <li><a href="#el-modelo-vectorial">El modelo vectorial</a></li>
 <li><a href="#el-estándar-simple-features">El estándar <em>Simple Features</em></a></li>
-<li><a href="#el-paquete-sf">El paquete sf</a></li>
+<li><a href="#el-paquete-sf">El paquete sf</a>
+<ul>
+<li><a href="#funciones">Funciones</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -2514,6 +2517,46 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ul>
 <p>sf provee acceso, desde un mismo paquete de R, a la funcionalidad de estas tres bibliotecas, proporcionando así una interfaz unificada para leer y escribir datos geoespaciales mediante GDAL, realizar operaciones con geometrías mediante GEOS y efectuar transformaciones entre sistemas de coordenadas mediante PROJ.</p>
 <p>En sf, los conjuntos de datos geoespaciales se almacenan en un data frame que contiene una columna especial para las geometrías. Esta columna se denomina generalmente <code>geom</code> o <code>geometry</code>. El manejo de datos geoespaciales como data frames, permite manipularlos con las funciones ya desarrolladas para data frames y con la misma forma de referenciar las filas (observaciones) y las columnas (variables).</p>
+<h4 id="funciones">Funciones</h4>
+<p>La función <a href="https://r-spatial.github.io/sf/reference/st_read.html">st_read()</a> permite leer una fuenta de datos vectoriales (ej. archivo, base de datos) y recuperarlos en un <a href="https://r-spatial.github.io/sf/reference/sf.html">objeto sf</a>. Este tipo de objetos extiende los data frames con una columna de geometrías.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Lectura de una capa vectorial mediante st_read()</span>
+<span class='va'>provincias</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_provincias_simp_wgs84.geojson"</span>,
+    quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>La función <a href="https://r-spatial.github.io/sf/reference/plot.html">plot()</a> muestra un objeto sf en un mapa.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Mapeo de un objeto sf mediante plot()</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>provincias</span><span class='op'>[</span><span class='st'>"geometry"</span><span class='op'>]</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<img src="01-r-ecosistemaespacial_files/figure-html5/unnamed-chunk-4-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Mapeo de un objeto sf con argumentos adicionales de plot()</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>provincias</span><span class='op'>[</span><span class='st'>"geometry"</span><span class='op'>]</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_bbox.html'>st_bbox</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    xmin <span class='op'>=</span> <span class='op'>-</span><span class='fl'>86</span>,
+    xmax <span class='op'>=</span> <span class='op'>-</span><span class='fl'>82</span>,
+    ymax <span class='op'>=</span> <span class='fl'>11</span>,
+    ymin <span class='op'>=</span> <span class='fl'>8</span>
+  <span class='op'>)</span><span class='op'>)</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="01-r-ecosistemaespacial_files/figure-html5/unnamed-chunk-4-2.png" width="624" /></p>
+</div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

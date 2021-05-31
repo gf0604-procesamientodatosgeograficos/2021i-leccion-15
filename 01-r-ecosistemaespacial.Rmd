@@ -65,3 +65,37 @@ sf provee acceso, desde un mismo paquete de R, a la funcionalidad de estas tres 
 
 En sf, los conjuntos de datos geoespaciales se almacenan en un data frame que contiene una columna especial para las geometrías. Esta columna se denomina generalmente ```geom``` o ```geometry```. El manejo de datos geoespaciales como data frames, permite manipularlos con las funciones ya desarrolladas para data frames y con la misma forma de referenciar las filas (observaciones) y las columnas (variables).
 
+#### Funciones
+La función [st_read()](https://r-spatial.github.io/sf/reference/st_read.html) permite leer una fuenta de datos vectoriales (ej. archivo, base de datos) y recuperarlos en un [objeto sf](https://r-spatial.github.io/sf/reference/sf.html). Este tipo de objetos extiende los data frames con una columna de geometrías.
+
+```{r}
+# Lectura de una capa vectorial mediante st_read()
+provincias <-
+  st_read(
+    "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_provincias_simp_wgs84.geojson",
+    quiet = TRUE
+  )
+```
+
+La función [plot()](https://r-spatial.github.io/sf/reference/plot.html) muestra un objeto sf en un mapa. 
+
+```{r}
+# Mapeo de un objeto sf mediante plot()
+plot(
+  provincias["geometry"]
+)
+
+# Mapeo de un objeto sf con argumentos adicionales de plot()
+plot(
+  provincias["geometry"],
+  extent = st_bbox(c(
+    xmin = -86,
+    xmax = -82,
+    ymax = 11,
+    ymin = 8
+  )),
+  axes = TRUE,
+  graticule = TRUE
+)
+```
+
