@@ -99,7 +99,7 @@ plot(
 
 ```{r}
 # Lectura de una archivo CSV con columnas de coordenadas mediante st_read()
-registros_manigordos <-
+manigordos <-
   st_read(
     "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/gbif/leopardus_pardalis-cr-registros.csv",
     options = c(
@@ -110,11 +110,11 @@ registros_manigordos <-
   )
 
 # Asignación del sistema de coordenadas
-st_crs(registros_manigordos) = 4326
+st_crs(manigordos) = 4326
 
 # Mapeo
 plot(
-  registros_manigordos$geometry,
+  manigordos$geometry,
   extent = st_bbox(c(
     xmin = -86,
     xmax = -82,
@@ -147,7 +147,7 @@ plot(
 )
 
 # Segunda capa
-plot(registros_manigordos,
+plot(manigordos,
      add = TRUE,
      col = "orange")
 ```
@@ -163,8 +163,8 @@ provincias %>%
   st_write("provincias.shp")
 
 # Se guarda la capa de registros de manigordos
-registros_manigordos %>%
-  st_write("registros_manigordos.kml")
+manigordos %>%
+  st_write("manigordos.kml")
 ```
 
 #### Mapeo de objetos sf con otros paquetes
@@ -175,7 +175,7 @@ registros_manigordos %>%
 ggplot(data = provincias) +
   geom_sf() +
   geom_point(
-    data = registros_manigordos,
+    data = manigordos,
     aes(x = decimalLongitude, y = decimalLatitude),
     size = 2,
     col = "orange",
@@ -202,7 +202,7 @@ leaflet() %>%
     weight = 1.0,
   ) %>%
   addCircleMarkers(
-    data = registros_manigordos,
+    data = manigordos,
     stroke = F,
     radius = 4,
     fillColor = 'orange',
