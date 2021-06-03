@@ -27,6 +27,7 @@ library(dplyr)
 
 - [Provincias de Costa Rica](https://github.com/gf0604-procesamientodatosgeograficos/2021i-datos/blob/main/ign/delimitacion-territorial-administrativa/cr_provincias_simp_wgs84.geojson)
 - [Registros de presencia de Leopardus pardalis (manigordo) en Costa Rica](https://github.com/gf0604-procesamientodatosgeograficos/2021i-datos/blob/main/gbif/leopardus_pardalis-cr-registros.csv)
+- [WorldClim](https://www.worldclim.org/)
 
 # Introducción
 La comunidad de programadores de R ha desarrollado un conjunto de paquetes para el manejo de datos geoespaciales, tanto en formatos vectoriales como raster. Algunos de los principales de estos paquetes son:
@@ -41,17 +42,17 @@ Algunos paquetes de graficación, como [ggplot2](https://ggplot2.tidyverse.org/)
 
 # Datos vectoriales
 
-### El modelo vectorial
+## El modelo vectorial
 El modelo vectorial de datos está basado en puntos localizados en un [sistema de referencia de coordenadas (CRS)](https://en.wikipedia.org/wiki/Spatial_reference_system). Los puntos individuales pueden representar objetos independientes (ej. la localización de un poste eléctrico o de una cabina telefónica) o pueden también agruparse para formar geometrías más complejas como líneas o polígonos. Por lo general, los puntos tienen solo dos dimensiones (x, y), a las que se les puede agregar una tercera dimensión _z_, usualmente correspondiente a la altitud sobre el nivel del mar.
 
-### El estándar _Simple Features_
+## El estándar _Simple Features_
 [_Simple Features_](https://www.ogc.org/standards/sfa) (o _Simple Feature Access_) es un estándar abierto de la [Organización Internacional de Estandarización (ISO)](https://iso.org/) y del [_Open Geospatial Consortium_ (OGC)](https://www.ogc.org/) que especifica un modelo común de almacenamiento y acceso para geometrías de dos dimensiones (líneas, polígonos, multilíneas, multipolígonos, etc.). El estándar es implementado por muchas bibliotecas y bases de datos geoespaciales como [sf](https://cran.r-project.org/web/packages/sf/index.html), [GDAL](https://gdal.org/), [PostgreSQL/PostGIS](https://en.wikipedia.org/wiki/PostGIS), [SQLite/SpatiaLite](https://www.gaia-gis.it/fossil/libspatialite/), [Oracle Spatial](https://www.oracle.com/database/technologies/spatialandgraph.html) y [Microsoft SQL Server](https://www.microsoft.com/en-us/sql-server/), entre muchas otras.
 
 La especificación define 17 tipos de geometrías, de las cuales siete son las más comúnmente utilizadas. Estas últimas se muestran en la figura 1.
 
 ![**Figura 1**. Tipos de geometrías de Simple Features más usadas. Imagen de Robin Lovelace et al. (https://geocompr.robinlovelace.net/spatial-class.html#vector-data)](img/sf_types.png)
 
-### El paquete sf
+## El paquete sf
 El paquete [sf](https://r-spatial.github.io/sf/) (de _Simple Features_) de R implementa los modelos de datos de las geometrías de tipo vectorial: puntos, líneas, polígonos, sus versiones múltiples y las colecciones de geometrías. Está basado en bibliotecas de sofware ampliamente utilizadas en aplicaciones geoespaciales:
 
 * **GDAL**: [Geospatial Data Abstraction Library (GDAL)](https://gdal.org/) es una biblioteca para leer y escribir datos geoespaciales en varios formatos [raster](https://gdal.org/drivers/raster/) y [vectoriales](https://gdal.org/drivers/vector/). Implementa un único [modelo abstracto de datos raster](https://gdal.org/user/raster_data_model.html) y un único [modelo abstracto de datos vectoriales](https://gdal.org/user/vector_data_model.html), lo que permite programar aplicaciones geoespaciales sin tener que ocuparse de las particularidades de cada formato que se utilice (GeoTIFF, NetCDF, ESRI Shapefile, GeoJSON, etc.). A pesar de que GDAL está programada en C/C++, cuenta con una interfaz de programación de aplicaciones (API) para varios lenguajes de programación, incluyendo [C](https://gdal.org/api/index.html#c-api), [C++](https://gdal.org/api/index.html#id3), [Python](https://gdal.org/python/index.html) y [Java](https://gdal.org/java/overview-summary.html). Además, ofrece un conjunto de [utilitarios de línea de comandos](https://gdal.org/programs/) cuyas [distribuciones binarias](https://gdal.org/download.html#binaries) están disponibles para varios sistemas operativos, incluyendo Windows, macOS y Linux.
@@ -62,7 +63,7 @@ sf provee acceso, desde un mismo paquete de R, a la funcionalidad de estas tres 
 
 En sf, los conjuntos de datos geoespaciales se almacenan en un data frame que contiene una columna especial para las geometrías. Esta columna se denomina generalmente ```geom``` o ```geometry```. El manejo de datos geoespaciales como data frames, permite manipularlos con las funciones ya desarrolladas para data frames y con la misma forma de referenciar las filas (observaciones) y las columnas (variables).
 
-#### Ejemplos de uso de funciones de sf
+### Ejemplos de uso de funciones del paquete sf
 La función [st_read()](https://r-spatial.github.io/sf/reference/st_read.html) permite leer una fuenta de datos vectoriales (ej. archivo, base de datos) y recuperarlos en un [objeto sf](https://r-spatial.github.io/sf/reference/sf.html). Este tipo de objetos extiende los data frames con una columna de geometrías.
 
 ```{r}
@@ -83,12 +84,7 @@ plot(provincias$geometry)
 # Mapeo de un objeto sf con argumentos adicionales de plot()
 plot(
   provincias$geometry,
-  extent = st_bbox(c(
-    xmin = -86,
-    xmax = -82,
-    ymax = 12,
-    ymin = 8
-  )),
+  extent = extent(-86,-82.3, 8, 11.3),
   main = "Provincias de Costa Rica",
   axes = TRUE,
   graticule = TRUE
@@ -115,12 +111,7 @@ st_crs(manigordos) = 4326
 # Mapeo
 plot(
   manigordos$geometry,
-  extent = st_bbox(c(
-    xmin = -86,
-    xmax = -82,
-    ymax = 12,
-    ymin = 8
-  )),
+  extent = extent(-86,-82.3, 8, 11.3),
   main = "Registros de Leopardus pardalis (manigordo) en Costa Rica",
   col = "orange",
   axes = TRUE,
@@ -134,12 +125,7 @@ Los argumentos ```reset``` y ```add``` de la función ```plot()``` permiten cons
 # Primera capa del mapa
 plot(
   provincias$geometry,
-  extent = st_bbox(c(
-    xmin = -86,
-    xmax = -82,
-    ymax = 12,
-    ymin = 8
-  )),
+  extent = extent(-86,-82.3, 8, 11.3),
   main = "Distribución de Leopardus pardalis (manigordo) en Costa Rica",
   reset = FALSE,
   axes = TRUE,
@@ -155,7 +141,7 @@ plot(manigordos,
 La función [st_write()](https://r-spatial.github.io/sf/reference/st_write.html) guarda en el disco un objeto sf. Pueden utilizarse los [formatos vectoriales de GDAL](https://gdal.org/drivers/vector/).
 
 ```{r eval=FALSE}
-# Especificación del directorio de trabajo (debe ser una ruta existente)
+# Especificación del directorio de trabajo (debe utilizarse una ruta existente)
 setwd("C:/Users/mfvargas/Downloads")
 
 # Se guarda la capa de provincias
@@ -167,9 +153,9 @@ manigordos %>%
   st_write("manigordos.kml")
 ```
 
-#### Mapeo de objetos sf con otros paquetes
+### Mapeo de objetos sf con otros paquetes
 
-##### ggplot2
+#### ggplot2
 
 ```{r}
 ggplot(data = provincias) +
@@ -181,19 +167,170 @@ ggplot(data = provincias) +
     col = "orange",
     fill = "orange"
   ) +
-  coord_sf(xlim = c(-86, -82),
-           ylim = c(8, 12),
+  coord_sf(xlim = c(-86, -82.3),
+           ylim = c(8, 11.3),
            expand = FALSE) +
   ggtitle("Distribución de Leopardus pardalis (manigordo) en Costa Rica") +
   xlab("Longitud") +
   ylab("Latitud")
 ```
 
-##### Leaflet
+#### Leaflet
 
 ```{r}
 leaflet() %>%
   addTiles() %>%
+  addPolygons(
+    data = provincias,
+    color = "black",
+    fillColor = "transparent",
+    stroke = TRUE,
+    weight = 1.0,
+  ) %>%
+  addCircleMarkers(
+    data = manigordos,
+    stroke = F,
+    radius = 4,
+    fillColor = 'orange',
+    fillOpacity = 1
+  )
+```
+
+# Datos raster
+
+## El modelo raster
+El modelo de datos raster usualmente consiste de un encabezado y de una matriz con celdas (también llamadas pixeles) de un mismo tamaño. El encabezado define el [sistema de referencia de coordenadas (CRS)](https://en.wikipedia.org/wiki/Spatial_reference_system), la extensión y el punto de origen de una capa raster. Por lo general, el origen se ubica en la esquina inferior izquierda o en la esquina superior izquierda de la matriz. La extensión se define mediante el número de filas, el número de columnas y el tamaño (resolución) de la celda.
+
+Cada celda tiene una identificación (ID) y almacena un único valor, el cual puede ser numérico o categórico, como se muestra en la figura 2. 
+
+![**Figura 2**. El modelo raster: (A) ID de las celdas, (B) valores de las celdas, (C) mapa raster de colores. Imagen de Robin Lovelace et al. (https://geocompr.robinlovelace.net/spatial-class.html#raster-data)](img/modelo_raster.png)
+
+A diferencia del modelo vectorial, el modelo raster no necesita almacenar todas las coordenadas de cada geometría (i.e. las esquinas de las celdas), debido a que la ubicación de cada celda puede calcularse a partir de la información contenida en el encabezado. Esta simplicidad, en conjunto con el [álgebra de mapas](https://en.wikipedia.org/wiki/Map_algebra), permiten que el procesamiento de datos raster sea mucho más eficiente que el procesamiento de datos vectoriales. Por otra parte, el modelo vectorial es mucho más flexible en cuanto a las posibilidades de representación de geometrías y almacenamiento de valores, por medio de múltiples elementos de datos.
+
+Los mapas raster generalmente almacenan fenómenos continuos como elevación, precipitación, temperatura, densidad de población y datos espectrales. También es posible representar mediante raster datos discretos, tales como tipos de suelo o clases de cobertura de la tierra, como se muestra en la figura 3.
+
+![**Figura 3**. Ejemplos de mapas raster continuos y categóricos. Imagen de Robin Lovelace et al. (https://geocompr.robinlovelace.net/spatial-class.html#raster-data)](img/raster_continuo_categorico.png)
+
+## El paquete raster
+El paquete [raster](https://cran.r-project.org/web/packages/raster/) proporciona funciones para la lectura, escritura, manipulación, análisis y modelado de datos raster. Por su parte, el paquete [rgdal](https://cran.r-project.org/web/packages/rgdal/) provee enlaces a las bibliotecas [GDAL](https://gdal.org/) y [PROJ](https://proj.org/).
+
+El paquete ```raster``` define tres tipos de datos principales:
+
+- **RasterLayer**: almacena una sola capa.  
+- **RasterBrick**: almacena varias capas, las cuales generalmente provienen de un mismo origen (ej. las bandas de una imagen satelital).  
+- **RasterStack**: también almacena varias capas, pero a diferencia de ```RasterBrick```, estas provienen de diferentes fuentes.  
+
+### Ejemplos de uso de funciones del paquete raster
+Para ejemplificar el uso del paquete ```raster```, se accederá a la base de datos climáticos [WorldClim](https://www.worldclim.org/), mediante la función [getData()](https://rdrr.io/pkg/raster/man/getData.html).
+
+```{r}
+# Especificación del directorio de trabajo (debe utilizarse una ruta existente)
+setwd("c:/users/mfvargas/")
+
+# Consulta del directorio de trabajo
+getwd()
+
+# Obtención de la capa de altitud
+alt <- getData(
+  "worldclim",
+  var = "alt",
+  res = .5,
+  lon = -84,
+  lat = 10
+)
+
+# Capa de altitud recortada para los límites aproximados de Costa Rica
+altitud <- crop(alt, extent(-86, -82.3, 8, 11.3))
+
+# Mapeo
+plot(altitud, main = "Altitud recortada para los límites aproximados de Costa Rica")
+
+# Capa de altitud recortada para los límites exactos de Costa Rica
+altitud <-
+  alt %>%
+  crop(provincias) %>%
+  mask(provincias)
+
+# Mapeo
+plot(altitud, main = "Altitud recortada para los límites exactos de Costa Rica")
+
+# Resumen de información básica de la capa raster
+altitud
+
+# Clase de la capa raster
+class(altitud)
+
+# Cantidad de capas
+nlayers(altitud)
+
+# Obtención de la capa de precipitación
+prec <-
+  getData(
+    "worldclim",
+    var = "prec",
+    res = .5,
+    lon = -84,
+    lat = 10
+  )
+
+# Capa de precipitación recortada para los límites aproximados de Costa Rica
+precipitacion <- crop(prec, extent(-86, -82.3, 8, 11.3))
+
+# Mapeo
+plot(precipitacion, main = "Precipitación recortada para los límites aproximados de Costa Rica")
+
+# Capa de precipitación recortada para los límites exactos de Costa Rica
+precipitacion <-
+  prec %>%
+  crop(provincias) %>%
+  mask(provincias)
+
+# Mapeo
+plot(precipitacion, main = "Precipitación recortada para los límites exactos de Costa Rica")
+
+# Resumen de información básica de la capa raster
+precipitacion
+
+# Clase de la capa raster
+class(precipitacion)
+
+# Cantidad de capas
+nlayers(precipitacion)
+
+# Lista e información sobre las capas
+unlist(precipitacion)
+
+
+# Mapeo de altitud y registros de presencia de manigordos
+plot(
+  altitud,
+  extent = extent(-86,-82.3, 8, 11.3),
+  axes = TRUE,
+  graticule = TRUE,
+  reset = FALSE
+)
+plot(manigordos, col = "black", add = TRUE)
+```
+
+### Mapeo de objetos raster con otros paquetes
+
+#### Leaflet
+
+```{r}
+# Paleta de colores
+pal <- colorNumeric(
+  c("#006400", "#FFFF00", "#0000FF"), 
+  values(altitud), 
+  na.color = "transparent"
+)
+
+leaflet() %>%
+  addTiles() %>%
+  addRasterImage(
+    altitud, 
+    colors = pal, 
+    opacity = 0.8
+  ) %>%  
   addPolygons(
     data = provincias,
     color = "black",
