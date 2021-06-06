@@ -22,11 +22,15 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 # Resumen
-En estas lecciones, se cubren las capacidades geoespaciales del lenguaje de programación R.
+En estas lecciones, se cubren las capacidades geoespaciales del lenguaje de programación R:
+
+- El ecosistema espacial de R.
+- Operaciones con datos de atributos.
 
 # Recursos bibliográficos
 - [Lovelace, R., Nowosad, J., & Muenchow, J. (2019). Geocomputation with R](https://geocompr.robinlovelace.net/).
 
 # Contenidos
-[01 El ecosistema espacial de R](01-r-ecosistemaespacial.html)  
+[01 El ecosistema espacial de R](01-r-ecosistemaespacial.html).  
+[02 Operaciones con datos de atributos](02-r-operaciones-atributos.html).  
   

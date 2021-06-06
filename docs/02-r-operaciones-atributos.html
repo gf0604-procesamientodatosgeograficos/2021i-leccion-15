@@ -86,31 +86,27 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
   <!--radix_placeholder_meta_tags-->
-  <title>GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30: GF0604 Procesamiento de datos geográficos 2021-I. Lecciones 15 - 30</title>
+  <title>GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30: Operaciones con datos de atributos</title>
 
-  <meta property="description" itemprop="description" content="Curso GF0604 Procesamiento de datos geográficos. Escuela de Geografía, Universidad de Costa Rica. Primer ciclo lectivo 2021. Lecciones 15 - 30."/>
 
   <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
 
-  <meta name="article:author" content="Manuel Vargas"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30: GF0604 Procesamiento de datos geográficos 2021-I. Lecciones 15 - 30"/>
+  <meta property="og:title" content="GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30: Operaciones con datos de atributos"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="Curso GF0604 Procesamiento de datos geográficos. Escuela de Geografía, Universidad de Costa Rica. Primer ciclo lectivo 2021. Lecciones 15 - 30."/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30: GF0604 Procesamiento de datos geográficos 2021-I. Lecciones 15 - 30"/>
-  <meta property="twitter:description" content="Curso GF0604 Procesamiento de datos geográficos. Escuela de Geografía, Universidad de Costa Rica. Primer ciclo lectivo 2021. Lecciones 15 - 30."/>
+  <meta property="twitter:title" content="GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30: Operaciones con datos de atributos"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","author","description","site"]}},"value":[{"type":"character","attributes":{},"value":["GF0604 Procesamiento de datos geográficos 2021-I. Lecciones 15 - 30"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Manuel Vargas"]},{"type":"character","attributes":{},"value":["https://github.com/mfvargas"]},{"type":"character","attributes":{},"value":["Universidad de Costa Rica"]},{"type":"character","attributes":{},"value":["https://www.ucr.ac.cr/"]}]}]},{"type":"character","attributes":{},"value":["Curso GF0604 Procesamiento de datos geográficos. Escuela de Geografía, Universidad de Costa Rica. Primer ciclo lectivo 2021. Lecciones 15 - 30.\n"]},{"type":"character","attributes":{},"value":["distill::distill_website"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Operaciones con datos de atributos"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[4]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2410,7 +2406,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"GF0604 Procesamiento de datos geográficos 2021-I. Lecciones 15 - 30","description":"Curso GF0604 Procesamiento de datos geográficos. Escuela de Geografía, Universidad de Costa Rica. Primer ciclo lectivo 2021. Lecciones 15 - 30.","authors":[{"author":"Manuel Vargas","authorURL":"https://github.com/mfvargas","affiliation":"Universidad de Costa Rica","affiliationURL":"https://www.ucr.ac.cr/","orcidID":""}]}
+{"title":"Operaciones con datos de atributos","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2442,43 +2438,651 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>GF0604 Procesamiento de datos geográficos 2021-I. Lecciones 15 - 30</h1>
+<h1>Operaciones con datos de atributos</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>Curso GF0604 Procesamiento de datos geográficos. Escuela de Geografía, Universidad de Costa Rica. Primer ciclo lectivo 2021. Lecciones 15 - 30.</p></p>
-</div>
-
-<div class="d-byline">
-  Manuel Vargas <a href="https://github.com/mfvargas" class="uri">https://github.com/mfvargas</a> (Universidad de Costa Rica)<a href="https://www.ucr.ac.cr/" class="uri">https://www.ucr.ac.cr/</a>
-  
 
 </div>
+
 
 <div class="d-article">
 <div class="d-contents d-contents-float">
 <nav class="l-text toc figcaption" id="TOC">
 <h3>Contents</h3>
 <ul>
-<li><a href="#resumen">Resumen</a></li>
-<li><a href="#recursos-bibliográficos">Recursos bibliográficos</a></li>
-<li><a href="#contenidos">Contenidos</a></li>
+<li><a href="#preparativos">Preparativos</a>
+<ul>
+<li><a href="#carga-de-paquetes">Carga de paquetes</a></li>
+<li><a href="#conjuntos-de-datos-utilizados">Conjuntos de datos utilizados</a></li>
+</ul></li>
+<li><a href="#introducción">Introducción</a></li>
+<li><a href="#datos-vectoriales">Datos vectoriales</a>
+<ul>
+<li><a href="#manejo-de-datos-de-atributos-con-el-paquete-sf">Manejo de datos de atributos con el paquete sf</a>
+<ul>
+<li><a href="#funciones-básicas-para-manejo-de-data-frames-y-objetos-sf">Funciones básicas para manejo de data frames y objetos sf</a></li>
+<li><a href="#creación-de-subconjuntos">Creación de subconjuntos</a>
+<ul>
+<li><a href="#notaciones-y-funciones-del-paquete-base">Notaciones y funciones del paquete base</a></li>
+<li><a href="#funciones-del-paquete-dplyr">Funciones del paquete dplyr</a></li>
+</ul></li>
+<li><a href="#agregación-de-datos">Agregación de datos</a>
+<ul>
+<li><a href="#la-función-aggregate-de-stats">La función <code>aggregate()</code> de stats</a></li>
+<li><a href="#la-función-aggregate-de-sf">La función <code>aggregate()</code> de sf</a></li>
+<li><a href="#la-función-summarize-de-dplyr">La función <code>summarize()</code> de dplyr</a></li>
+</ul></li>
+<li><a href="#cruce-de-datos">Cruce de datos</a>
+<ul>
+<li><a href="#la-función-left_join">La función left_join()</a></li>
+<li><a href="#la-función-inner_join">La función inner_join()</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
 </ul>
 </nav>
 </div>
-<h1 id="resumen">Resumen</h1>
-<p>En estas lecciones, se cubren las capacidades geoespaciales del lenguaje de programación R:</p>
+<h1 id="preparativos">Preparativos</h1>
+<h2 id="carga-de-paquetes">Carga de paquetes</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-spatial.github.io/sf/'>sf</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rstudio.github.io/leaflet/'>leaflet</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://nowosad.github.io/spData/'>spData</a></span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="conjuntos-de-datos-utilizados">Conjuntos de datos utilizados</h2>
+<strong>Provincias de Costa Rica</strong><br />
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Lectura mediante st_read()</span>
+<span class='va'>provincias</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_provincias_simp_wgs84.geojson"</span>,
+    quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<strong>Cantones de Costa Rica</strong><br />
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Lectura mediante st_read()</span>
+<span class='va'>cantones</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_cantones_simp_wgs84.geojson"</span>,
+    quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p><strong>Conjuntos de datos de ejemplo para análisis espacial</strong><br />
+- Documentación de <a href="https://nowosad.github.io/spData/">spData</a>.</p>
+<h1 id="introducción">Introducción</h1>
+<p>Se les llama atributos a los elementos de datos no espaciales de un conjunto de datos geográficos. Un conjunto de datos vectoriales puede tener asociados varios campos de atributos, mientras que un conjunto de datos raster tiene solamente uno.</p>
+<h1 id="datos-vectoriales">Datos vectoriales</h1>
+<p>Las operaciones con atributos en datos vectoriales incluyen:</p>
 <ul>
-<li>El ecosistema espacial de R.</li>
-<li>Operaciones con datos de atributos.</li>
+<li>Creación de subconjuntos (<em>subsetting</em>).<br />
+</li>
+<li>Agregación (<em>aggregation</em>).<br />
+</li>
+<li>Cruce de datos (<em>joining</em>).</li>
 </ul>
-<h1 id="recursos-bibliográficos">Recursos bibliográficos</h1>
+<p>Seguidamente, se explicará como maneja estas operaciones el paquete sf.</p>
+<h2 id="manejo-de-datos-de-atributos-con-el-paquete-sf">Manejo de datos de atributos con el paquete sf</h2>
+<p>El paquete <a href="https://cran.r-project.org/web/packages/sf/">sf</a> define una clase, también llamada <code>sf</code>, la cual extiende la clase <code>data.frame</code> del paquete <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/00Index.html">base</a> de R. Los objetos de la clase <code>sf</code> tienen un registro (o <em>feature</em>) por cada observación y una columna por cada atributo. También tienen una columna especial para almacenar las geometrías (puntos, líneas, polígonos, etc.), la cual generalmente se denomina <code>geometry</code> o <code>geom</code>. Esto permite que sf utilice métodos (i.e. funciones) de la clase <code>data.frame</code>, tales como <code>plot()</code> y <code>summary()</code>, entre otros.</p>
+<p>La lista de métodos de <code>sf</code> puede obtenerse a través de la función <a href="https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/methods">methods()</a>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Métodos de la clase sf</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/methods.html'>methods</a></span><span class='op'>(</span>class <span class='op'>=</span> <span class='st'>"sf"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1] $&lt;-                   [                     [[&lt;-                 
+ [4] aggregate             anti_join             arrange              
+ [7] as.data.frame         cbind                 coerce               
+[10] dbDataType            dbWriteTable          distinct             
+[13] dplyr_reconstruct     filter                full_join            
+[16] group_by              group_split           identify             
+[19] initialize            inner_join            left_join            
+[22] merge                 mutate                plot                 
+[25] print                 rbind                 rename               
+[28] right_join            rowwise               sample_frac          
+[31] sample_n              select                semi_join            
+[34] show                  slice                 slotsFromS3          
+[37] st_agr                st_agr&lt;-              st_area              
+[40] st_as_s2              st_as_sf              st_bbox              
+[43] st_boundary           st_buffer             st_cast              
+[46] st_centroid           st_collection_extract st_convex_hull       
+[49] st_coordinates        st_crop               st_crs               
+[52] st_crs&lt;-              st_difference         st_filter            
+[55] st_geometry           st_geometry&lt;-         st_inscribed_circle  
+[58] st_interpolate_aw     st_intersection       st_intersects        
+[61] st_is                 st_is_valid           st_join              
+[64] st_line_merge         st_m_range            st_make_valid        
+[67] st_nearest_points     st_node               st_normalize         
+[70] st_point_on_surface   st_polygonize         st_precision         
+[73] st_reverse            st_sample             st_segmentize        
+[76] st_set_precision      st_shift_longitude    st_simplify          
+[79] st_snap               st_sym_difference     st_transform         
+[82] st_triangulate        st_union              st_voronoi           
+[85] st_wrap_dateline      st_write              st_z_range           
+[88] st_zm                 summarise             transform            
+[91] transmute             ungroup              
+see &#39;?methods&#39; for accessing help and source code</code></pre>
+</div>
+<p>Además de <code>data.frame</code>, <code>sf</code> es compatible con clases como las del paquete <a href="https://tibble.tidyverse.org/">tibble</a>, las cuales pueden manipularse mediante los métodos de <a href="https://dplyr.tidyverse.org/">dplyr</a>. Esto que permite un manejo <em>tidy</em> (ordenado, organizado) de los datos geoespaciales, de acuerdo con el enfoque de <a href="https://www.tidyverse.org/">Tidyverse</a>.</p>
+<h3 id="funciones-básicas-para-manejo-de-data-frames-y-objetos-sf">Funciones básicas para manejo de data frames y objetos sf</h3>
+<p>Funciones para obtener información básica de un data frame o de un objeto sf:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Clase de cantones</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;sf&quot;         &quot;data.frame&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Dimensiones (cantidad de filas y de columnas)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 82 10</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Cantidad de filas</span>
+<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 82</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Cantidad de columnas</span>
+<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 10</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Nombres de las columnas</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1] &quot;gmlid&quot;      &quot;cod_catalo&quot; &quot;cod_canton&quot; &quot;canton&quot;     &quot;ori_toponi&quot;
+ [6] &quot;area&quot;       &quot;cod_provin&quot; &quot;provincia&quot;  &quot;version&quot;    &quot;geometry&quot;  </code></pre>
+</div>
+<p>La función <a href="https://r-spatial.github.io/sf/reference/st_geometry.html">st_drop_geometry()</a> puede ser útil cuando, por ejemplo, solo se necesita trabajar con los atributos y la columna con la geometría consume demasiada memoria del computador.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Remoción de la columna de geometría</span>
+<span class='va'>cantones_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_drop_geometry</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+
+<span class='co'># Nombres de las columnas</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>cantones_df</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;gmlid&quot;      &quot;cod_catalo&quot; &quot;cod_canton&quot; &quot;canton&quot;     &quot;ori_toponi&quot;
+[6] &quot;area&quot;       &quot;cod_provin&quot; &quot;provincia&quot;  &quot;version&quot;   </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Clase de df_cantones (nótese como no se muestra ya la clase sf)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>cantones_df</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Tamaño del conjunto de datos original (tipo sf)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/object.size.html'>object.size</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>, units<span class='op'>=</span><span class='st'>"Kb"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>1812.6 Kb</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Tamaño del conjunto de datos sin geometrías (tipo data.frame)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/utils/object.size.html'>object.size</a></span><span class='op'>(</span><span class='va'>cantones_df</span><span class='op'>)</span>, units<span class='op'>=</span><span class='st'>"Kb"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>35.4 Kb</code></pre>
+</div>
+<p>También es posible ocultar la columna de geometría de un conjunto de datos (sin borrarla) mediante el argumento <code>drop = TRUE</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Sin drop=TRUE</span>
+<span class='va'>cantones</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"canton"</span>, <span class='st'>"area"</span><span class='op'>)</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>Simple feature collection with 10 features and 2 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -84.55536 ymin: 8.040251 xmax: -82.55287 ymax: 9.767778
+Geodetic CRS:  WGS 84
+          canton    area                       geometry
+1     Corredores  623.61 MULTIPOLYGON (((-82.94161 8...
+2        Golfito 1753.42 MULTIPOLYGON (((-83.46678 8...
+3      Coto Brus  944.24 MULTIPOLYGON (((-82.90501 8...
+4            Osa 1932.03 MULTIPOLYGON (((-83.83946 9...
+5   Buenos Aires 2382.94 MULTIPOLYGON (((-83.32101 9...
+6  Pérez Zeledón 1901.08 MULTIPOLYGON (((-83.77329 9...
+7         Quepos  557.85 MULTIPOLYGON (((-84.13572 9...
+8      Talamanca 2792.23 MULTIPOLYGON (((-82.89452 9...
+9        Parrita  483.22 MULTIPOLYGON (((-84.30298 9...
+10       Tarrazú  291.27 MULTIPOLYGON (((-83.98178 9...</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Con drop=TRUE</span>
+<span class='va'>cantones</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"canton"</span>, <span class='st'>"area"</span><span class='op'>)</span>, drop<span class='op'>=</span><span class='cn'>TRUE</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>          canton    area
+1     Corredores  623.61
+2        Golfito 1753.42
+3      Coto Brus  944.24
+4            Osa 1932.03
+5   Buenos Aires 2382.94
+6  Pérez Zeledón 1901.08
+7         Quepos  557.85
+8      Talamanca 2792.23
+9        Parrita  483.22
+10       Tarrazú  291.27</code></pre>
+</div>
+<h3 id="creación-de-subconjuntos">Creación de subconjuntos</h3>
+<p>Frecuentemente, es necesario extrer subconjuntos del conjunto de datos original, para facilidad de manejo y para atender requerimientos específicos de un análisis. En esta sección, se explican las diferentes opciones para creación de subconjuntos, tanto con el paquete base de R como con dplyr. En resumen, estas son:</p>
 <ul>
-<li><a href="https://geocompr.robinlovelace.net/">Lovelace, R., Nowosad, J., &amp; Muenchow, J. (2019). Geocomputation with R</a>.</li>
+<li>Con el paquete base:
+<ul>
+<li>La notación de <code>[]</code> y <code>$</code></li>
+<li>La función <code>subset()</code></li>
+</ul></li>
+<li>Con el paquete dplyr:
+<ul>
+<li>La función <code>select()</code></li>
+<li>La función <code>slice()</code></li>
+<li>La función <code>filter()</code></li>
+</ul></li>
 </ul>
-<h1 id="contenidos">Contenidos</h1>
-<p><a href="01-r-ecosistemaespacial.html">01 El ecosistema espacial de R</a>.<br />
-<a href="02-r-operaciones-atributos.html">02 Operaciones con datos de atributos</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h4 id="notaciones-y-funciones-del-paquete-base">Notaciones y funciones del paquete base</h4>
+<h5 id="la-notación-de-y">La notación de <code>[]</code> y <code>$</code></h5>
+<p>La notación de paréntesis cuadrados (<code>[]</code>) y el signo de dólar (<code>$</code>) permite crear subconjuntos con base en la posición de filas y de columnas, por medio de nombres de columnas y a través de la especificación de condiciones (i.e. expresiones <em>booleanas</em>).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Subconjunto especificado por posiciones de filas</span>
+<span class='va'>cantones</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span>
+
+<span class='co'># Subconjunto especificado por posiciones de columnas</span>
+<span class='va'>cantones</span><span class='op'>[</span>, <span class='fl'>8</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span>
+
+<span class='co'># Subconjunto especificado por nombres de columnas</span>
+<span class='va'>cantones</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"canton"</span>, <span class='st'>"area"</span>, <span class='st'>"provincia"</span><span class='op'>)</span><span class='op'>]</span>
+</code></pre>
+</div>
+</div>
+<p>Especificación mediante una condición (i.e. expresión lógica):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Cantones de la provincia de Cartago</span>
+<span class='va'>cantones</span><span class='op'>[</span><span class='va'>cantones</span><span class='op'>$</span><span class='va'>provincia</span> <span class='op'>==</span> <span class='st'>"Cartago"</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"canton"</span>, <span class='st'>"provincia"</span><span class='op'>)</span>, drop <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>      canton provincia
+19 El Guarco   Cartago
+20   Cartago   Cartago
+22   Paraíso   Cartago
+23   Jiménez   Cartago
+24 Turrialba   Cartago
+26  Oreamuno   Cartago
+29  La Unión   Cartago
+34  Alvarado   Cartago</code></pre>
+</div>
+<h5 id="la-función-subset">La función subset()</h5>
+<p>La función <a href="https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/subset">subset()</a> también retorna un subconjunto cuyos registros cumplen una condición.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Cantones con área &gt;= 2000 km2</span>
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"canton"</span>, <span class='st'>"area"</span><span class='op'>)</span>, drop <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>]</span>,
+       <span class='va'>area</span> <span class='op'>&gt;=</span> <span class='fl'>2000</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>         canton    area
+5  Buenos Aires 2382.94
+8     Talamanca 2792.23
+70       Pococí 2408.76
+71   San Carlos 3352.31
+74    Sarapiquí 2144.38</code></pre>
+</div>
+<p>Los operadores lógicos y de comparación que pueden utilizarse en las condiciones de la función <code>subset()</code>, y en expresiones lógicas en general, se listan en la siguiente tabla:</p>
+<div class="layout-chunk" data-layout="l-body">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Operador</th>
+<th style="text-align: left;">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">==</td>
+<td style="text-align: left;">igual a</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">!=</td>
+<td style="text-align: left;">distinto de</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">&gt;, &lt;</td>
+<td style="text-align: left;">mayor que, menor que</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">&gt;=, &lt;=</td>
+<td style="text-align: left;">mayor o igual que, menor o igual que</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">&amp;, |, !</td>
+<td style="text-align: left;">Operadores lógicos: y, o, no</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="funciones-del-paquete-dplyr">Funciones del paquete dplyr</h4>
+<p>Las funciones del paquete base de R son confiables y ampliamente usadas. Sin embargo, el enfoque más moderno de dplyr permite flujos de trabajo más intuitivos y es más rápido, debido a que se apoya en código escrito en el lenguaje C++. Esto es útil, por ejemplo, cuando se trabaja con conjuntos de datos grandes (<em>big data</em>) y cuando se necesita integración con bases de datos. Las principales funciones de dplyr para creación de subconjuntos son <code>select()</code>, <code>slice()</code> y <code>filter()</code>.</p>
+<h5 id="la-función-select">La función select()</h5>
+<p>La función <a href="https://dplyr.tidyverse.org/reference/select.html">select()</a> permite seleccionar y renombrar columnas de un conjunto de datos.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Selección de columnas</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>cantones</span>,
+       <span class='va'>canton</span>, <span class='va'>provincia</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Simple feature collection with 82 features and 2 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -87.10189 ymin: 5.498569 xmax: -82.55287 ymax: 11.21964
+Geodetic CRS:  WGS 84
+First 10 features:
+          canton  provincia                       geometry
+1     Corredores Puntarenas MULTIPOLYGON (((-82.94161 8...
+2        Golfito Puntarenas MULTIPOLYGON (((-83.46678 8...
+3      Coto Brus Puntarenas MULTIPOLYGON (((-82.90501 8...
+4            Osa Puntarenas MULTIPOLYGON (((-83.83946 9...
+5   Buenos Aires Puntarenas MULTIPOLYGON (((-83.32101 9...
+6  Pérez Zeledón   San José MULTIPOLYGON (((-83.77329 9...
+7         Quepos Puntarenas MULTIPOLYGON (((-84.13572 9...
+8      Talamanca      Limón MULTIPOLYGON (((-82.89452 9...
+9        Parrita Puntarenas MULTIPOLYGON (((-84.30298 9...
+10       Tarrazú   San José MULTIPOLYGON (((-83.98178 9...</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Selección de columnas y renombramiento de la columna area</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>cantones</span>,
+       <span class='va'>canton</span>, area_km2 <span class='op'>=</span> <span class='va'>area</span>, <span class='va'>provincia</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Simple feature collection with 82 features and 3 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -87.10189 ymin: 5.498569 xmax: -82.55287 ymax: 11.21964
+Geodetic CRS:  WGS 84
+First 10 features:
+          canton area_km2  provincia                       geometry
+1     Corredores   623.61 Puntarenas MULTIPOLYGON (((-82.94161 8...
+2        Golfito  1753.42 Puntarenas MULTIPOLYGON (((-83.46678 8...
+3      Coto Brus   944.24 Puntarenas MULTIPOLYGON (((-82.90501 8...
+4            Osa  1932.03 Puntarenas MULTIPOLYGON (((-83.83946 9...
+5   Buenos Aires  2382.94 Puntarenas MULTIPOLYGON (((-83.32101 9...
+6  Pérez Zeledón  1901.08   San José MULTIPOLYGON (((-83.77329 9...
+7         Quepos   557.85 Puntarenas MULTIPOLYGON (((-84.13572 9...
+8      Talamanca  2792.23      Limón MULTIPOLYGON (((-82.89452 9...
+9        Parrita   483.22 Puntarenas MULTIPOLYGON (((-84.30298 9...
+10       Tarrazú   291.27   San José MULTIPOLYGON (((-83.98178 9...</code></pre>
+</div>
+<h5 id="la-función-slice">La función slice()</h5>
+<p><a href="https://dplyr.tidyverse.org/reference/slice.html">slice()</a> es el equivalente de <code>select()</code> para filas.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Subconjunto especificado mediante un rango de filas</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span>
+  <span class='va'>cantones</span>, 
+  <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h5 id="la-función-filter">La función filter()</h5>
+<p>La función <a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a> es el equivalente en <code>dplyr</code> de la función <code>subset()</code> del paquete <code>base</code>. Retorna los registros que cumplen con una condición:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Androides de "La Guerra de las Galaxias"</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>starwars</span>,
+       <span class='va'>species</span> <span class='op'>==</span> <span class='st'>"Droid"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 6 x 14
+  name   height  mass hair_color skin_color eye_color birth_year sex  
+  &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;
+1 C-3PO     167    75 &lt;NA&gt;       gold       yellow           112 none 
+2 R2-D2      96    32 &lt;NA&gt;       white, bl~ red               33 none 
+3 R5-D4      97    32 &lt;NA&gt;       white, red red               NA none 
+4 IG-88     200   140 none       metal      red               15 none 
+5 R4-P17     96    NA none       silver, r~ red, blue         NA none 
+6 BB8        NA    NA none       none       black             NA none 
+# ... with 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;,
+#   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+<p>Las funciones del paquete <code>dplyr</code> suelen ser utilizadas conjuntamente con el <a href="http://r4ds.had.co.nz/pipes.html">operador <em>pipe</em> (%&gt;%)</a>, el cual posibilita el “encadenamiento” de funciones: la salida de la función previa se convierte en el primer argumento de la siguiente función. En el siguiente ejemplo, el conjunto de datos <a href="https://dplyr.tidyverse.org/reference/starwars.html">starwars</a> se pasa como entrada a la función <code>filter()</code>, para filtrar los personajes humanos. Seguidamente, el resultado se pasa a la función <code>select()</code>, para seleccionar las columnas <code>name</code>, <code>homeworld</code> y <code>species</code>. Finalmente, la función <code>slice()</code> reduce el resultado a las 10 primeras filas.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Encadenamiento de funciones mediante pipe (%&gt;%)</span>
+<span class='va'>starwars</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>species</span> <span class='op'>==</span> <span class='st'>"Human"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>homeworld</span>, <span class='va'>species</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 10 x 3
+   name               homeworld species
+   &lt;chr&gt;              &lt;chr&gt;     &lt;chr&gt;  
+ 1 Luke Skywalker     Tatooine  Human  
+ 2 Darth Vader        Tatooine  Human  
+ 3 Leia Organa        Alderaan  Human  
+ 4 Owen Lars          Tatooine  Human  
+ 5 Beru Whitesun lars Tatooine  Human  
+ 6 Biggs Darklighter  Tatooine  Human  
+ 7 Obi-Wan Kenobi     Stewjon   Human  
+ 8 Anakin Skywalker   Tatooine  Human  
+ 9 Wilhuff Tarkin     Eriadu    Human  
+10 Han Solo           Corellia  Human  </code></pre>
+</div>
+<p>Una alternativa al uso de <em>pipes</em> es el anidamiento de las funciones:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Anidamiento de funciones</span>
+<span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>
+    <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
+      <span class='va'>starwars</span>,
+      <span class='va'>species</span><span class='op'>==</span><span class='st'>"Human"</span>
+    <span class='op'>)</span>,
+    <span class='va'>name</span>, <span class='va'>homeworld</span>, <span class='va'>species</span>
+  <span class='op'>)</span>,
+  <span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 10 x 3
+   name               homeworld species
+   &lt;chr&gt;              &lt;chr&gt;     &lt;chr&gt;  
+ 1 Luke Skywalker     Tatooine  Human  
+ 2 Darth Vader        Tatooine  Human  
+ 3 Leia Organa        Alderaan  Human  
+ 4 Owen Lars          Tatooine  Human  
+ 5 Beru Whitesun lars Tatooine  Human  
+ 6 Biggs Darklighter  Tatooine  Human  
+ 7 Obi-Wan Kenobi     Stewjon   Human  
+ 8 Anakin Skywalker   Tatooine  Human  
+ 9 Wilhuff Tarkin     Eriadu    Human  
+10 Han Solo           Corellia  Human  </code></pre>
+</div>
+<h3 id="agregación-de-datos">Agregación de datos</h3>
+<p>Las operaciones de agregación realizan cálculos (suma, promedio, etc.) a partir de la agrupación de valores de variables. En esta sección, se explican funciones de agregación contenidas en los paquetes <code>stats</code>, <code>sf</code> y <code>dplyr</code>, las cuales son:</p>
+<ul>
+<li>Del paquete stats:
+<ul>
+<li>La función <code>aggregate()</code></li>
+</ul></li>
+<li>Del paquete sf:
+<ul>
+<li>La función <code>aggregate()</code><br />
+</li>
+</ul></li>
+<li>Del paquete dplyr:
+<ul>
+<li>La función <code>summarize()</code></li>
+</ul></li>
+</ul>
+<h4 id="la-función-aggregate-de-stats">La función <code>aggregate()</code> de stats</h4>
+<p>La función <a href="https://rdrr.io/r/stats/aggregate.html">aggregate()</a> del paquete <a href="https://rdrr.io/r/#stats">stats</a> aplica una función de agregación (ej. suma, promedio, mínimo, máximo) sobre una columna. El resultado es un objeto de tipo <code>data.frame</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Suma de áreas de cantones por provincia</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>
+  data <span class='op'>=</span> <span class='va'>cantones</span>, 
+  <span class='va'>area</span> <span class='op'>~</span> <span class='va'>provincia</span>, 
+  FUN <span class='op'>=</span> <span class='va'>sum</span>, 
+  na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   provincia     area
+1   Alajuela  9772.25
+2    Cartago  3093.23
+3 Guanacaste 10196.30
+4    Heredia  2663.45
+5      Limón  9176.97
+6 Puntarenas 11298.51
+7   San José  4969.73</code></pre>
+</div>
+<h4 id="la-función-aggregate-de-sf">La función <code>aggregate()</code> de sf</h4>
+<p><code>aggregate()</code> es una <a href="https://adv-r.hadley.nz/s3.html#s3-methods">función genérica</a>, lo que significa que pueden comportarse de manera diferente, dependiendo de los valores de entrada. El paquete <code>sf</code> también provee una versión de <a href="https://r-spatial.github.io/sf/reference/aggregate.sf.html">aggregate()</a>, la cual se activa cuando recibe un objeto <code>sf</code> y se usa el argumento <code>by</code>. El resultado es un objeto de tipo <code>sf</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Suma de áreas de cantones por provincia</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>
+  <span class='va'>cantones</span><span class='op'>[</span><span class='st'>"area"</span><span class='op'>]</span>, 
+  by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>$</span><span class='va'>provincia</span><span class='op'>)</span>, 
+  FUN <span class='op'>=</span> <span class='va'>sum</span>, 
+  na.rm <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Simple feature collection with 7 features and 2 fields
+Attribute-geometry relationship: 0 constant, 1 aggregate, 1 identity
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -87.10189 ymin: 5.498569 xmax: -82.55287 ymax: 11.21964
+Geodetic CRS:  WGS 84
+     Group.1     area                       geometry
+1   Alajuela  9772.25 POLYGON ((-85.01616 10.6717...
+2    Cartago  3093.23 POLYGON ((-84.02189 9.77001...
+3 Guanacaste 10196.30 MULTIPOLYGON (((-85.79855 1...
+4    Heredia  2663.45 POLYGON ((-84.11004 9.96061...
+5      Limón  9176.97 POLYGON ((-83.60509 9.98186...
+6 Puntarenas 11298.51 MULTIPOLYGON (((-87.10174 5...
+7   San José  4969.73 POLYGON ((-84.48391 9.57367...</code></pre>
+</div>
+<h4 id="la-función-summarize-de-dplyr">La función <code>summarize()</code> de dplyr</h4>
+<p>La función <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a> es el equivalente de <code>aggregate()</code> en el paquete dplyr. Suele utilizarse conjuntamente con <a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a>, que especifica la variable a agrupar.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Suma de áreas de cantones por provincia</span>
+<span class='va'>cantones</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>provincia</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>area_km2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>area</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Simple feature collection with 7 features and 2 fields
+Geometry type: GEOMETRY
+Dimension:     XY
+Bounding box:  xmin: -87.10189 ymin: 5.498569 xmax: -82.55287 ymax: 11.21964
+Geodetic CRS:  WGS 84
+# A tibble: 7 x 3
+  provincia  area_km2                                         geometry
+  &lt;chr&gt;         &lt;dbl&gt;                                   &lt;GEOMETRY [°]&gt;
+1 Alajuela      9772. POLYGON ((-85.01616 10.67176, -85.01735 10.6727~
+2 Cartago       3093. POLYGON ((-84.02189 9.770014, -84.02291 9.77039~
+3 Guanacaste   10196. MULTIPOLYGON (((-85.79855 10.48368, -85.79847 1~
+4 Heredia       2663. POLYGON ((-84.11004 9.960612, -84.11185 9.96061~
+5 Limón         9177. POLYGON ((-83.60509 9.981863, -83.61626 9.98678~
+6 Puntarenas   11299. MULTIPOLYGON (((-87.10174 5.508679, -87.10189 5~
+7 San José      4970. POLYGON ((-84.48391 9.573673, -84.48379 9.57302~</code></pre>
+</div>
+<p>Nótese que este enfoque permite renombrar las variables, como también se hace en el siguiente ejemplo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Suma total de las áreas de cantones</span>
+<span class='va'>cantones</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>area_km2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>area</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+            cantidad_cantones <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Simple feature collection with 1 feature and 2 fields
+Geometry type: MULTIPOLYGON
+Dimension:     XY
+Bounding box:  xmin: -87.10189 ymin: 5.498569 xmax: -82.55287 ymax: 11.21964
+Geodetic CRS:  WGS 84
+  area_km2 cantidad_cantones                       geometry
+1 51170.44                82 MULTIPOLYGON (((-87.10189 5...</code></pre>
+</div>
+<p>El siguiente ejemplo utiliza otras funciones del paquete dplyr para encontrar las tres provincias más grandes y sus respectivas áreas:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Área y cantidad de cantones de las tres provincias más grandes</span>
+<span class='va'>cantones</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>area</span>, <span class='va'>provincia</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>provincia</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>area <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>area</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
+            cantidad_cantones <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>area</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/top_n.html'>top_n</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>3</span>, wt <span class='op'>=</span> <span class='va'>area</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_drop_geometry</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 3 x 3
+  provincia    area cantidad_cantones
+* &lt;chr&gt;       &lt;dbl&gt;             &lt;int&gt;
+1 Puntarenas 11299.                11
+2 Guanacaste 10196.                11
+3 Alajuela    9772.                16</code></pre>
+</div>
+<h3 id="cruce-de-datos">Cruce de datos</h3>
+<p>La combinación de datos ubicados en diferentes fuentes es una tarea común en análisis de información. Este tipo de operaciones se realizan con base en atributos que son comunes en los conjuntos de datos que se desea cruzar. El paquete <code>dplyr</code> proporciona varias <a href="https://dplyr.tidyverse.org/reference/join.html">funciones para realizar cruces de datos</a>, entre las que se encuentran:</p>
+<ul>
+<li>La función <code>left_join()</code></li>
+<li>La función <code>inner_join()</code></li>
+</ul>
+<h4 id="la-función-left_join">La función left_join()</h4>
+<p>La función <code>left_join()</code> mantiene todos los registros de la tabla del lado izquierdo y agrega las columnas de la tabla del lado derecho, en los registros en los que hay coincidencia.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># "Join" de los datos de producción de café. Ambas tablas comparten la columna name_long.</span>
+<span class='va'>world_coffee_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>world</span>, <span class='va'>coffee_data</span><span class='op'>)</span>
+
+<span class='co'># Mapeo de la producción de café en 2017</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>world_coffee_1</span><span class='op'>[</span><span class='st'>"coffee_production_2017"</span><span class='op'>]</span>, main<span class='op'>=</span><span class='st'>"Producción mundial de café en 2017"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="02-r-operaciones-atributos_files/figure-html5/unnamed-chunk-22-1.png" width="624" /></p>
+</div>
+<h4 id="la-función-inner_join">La función inner_join()</h4>
+<p>La función <code>inner_join()</code> retorna solamente aquellos registros que coinciden en ambas tablas.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># "Join" de los datos de producción de café. Ambas tablas comparten la columna name_long.</span>
+<span class='va'>world_coffee_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>world</span>, <span class='va'>coffee_data</span><span class='op'>)</span>
+
+<span class='co'># Mapeo de la producción de café en 2017</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>world_coffee_2</span><span class='op'>[</span><span class='st'>"coffee_production_2017"</span><span class='op'>]</span>, main<span class='op'>=</span><span class='st'>"Producción mundial de café en 2017"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="02-r-operaciones-atributos_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
