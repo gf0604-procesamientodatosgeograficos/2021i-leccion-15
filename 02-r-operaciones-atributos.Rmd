@@ -18,7 +18,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(sf)
 library(leaflet)
 library(dplyr)
-library(spData)
 ```
 
 ## Conjuntos de datos utilizados
@@ -30,6 +29,9 @@ provincias <-
     "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_provincias_simp_wgs84.geojson",
     quiet = TRUE
   )
+
+# Mapeo
+plot(provincias$geometry)
 ```
 
 **Cantones de Costa Rica**  
@@ -40,10 +42,18 @@ cantones <-
     "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_cantones_simp_wgs84.geojson",
     quiet = TRUE
   )
+
+# Mapeo
+plot(cantones$geometry)
 ```
 
 **Conjuntos de datos de ejemplo para análisis espacial**  
-- Documentación de [spData](https://nowosad.github.io/spData/).
+```{r message = FALSE}
+# Carga del paquete spData
+library(spData)
+```
+
+Documentación del paquete spData: [Datasets for Spatial Analysis - spData](https://nowosad.github.io/spData/).
 
 # Introducción
 Se les llama atributos a los elementos de datos no espaciales de un conjunto de datos geográficos. Un conjunto de datos vectoriales puede tener asociados varios campos de atributos, mientras que un conjunto de datos raster tiene solamente uno.
@@ -80,10 +90,10 @@ class(cantones)
 # Dimensiones (cantidad de filas y de columnas)
 dim(cantones)
 
-# Cantidad de filas
+# Cantidad de filas (i.e. observaciones)
 nrow(cantones)
 
-# Cantidad de columnas
+# Cantidad de columnas (i.e. variables)
 ncol(cantones)
 
 # Nombres de las columnas
@@ -112,10 +122,10 @@ print(object.size(cantones_df), units="Kb")
 También es posible ocultar la columna de geometría de un conjunto de datos (sin borrarla) mediante el argumento ```drop = TRUE```.
 
 ```{r}
-# Sin drop=TRUE
+# Sin drop = TRUE
 cantones[1:10, c("canton", "area")]
 
-# Con drop=TRUE
+# Con drop = TRUE
 cantones[1:10, c("canton", "area"), drop=TRUE]
 ```
 
@@ -132,7 +142,7 @@ Frecuentemente, es necesario extrer subconjuntos del conjunto de datos original,
   
 #### Notaciones y funciones del paquete base
 ##### La notación de ```[]``` y ```$```
-La notación de paréntesis cuadrados (```[]```) y el signo de dólar (```$```) permite crear subconjuntos con base en la posición de filas y de columnas, por medio de nombres de columnas y a través de la especificación de condiciones (i.e. expresiones _booleanas_).
+La notación de paréntesis cuadrados (```[]```) y el signo de dólar (```$```) permite crear subconjuntos con base en la posición de filas y de columnas, por medio de nombres de columnas y a través de la especificación de condiciones (i.e. expresiones lógicas).
 
 ```{r message=FALSE, warning=FALSE, results='hide'}
 # Subconjunto especificado por posiciones de filas
@@ -185,35 +195,33 @@ La función [select()](https://dplyr.tidyverse.org/reference/select.html) permit
 
 ```{r}
 # Selección de columnas
-select(cantones,
-       canton, provincia)
+cantones %>%
+  select(canton, provincia)
 
-# Selección de columnas y renombramiento de la columna area
-select(cantones,
-       canton, area_km2 = area, provincia)
+# Selección y cambio de nombre de columnas
+cantones %>%
+  select(canton, area_km2 = area, provincia)
 ```
 
 ##### La función slice()
-[slice()](https://dplyr.tidyverse.org/reference/slice.html) es el equivalente de ```select()``` para filas.
+[slice()](https://dplyr.tidyverse.org/reference/slice.html) es el equivalente de ```select()``` para filas. Crea un subconjunto con base en las posiciones de las filas.
 
 ```{r results='hide'}
 # Subconjunto especificado mediante un rango de filas
-slice(
-  cantones, 
-  1:10
-)
+cantones %>%
+  slice(1:10)
 ```
 
 ##### La función filter()
-La función [filter()](https://dplyr.tidyverse.org/reference/filter.html) es el equivalente en ```dplyr``` de la función ```subset()``` del paquete ```base```. Retorna los registros que cumplen con una condición:
+La función [filter()](https://dplyr.tidyverse.org/reference/filter.html) es el equivalente en dplyr de la función ```subset()``` del paquete ```base```. Retorna los registros que cumplen con una condición.
 
 ```{r}
 # Androides de "La Guerra de las Galaxias"
-filter(starwars,
-       species == "Droid")
+starwars %>%
+  filter(species == "Droid")
 ```
 
-Las funciones del paquete ```dplyr``` suelen ser utilizadas conjuntamente con el [operador _pipe_ (%>%)](http://r4ds.had.co.nz/pipes.html), el cual posibilita el "encadenamiento" de funciones: la salida de la función previa se convierte en el primer argumento de la siguiente función. En el siguiente ejemplo, el conjunto de datos [starwars](https://dplyr.tidyverse.org/reference/starwars.html) se pasa como entrada a la función ```filter()```, para filtrar los personajes humanos. Seguidamente, el resultado se pasa a la función ```select()```, para seleccionar las columnas  ```name ```, ```homeworld``` y ```species```. Finalmente, la función ```slice()``` reduce el resultado a las 10 primeras filas.
+Las funciones del paquete dplyr suelen ser utilizadas conjuntamente con el [operador _pipe_ (%>%)](http://r4ds.had.co.nz/pipes.html), el cual posibilita el "encadenamiento" de funciones: la salida de la función previa se convierte en el primer argumento de la siguiente función. En el siguiente ejemplo, el conjunto de datos [starwars](https://dplyr.tidyverse.org/reference/starwars.html) se pasa como entrada a la función ```filter()```, para filtrar los personajes humanos. Seguidamente, el resultado se pasa a la función ```select()```, para seleccionar las columnas  ```name ```, ```homeworld``` y ```species```. Finalmente, la función ```slice()``` reduce el resultado a las 10 primeras filas.
 
 ```{r}
 # Encadenamiento de funciones mediante pipe (%>%)
@@ -238,6 +246,8 @@ slice(
   1:10
 )
 ```
+
+**Ejercicio: mediante las funciones ```select()``` y ```filter()``` de dplyr, cree un nuevo objeto ```sf``` que contenga los cantones de Puntarenas y Guanacaste con área mayor o igual a 2000 km2. Incluya las columnas de provincia, cantón y área.**
 
 ### Agregación de datos
 Las operaciones de agregación realizan cálculos (suma, promedio, etc.) a partir de la agrupación de valores de variables. En esta sección, se explican funciones de agregación contenidas en los paquetes  ```stats ```, ```sf``` y ```dplyr```, las cuales son:
@@ -308,8 +318,10 @@ cantones %>%
   st_drop_geometry()
 ```
 
+**Ejercicio: mediante ```summarize()```, y otras funciones de dplyr, despliegue el área y la cantidad de cantones de las dos provincias más pequeñas.**
+
 ### Cruce de datos
-La combinación de datos ubicados en diferentes fuentes es una tarea común en análisis de información. Este tipo de operaciones se realizan con base en atributos que son comunes en los conjuntos de datos que se desea cruzar. El paquete ```dplyr``` proporciona varias [funciones para realizar cruces de datos](https://dplyr.tidyverse.org/reference/join.html), entre las que se encuentran:
+La combinación de datos ubicados en diferentes fuentes es una tarea común en análisis de información. Este tipo de operaciones se realizan con base en atributos que son comunes en los conjuntos de datos que se desea cruzar. El paquete dplyr proporciona varias [funciones para realizar cruces de datos](https://dplyr.tidyverse.org/reference/join.html), entre las que se encuentran:
 
 - La función ```left_join()```
 - La función ```inner_join()```
@@ -319,10 +331,10 @@ La función ```left_join()``` mantiene todos los registros de la tabla del lado 
 
 ```{r}
 # "Join" de los datos de producción de café. Ambas tablas comparten la columna name_long.
-world_coffee_1 <- left_join(world, coffee_data)
+productores_cafe_1 <- left_join(world, coffee_data)
 
 # Mapeo de la producción de café en 2017
-plot(world_coffee_1["coffee_production_2017"], main="Producción mundial de café en 2017")
+plot(productores_cafe_1["coffee_production_2017"], main="Producción mundial de café en 2017")
 ```
 
 #### La función inner_join()
@@ -330,8 +342,8 @@ La función ```inner_join()``` retorna solamente aquellos registros que coincide
 
 ```{r}
 # "Join" de los datos de producción de café. Ambas tablas comparten la columna name_long.
-world_coffee_2 <- inner_join(world, coffee_data)
+productores_cafe_2 <- inner_join(world, coffee_data)
 
 # Mapeo de la producción de café en 2017
-plot(world_coffee_2["coffee_production_2017"], main="Producción mundial de café en 2017")
+plot(productores_cafe_2["coffee_production_2017"], main="Producción mundial de café en 2017")
 ```
