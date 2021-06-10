@@ -2479,6 +2479,15 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </ul></li>
 </ul></li>
 </ul></li>
+<li><a href="#datos-raster">Datos raster</a>
+<ul>
+<li><a href="#manejo-de-datos-de-atributos-con-el-paquete-raster">Manejo de datos de atributos con el paquete raster</a>
+<ul>
+<li><a href="#funciones-básicas-para-manejo-de-objetos-raster">Funciones básicas para manejo de objetos raster</a></li>
+<li><a href="#creación-de-subconjuntos-1">Creación de subconjuntos</a></li>
+<li><a href="#resumen-de-información">Resumen de información</a></li>
+</ul></li>
+</ul></li>
 </ul>
 </nav>
 </div>
@@ -2487,6 +2496,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-spatial.github.io/sf/'>sf</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rspatial.org/raster'>raster</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2561,33 +2571,35 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
  [4] aggregate             anti_join             arrange              
  [7] as.data.frame         cbind                 coerce               
 [10] dbDataType            dbWriteTable          distinct             
-[13] dplyr_reconstruct     filter                full_join            
-[16] group_by              group_split           identify             
-[19] initialize            inner_join            left_join            
-[22] merge                 mutate                plot                 
-[25] print                 rbind                 rename               
-[28] right_join            rowwise               sample_frac          
-[31] sample_n              select                semi_join            
-[34] show                  slice                 slotsFromS3          
-[37] st_agr                st_agr&lt;-              st_area              
-[40] st_as_s2              st_as_sf              st_bbox              
-[43] st_boundary           st_buffer             st_cast              
-[46] st_centroid           st_collection_extract st_convex_hull       
-[49] st_coordinates        st_crop               st_crs               
-[52] st_crs&lt;-              st_difference         st_filter            
-[55] st_geometry           st_geometry&lt;-         st_inscribed_circle  
-[58] st_interpolate_aw     st_intersection       st_intersects        
-[61] st_is                 st_is_valid           st_join              
-[64] st_line_merge         st_m_range            st_make_valid        
-[67] st_nearest_points     st_node               st_normalize         
-[70] st_point_on_surface   st_polygonize         st_precision         
-[73] st_reverse            st_sample             st_segmentize        
-[76] st_set_precision      st_shift_longitude    st_simplify          
-[79] st_snap               st_sym_difference     st_transform         
-[82] st_triangulate        st_union              st_voronoi           
-[85] st_wrap_dateline      st_write              st_z_range           
-[88] st_zm                 summarise             transform            
-[91] transmute             ungroup              
+[13] dplyr_reconstruct     extent                extract              
+[16] filter                full_join             group_by             
+[19] group_split           identify              initialize           
+[22] inner_join            left_join             mask                 
+[25] merge                 mutate                plot                 
+[28] print                 raster                rasterize            
+[31] rbind                 rename                right_join           
+[34] rowwise               sample_frac           sample_n             
+[37] select                semi_join             show                 
+[40] slice                 slotsFromS3           st_agr               
+[43] st_agr&lt;-              st_area               st_as_s2             
+[46] st_as_sf              st_bbox               st_boundary          
+[49] st_buffer             st_cast               st_centroid          
+[52] st_collection_extract st_convex_hull        st_coordinates       
+[55] st_crop               st_crs                st_crs&lt;-             
+[58] st_difference         st_filter             st_geometry          
+[61] st_geometry&lt;-         st_inscribed_circle   st_interpolate_aw    
+[64] st_intersection       st_intersects         st_is                
+[67] st_is_valid           st_join               st_line_merge        
+[70] st_m_range            st_make_valid         st_nearest_points    
+[73] st_node               st_normalize          st_point_on_surface  
+[76] st_polygonize         st_precision          st_reverse           
+[79] st_sample             st_segmentize         st_set_precision     
+[82] st_shift_longitude    st_simplify           st_snap              
+[85] st_sym_difference     st_transform          st_triangulate       
+[88] st_union              st_voronoi            st_wrap_dateline     
+[91] st_write              st_z_range            st_zm                
+[94] summarise             transform             transmute            
+[97] ungroup              
 see &#39;?methods&#39; for accessing help and source code</code></pre>
 </div>
 <p>Además de <code>data.frame</code>, <code>sf</code> es compatible con clases como las del paquete <a href="https://tibble.tidyverse.org/">tibble</a>, las cuales pueden manipularse mediante los métodos de <a href="https://dplyr.tidyverse.org/">dplyr</a>. Esto que permite un manejo <em>tidy</em> (ordenado, organizado) de los datos geoespaciales, de acuerdo con el enfoque de <a href="https://www.tidyverse.org/">Tidyverse</a>.</p>
@@ -2602,25 +2614,25 @@ see &#39;?methods&#39; for accessing help and source code</code></pre>
 <pre><code>[1] &quot;sf&quot;         &quot;data.frame&quot;</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Dimensiones (cantidad de filas y de columnas)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/dim.html'>dim</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/dimensions.html'>dim</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 82 10</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Cantidad de filas (i.e. observaciones)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/ncell.html'>nrow</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 82</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Cantidad de columnas (i.e. variables)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>ncol</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/ncell.html'>ncol</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] 10</code></pre>
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Nombres de las columnas</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code> [1] &quot;gmlid&quot;      &quot;cod_catalo&quot; &quot;cod_canton&quot; &quot;canton&quot;     &quot;ori_toponi&quot;
@@ -2633,7 +2645,7 @@ see &#39;?methods&#39; for accessing help and source code</code></pre>
 <span class='va'>cantones_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_drop_geometry</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>)</span>
 
 <span class='co'># Nombres de las columnas</span>
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>cantones_df</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span><span class='op'>(</span><span class='va'>cantones_df</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>[1] &quot;gmlid&quot;      &quot;cod_catalo&quot; &quot;cod_canton&quot; &quot;canton&quot;     &quot;ori_toponi&quot;
@@ -2750,7 +2762,7 @@ Geodetic CRS:  WGS 84
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Cantones con área &gt;= 2000 km2</span>
-<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"canton"</span>, <span class='st'>"area"</span><span class='op'>)</span>, drop <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>]</span>,
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"canton"</span>, <span class='st'>"area"</span><span class='op'>)</span>, drop <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>]</span>,
        <span class='va'>area</span> <span class='op'>&gt;=</span> <span class='fl'>2000</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2802,7 +2814,7 @@ Geodetic CRS:  WGS 84
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Selección de columnas</span>
 <span class='va'>cantones</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>canton</span>, <span class='va'>provincia</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/select.html'>select</a></span><span class='op'>(</span><span class='va'>canton</span>, <span class='va'>provincia</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Simple feature collection with 82 features and 2 fields
@@ -2825,7 +2837,7 @@ First 10 features:
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Selección y cambio de nombre de columnas</span>
 <span class='va'>cantones</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>canton</span>, area_km2 <span class='op'>=</span> <span class='va'>area</span>, <span class='va'>provincia</span><span class='op'>)</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/select.html'>select</a></span><span class='op'>(</span><span class='va'>canton</span>, area_km2 <span class='op'>=</span> <span class='va'>area</span>, <span class='va'>provincia</span><span class='op'>)</span>
 </code></pre>
 </div>
 <pre><code>Simple feature collection with 82 features and 3 fields
@@ -2883,7 +2895,7 @@ First 10 features:
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Encadenamiento de funciones mediante pipe (%&gt;%)</span>
 <span class='va'>starwars</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>species</span> <span class='op'>==</span> <span class='st'>"Human"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>homeworld</span>, <span class='va'>species</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/select.html'>select</a></span><span class='op'>(</span><span class='va'>name</span>, <span class='va'>homeworld</span>, <span class='va'>species</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2906,7 +2918,7 @@ First 10 features:
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Anidamiento de funciones</span>
 <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/select.html'>select</a></span><span class='op'>(</span>
     <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span>
       <span class='va'>starwars</span>,
       <span class='va'>species</span><span class='op'>==</span><span class='st'>"Human"</span>
@@ -3047,7 +3059,7 @@ Geodetic CRS:  WGS 84
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Área y cantidad de cantones de las tres provincias más grandes</span>
 <span class='va'>cantones</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='va'>area</span>, <span class='va'>provincia</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/select.html'>select</a></span><span class='op'>(</span><span class='va'>area</span>, <span class='va'>provincia</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>provincia</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>area <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>area</span>, na.rm <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>,
             cantidad_cantones <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -3078,7 +3090,7 @@ Geodetic CRS:  WGS 84
 <span class='va'>productores_cafe_1</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>world</span>, <span class='va'>coffee_data</span><span class='op'>)</span>
 
 <span class='co'># Mapeo de la producción de café en 2017</span>
-<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>productores_cafe_1</span><span class='op'>[</span><span class='st'>"coffee_production_2017"</span><span class='op'>]</span>, main<span class='op'>=</span><span class='st'>"Producción mundial de café en 2017"</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>productores_cafe_1</span><span class='op'>[</span><span class='st'>"coffee_production_2017"</span><span class='op'>]</span>, main <span class='op'>=</span> <span class='st'>"Producción mundial de café en 2017"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="02-r-operaciones-atributos_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
@@ -3091,12 +3103,317 @@ Geodetic CRS:  WGS 84
 <span class='va'>productores_cafe_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>inner_join</a></span><span class='op'>(</span><span class='va'>world</span>, <span class='va'>coffee_data</span><span class='op'>)</span>
 
 <span class='co'># Mapeo de la producción de café en 2017</span>
-<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>productores_cafe_2</span><span class='op'>[</span><span class='st'>"coffee_production_2017"</span><span class='op'>]</span>, main<span class='op'>=</span><span class='st'>"Producción mundial de café en 2017"</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>productores_cafe_2</span><span class='op'>[</span><span class='st'>"coffee_production_2017"</span><span class='op'>]</span>, main <span class='op'>=</span> <span class='st'>"Producción mundial de café en 2017"</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="02-r-operaciones-atributos_files/figure-html5/unnamed-chunk-24-1.png" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h1 id="datos-raster">Datos raster</h1>
+<p>Las operaciones con atributos en datos raster incluyen:</p>
+<ul>
+<li>Creación de subconjuntos (<em>subsetting</em>).<br />
+</li>
+<li>Resumen de información (<em>summarizing</em>).</li>
+</ul>
+<p>Seguidamente, se explicará como maneja estas operaciones el paquete raster.</p>
+<h2 id="manejo-de-datos-de-atributos-con-el-paquete-raster">Manejo de datos de atributos con el paquete raster</h2>
+<h3 id="funciones-básicas-para-manejo-de-objetos-raster">Funciones básicas para manejo de objetos raster</h3>
+<p>El siguiente bloque de código crea y mapea un objeto raster llamado <code>elevacion</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Creación del objeto raster</span>
+<span class='va'>elevacion</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span><span class='op'>(</span>
+  nrows <span class='op'>=</span> <span class='fl'>6</span>,
+  ncols <span class='op'>=</span> <span class='fl'>6</span>,
+  res <span class='op'>=</span> <span class='fl'>0.5</span>,
+  xmn <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1.5</span>,
+  xmx <span class='op'>=</span> <span class='fl'>1.5</span>,
+  ymn <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1.5</span>,
+  ymx <span class='op'>=</span> <span class='fl'>1.5</span>,
+  vals <span class='op'>=</span> <span class='fl'>1</span><span class='op'>:</span><span class='fl'>36</span>
+<span class='op'>)</span>
+
+<span class='co'># Mapeo</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elevacion</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="02-r-operaciones-atributos_files/figure-html5/unnamed-chunk-25-1.png" width="624" /></p>
+</div>
+<p>Los objetos raster también pueden contener valores categóricos de tipo <code>logical</code> o <code>factor</code>. El siguiente bloque de código crea y mapea un objeto raster con información sobre tipos de granos de una porción de suelo.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Tipos de granos</span>
+<span class='va'>grano_tipo</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"arcilla"</span>, <span class='st'>"limo"</span>, <span class='st'>"arena"</span><span class='op'>)</span>
+
+<span class='co'># Lista de nombres de granos generada aleatoriamente</span>
+<span class='va'>grano_nombres</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sample.html'>sample</a></span><span class='op'>(</span><span class='va'>grano_tipo</span>, <span class='fl'>36</span>, replace <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='va'>grano_nombres</span>
+</code></pre>
+</div>
+<pre><code> [1] &quot;limo&quot;    &quot;arena&quot;   &quot;arcilla&quot; &quot;arcilla&quot; &quot;arcilla&quot; &quot;arena&quot;  
+ [7] &quot;arena&quot;   &quot;arena&quot;   &quot;arcilla&quot; &quot;arcilla&quot; &quot;arcilla&quot; &quot;limo&quot;   
+[13] &quot;arcilla&quot; &quot;limo&quot;    &quot;arena&quot;   &quot;arena&quot;   &quot;arcilla&quot; &quot;arcilla&quot;
+[19] &quot;limo&quot;    &quot;arena&quot;   &quot;arena&quot;   &quot;limo&quot;    &quot;arcilla&quot; &quot;arcilla&quot;
+[25] &quot;arena&quot;   &quot;arcilla&quot; &quot;arcilla&quot; &quot;limo&quot;    &quot;limo&quot;    &quot;arena&quot;  
+[31] &quot;arcilla&quot; &quot;arena&quot;   &quot;limo&quot;    &quot;arena&quot;   &quot;arena&quot;   &quot;arena&quot;  </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Factor de tipos de granos</span>
+<span class='va'>grano_factor</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>grano_nombres</span>, levels <span class='op'>=</span> <span class='va'>grano_tipo</span><span class='op'>)</span>
+
+<span class='co'># Objeto raster de tipos de granos</span>
+<span class='va'>grano</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span><span class='op'>(</span>
+  nrows <span class='op'>=</span> <span class='fl'>6</span>,
+  ncols <span class='op'>=</span> <span class='fl'>6</span>,
+  res <span class='op'>=</span> <span class='fl'>0.5</span>,
+  xmn <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1.5</span>,
+  xmx <span class='op'>=</span> <span class='fl'>1.5</span>,
+  ymn <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1.5</span>,
+  ymx <span class='op'>=</span> <span class='fl'>1.5</span>,
+  vals <span class='op'>=</span> <span class='va'>grano_factor</span>
+<span class='op'>)</span>
+
+<span class='co'># Mapeo</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>grano</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="02-r-operaciones-atributos_files/figure-html5/unnamed-chunk-26-1.png" width="624" /></p>
+</div>
+<p>Ambos objetos raster pueden guardados en el disco con la función <a href="https://rdrr.io/pkg/raster/man/writeRaster.html">writeRaster()</a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Especificación del directorio de trabajo (debe ser una ruta existente)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>"C:/Users/mfvargas/Downloads"</span><span class='op'>)</span>
+
+<span class='co'># Escritura de los objetos raster</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span><span class='op'>(</span><span class='va'>grano</span>, filename <span class='op'>=</span> <span class='st'>"elevacion.asc"</span>, overwrite <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span><span class='op'>(</span><span class='va'>grano</span>, filename <span class='op'>=</span> <span class='st'>"grano.asc"</span>, overwrite <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>La función <a href="https://rdrr.io/pkg/raster/man/factor.html">levels()</a> puede utilizarse para consultar la <em>Raster Attribute Table</em> (RAT) de un objeto raster, la cual contiene información sobre sus factores y niveles. También puede emplearse para asignar nuevos factores al objeto raster.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Consulta de la RAT</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/factor.html'>levels</a></span><span class='op'>(</span><span class='va'>grano</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+  ID   VALUE
+1  1 arcilla
+2  2    limo
+3  3   arena</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Nuevo factor</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/factor.html'>levels</a></span><span class='op'>(</span><span class='va'>grano</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>cbind</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/factor.html'>levels</a></span><span class='op'>(</span><span class='va'>grano</span><span class='op'>)</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>, humedad <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mojado"</span>, <span class='st'>"húmedo"</span>, <span class='st'>"seco"</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Consulta de la RAT</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/factor.html'>levels</a></span><span class='op'>(</span><span class='va'>grano</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+  ID   VALUE humedad
+1  1 arcilla  mojado
+2  2    limo  húmedo
+3  3   arena    seco</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Consulta de los factores de un subconjunto de celdas del objeto raster</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/factor.html'>factorValues</a></span><span class='op'>(</span><span class='va'>grano</span>, <span class='va'>grano</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>11</span>, <span class='fl'>35</span><span class='op'>)</span><span class='op'>]</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>    VALUE humedad
+1    limo  húmedo
+2 arcilla  mojado
+3   arena    seco</code></pre>
+</div>
+<h3 id="creación-de-subconjuntos-1">Creación de subconjuntos</h3>
+<p>Los subconjuntos se crean en objetos raster con el operador <code>[</code>, el cual acepta una variedad de entradas.</p>
+<ul>
+<li>Índices de filas y columnas.</li>
+<li>ID de celdas.</li>
+<li>Coordenadas.</li>
+<li>Otros objetos espaciales.</li>
+</ul>
+<p>En esta lección, solo se tratarán las dos primeras opciones. Las restantes se cubrirán en las lecciones sobre operaciones espaciales.</p>
+<p>Las dos primeras opciones se ilustran en el siguiente bloque de código, en el que se consulta la celda (también llamada pixel) ubicada en la esquina superior izquierda del objeto raster de elevación.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Celda en la fila 1, columna 1</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[1] 1</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Celda con ID = 1</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[1] 1</code></pre>
+</div>
+<p>La totalidad de los valores del objeto raster puede consultarse con las función <a href="https://rdrr.io/pkg/raster/man/getValues.html">values()</a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Valores de un objeto raster</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/getValues.html'>values</a></span><span class='op'>(</span><span class='va'>elevacion</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
+[23] 23 24 25 26 27 28 29 30 31 32 33 34 35 36</code></pre>
+</div>
+<p>Estas funciones también pueden utilizarse en objetos raster de múltiples capas (i.e. stack, brick). En el siguiente bloque de código, se muestran el uso de la función <a href="https://rdrr.io/pkg/raster/man/subset.html">raster::subset()</a> y de los operadores <code>[</code> y <code>$</code> para consultar capas.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Creación de un objeto stack de dos capas</span>
+<span class='va'>r_stack</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></span><span class='op'>(</span><span class='va'>elevacion</span>, <span class='va'>grano</span><span class='op'>)</span>
+<span class='va'>r_stack</span>
+</code></pre>
+</div>
+<pre><code>class      : RasterStack 
+dimensions : 6, 6, 36, 2  (nrow, ncol, ncell, nlayers)
+resolution : 0.5, 0.5  (x, y)
+extent     : -1.5, 1.5, -1.5, 1.5  (xmin, xmax, ymin, ymax)
+crs        : +proj=longlat +datum=WGS84 +no_defs 
+names      : layer.1, layer.2 
+min values :       1,       1 
+max values :      36,       3 </code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Cambio de nombres de las capas</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span><span class='op'>(</span><span class='va'>r_stack</span><span class='op'>)</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"elevacion"</span>, <span class='st'>"grano"</span><span class='op'>)</span>
+
+<span class='co'># Tres maneras de extraer una capa de un objeto stack</span>
+<span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>r_stack</span>, <span class='st'>"elevacion"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>class      : RasterLayer 
+dimensions : 6, 6, 36  (nrow, ncol, ncell)
+resolution : 0.5, 0.5  (x, y)
+extent     : -1.5, 1.5, -1.5, 1.5  (xmin, xmax, ymin, ymax)
+crs        : +proj=longlat +datum=WGS84 +no_defs 
+source     : memory
+names      : elevacion 
+values     : 1, 36  (min, max)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>r_stack</span><span class='op'>[[</span><span class='st'>"elevacion"</span><span class='op'>]</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>class      : RasterLayer 
+dimensions : 6, 6, 36  (nrow, ncol, ncell)
+resolution : 0.5, 0.5  (x, y)
+extent     : -1.5, 1.5, -1.5, 1.5  (xmin, xmax, ymin, ymax)
+crs        : +proj=longlat +datum=WGS84 +no_defs 
+source     : memory
+names      : elevacion 
+values     : 1, 36  (min, max)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>r_stack</span><span class='op'>$</span><span class='va'>elevacion</span>
+</code></pre>
+</div>
+<pre><code>class      : RasterLayer 
+dimensions : 6, 6, 36  (nrow, ncol, ncell)
+resolution : 0.5, 0.5  (x, y)
+extent     : -1.5, 1.5, -1.5, 1.5  (xmin, xmax, ymin, ymax)
+crs        : +proj=longlat +datum=WGS84 +no_defs 
+source     : memory
+names      : elevacion 
+values     : 1, 36  (min, max)</code></pre>
+</div>
+<p>El operador <code>[</code> también puede utilizarse para modificar los valores de un objeto raster.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Modificación de una celda</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>0</span>
+
+<span class='co'># Consulta de todos los valores del raster (equivalente a values())</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code> [1]  0  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
+[23] 23 24 25 26 27 28 29 30 31 32 33 34 35 36</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Modificación de rangos de celdas</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>0</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>10</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='fl'>3</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>15</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='fl'>4</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>15</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='fl'>5</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>20</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='fl'>6</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>6</span><span class='op'>]</span> <span class='op'>=</span> <span class='fl'>35</span>
+
+<span class='co'># Consulta de los valores</span>
+<span class='va'>elevacion</span><span class='op'>[</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code> [1]  0  0  0  0  0  0 10 10 10 10 10 10 15 15 15 15 15 15 15 15 15 15
+[23] 15 15 20 20 20 20 20 20 35 35 35 35 35 35</code></pre>
+</div>
+<h3 id="resumen-de-información">Resumen de información</h3>
+<p>La escritura del nombre de un objeto raster en la consola imprime información general sobre ese objeto. La función <a href="https://rdrr.io/r/base/summary.html">summary()</a> proporciona algunas estadísticas descriptivas (mínimo, máximo, cuartiles, etc.). Otras estadísticas pueden ser calculadas con <a href="https://rdrr.io/pkg/raster/man/cellStats.html">cellStats()</a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Información general</span>
+<span class='va'>elevacion</span>
+</code></pre>
+</div>
+<pre><code>class      : RasterLayer 
+dimensions : 6, 6, 36  (nrow, ncol, ncell)
+resolution : 0.5, 0.5  (x, y)
+extent     : -1.5, 1.5, -1.5, 1.5  (xmin, xmax, ymin, ymax)
+crs        : +proj=longlat +datum=WGS84 +no_defs 
+source     : memory
+names      : layer 
+values     : 0, 35  (min, max)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Resumen de un raster de una capa</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>elevacion</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>        layer
+Min.        0
+1st Qu.    10
+Median     15
+3rd Qu.    20
+Max.       35
+NA&#39;s        0</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Resumen de un raster de varias capas</span>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/brick.html'>brick</a></span><span class='op'>(</span><span class='va'>elevacion</span>, <span class='va'>grano</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>        layer.1 layer.2
+Min.          0       1
+1st Qu.      10       1
+Median       15       2
+3rd Qu.      20       3
+Max.         35       3
+NA&#39;s          0       0</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Desviación estándar</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/cellStats.html'>cellStats</a></span><span class='op'>(</span><span class='va'>elevacion</span>, <span class='va'>sd</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 10.72381</code></pre>
+</div>
+<p>Las estadísticas pueden ser visualizadas con funciones como <a href="https://rdrr.io/pkg/raster/man/hist.html">hist()</a> y <a href="https://rdrr.io/pkg/raster/man/density.html">density()</a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Histograma</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/hist.html'>hist</a></span><span class='op'>(</span><span class='va'>elevacion</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="02-r-operaciones-atributos_files/figure-html5/unnamed-chunk-34-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Densidad</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/density.html'>density</a></span><span class='op'>(</span><span class='va'>elevacion</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="02-r-operaciones-atributos_files/figure-html5/unnamed-chunk-34-2.png" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

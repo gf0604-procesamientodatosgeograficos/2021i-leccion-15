@@ -16,6 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r message = FALSE}
 library(sf)
+library(raster)
 library(dplyr)
 ```
 
@@ -333,7 +334,7 @@ La función ```left_join()``` mantiene todos los registros de la tabla del lado 
 productores_cafe_1 <- left_join(world, coffee_data)
 
 # Mapeo de la producción de café en 2017
-plot(productores_cafe_1["coffee_production_2017"], main="Producción mundial de café en 2017")
+plot(productores_cafe_1["coffee_production_2017"], main = "Producción mundial de café en 2017")
 ```
 
 #### La función inner_join()
@@ -344,5 +345,181 @@ La función ```inner_join()``` retorna solamente aquellos registros que coincide
 productores_cafe_2 <- inner_join(world, coffee_data)
 
 # Mapeo de la producción de café en 2017
-plot(productores_cafe_2["coffee_production_2017"], main="Producción mundial de café en 2017")
+plot(productores_cafe_2["coffee_production_2017"], main = "Producción mundial de café en 2017")
+```
+
+# Datos raster
+Las operaciones con atributos en datos raster incluyen:
+
+- Creación de subconjuntos (_subsetting_).  
+- Resumen de información (_summarizing_).  
+
+Seguidamente, se explicará como maneja estas operaciones el paquete raster.
+
+## Manejo de datos de atributos con el paquete raster
+### Funciones básicas para manejo de objetos raster
+El siguiente bloque de código crea y mapea un objeto raster llamado ```elevacion```.
+
+```{r}
+# Creación del objeto raster
+elevacion = raster(
+  nrows = 6,
+  ncols = 6,
+  res = 0.5,
+  xmn = -1.5,
+  xmx = 1.5,
+  ymn = -1.5,
+  ymx = 1.5,
+  vals = 1:36
+)
+
+# Mapeo
+plot(elevacion)
+```
+
+Los objetos raster también pueden contener valores categóricos de tipo ```logical``` o ```factor```. El siguiente bloque de código crea y mapea un objeto raster con información sobre tipos de granos de una porción de suelo.
+
+```{r collapse=TRUE}
+# Tipos de granos
+grano_tipo = c("arcilla", "limo", "arena")
+
+# Lista de nombres de granos generada aleatoriamente
+grano_nombres = sample(grano_tipo, 36, replace = TRUE)
+grano_nombres
+
+# Factor de tipos de granos
+grano_factor = factor(grano_nombres, levels = grano_tipo)
+
+# Objeto raster de tipos de granos
+grano = raster(
+  nrows = 6,
+  ncols = 6,
+  res = 0.5,
+  xmn = -1.5,
+  xmx = 1.5,
+  ymn = -1.5,
+  ymx = 1.5,
+  vals = grano_factor
+)
+
+# Mapeo
+plot(grano)
+```
+
+Ambos objetos raster pueden guardados en el disco con la función [writeRaster()](https://rdrr.io/pkg/raster/man/writeRaster.html).
+
+```{r eval=FALSE}
+# Especificación del directorio de trabajo (debe ser una ruta existente)
+setwd("C:/Users/mfvargas/Downloads")
+
+# Escritura de los objetos raster
+writeRaster(grano, filename = "elevacion.asc", overwrite = TRUE)
+writeRaster(grano, filename = "grano.asc", overwrite = TRUE)
+```
+
+La función [levels()](https://rdrr.io/pkg/raster/man/factor.html) puede utilizarse para consultar la *Raster Attribute Table* (RAT) de un objeto raster, la cual contiene información sobre sus factores y niveles. También puede emplearse para asignar nuevos factores al objeto raster.
+
+```{r collapse=TRUE}
+# Consulta de la RAT
+levels(grano)
+
+# Nuevo factor
+levels(grano)[[1]] = cbind(levels(grano)[[1]], humedad = c("mojado", "húmedo", "seco"))
+
+# Consulta de la RAT
+levels(grano)
+
+# Consulta de los factores de un subconjunto de celdas del objeto raster
+factorValues(grano, grano[c(1, 11, 35)])
+```
+
+### Creación de subconjuntos
+Los subconjuntos se crean en objetos raster con el operador ```[```, el cual acepta una variedad de entradas.
+
+- Índices de filas y columnas.
+- ID de celdas.
+- Coordenadas.
+- Otros objetos espaciales.
+
+En esta lección, solo se tratarán las dos primeras opciones. Las restantes se cubrirán en las lecciones sobre operaciones espaciales.
+
+Las dos primeras opciones se ilustran en el siguiente bloque de código, en el que se consulta la celda (también llamada pixel) ubicada en la esquina superior izquierda del objeto raster de elevación.
+
+```{r}
+# Celda en la fila 1, columna 1
+elevacion[1, 1]
+
+# Celda con ID = 1
+elevacion[1]
+```
+
+La totalidad de los valores del objeto raster puede consultarse con las función [values()](https://rdrr.io/pkg/raster/man/getValues.html).
+
+```{r collapse=TRUE}
+# Valores de un objeto raster
+values(elevacion)
+```
+
+Estas funciones también pueden utilizarse en objetos raster de múltiples capas (i.e. stack, brick). En el siguiente bloque de código, se muestran el uso de la función [raster::subset()](https://rdrr.io/pkg/raster/man/subset.html) y de los operadores ```[``` y ```$``` para consultar capas.
+
+```{r collapse=TRUE}
+# Creación de un objeto stack de dos capas
+r_stack = stack(elevacion, grano)
+r_stack
+
+# Cambio de nombres de las capas
+names(r_stack) = c("elevacion", "grano")
+
+# Tres maneras de extraer una capa de un objeto stack
+raster::subset(r_stack, "elevacion")
+r_stack[["elevacion"]]
+r_stack$elevacion
+```
+
+El operador ```[``` también puede utilizarse para modificar los valores de un objeto raster.
+
+```{r}
+# Modificación de una celda
+elevacion[1, 1] = 0
+
+# Consulta de todos los valores del raster (equivalente a values())
+elevacion[]
+
+# Modificación de rangos de celdas
+elevacion[1, 1:6] = 0
+elevacion[2, 1:6] = 10
+elevacion[3, 1:6] = 15
+elevacion[4, 1:6] = 15
+elevacion[5, 1:6] = 20
+elevacion[6, 1:6] = 35
+
+# Consulta de los valores
+elevacion[]
+```
+
+### Resumen de información
+La escritura del nombre de un objeto raster en la consola imprime información general sobre ese objeto. La función [summary()](https://rdrr.io/r/base/summary.html) proporciona algunas estadísticas descriptivas (mínimo, máximo, cuartiles, etc.). Otras estadísticas pueden ser calculadas con [cellStats()](https://rdrr.io/pkg/raster/man/cellStats.html).
+
+```{r collapse=TRUE}
+# Información general
+elevacion
+
+# Resumen de un raster de una capa
+summary(elevacion)
+
+# Resumen de un raster de varias capas
+summary(brick(elevacion, grano))
+
+# Desviación estándar
+cellStats(elevacion, sd)
+```
+
+Las estadísticas pueden ser visualizadas con funciones como [hist()](https://rdrr.io/pkg/raster/man/hist.html) y [density()](https://rdrr.io/pkg/raster/man/density.html).
+
+```{r}
+# Histograma
+hist(elevacion)
+
+# Densidad
+density(elevacion)
 ```
