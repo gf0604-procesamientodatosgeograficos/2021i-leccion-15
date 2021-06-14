@@ -26,6 +26,7 @@ En estas lecciones, se cubren las capacidades geoespaciales del lenguaje de prog
 
 - El ecosistema espacial de R.
 - Operaciones con datos de atributos.
+- Operaciones con datos espaciales.
 
 # Recursos bibliográficos
 - [Lovelace, R., Nowosad, J., & Muenchow, J. (2019). Geocomputation with R](https://geocompr.robinlovelace.net/).
@@ -33,4 +34,5 @@ En estas lecciones, se cubren las capacidades geoespaciales del lenguaje de prog
 # Contenidos
 [01 El ecosistema espacial de R](01-r-ecosistemaespacial.html).  
 [02 Operaciones con datos de atributos](02-r-operaciones-atributos.html).  
+[03 Operaciones con datos espaciales](03-r-operaciones-espaciales.html).  
   
