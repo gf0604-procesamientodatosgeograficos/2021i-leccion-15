@@ -1,0 +1,3030 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #20794d; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007ba5; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #007ba5; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #007ba5; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #20794d; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30: Operaciones con datos espaciales</title>
+
+
+  <link rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/"/>
+
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30: Operaciones con datos espaciales"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:site_name" content="GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30: Operaciones con datos espaciales"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","output"]}},"value":[{"type":"character","attributes":{},"value":["Operaciones con datos espaciales"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[4]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  <!--radix_placeholder_navigation_in_header-->
+  <meta name="distill:offset" content=""/>
+
+  <script type="application/javascript">
+
+    window.headroom_prevent_pin = false;
+
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+
+      // initialize headroom for banner
+      var header = $('header').get(0);
+      var headerHeight = header.offsetHeight;
+      var headroom = new Headroom(header, {
+        tolerance: 5,
+        onPin : function() {
+          if (window.headroom_prevent_pin) {
+            window.headroom_prevent_pin = false;
+            headroom.unpin();
+          }
+        }
+      });
+      headroom.init();
+      if(window.location.hash)
+        headroom.unpin();
+      $(header).addClass('headroom--transition');
+
+      // offset scroll location for banner on hash change
+      // (see: https://github.com/WickyNilliams/headroom.js/issues/38)
+      window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0, window.pageYOffset - (headerHeight + 25));
+      });
+
+      // responsive menu
+      $('.distill-site-header').each(function(i, val) {
+        var topnav = $(this);
+        var toggle = topnav.find('.nav-toggle');
+        toggle.on('click', function() {
+          topnav.toggleClass('responsive');
+        });
+      });
+
+      // nav dropdowns
+      $('.nav-dropbtn').click(function(e) {
+        $(this).next('.nav-dropdown-content').toggleClass('nav-dropdown-active');
+        $(this).parent().siblings('.nav-dropdown')
+           .children('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $("body").click(function(e){
+        $('.nav-dropdown-content').removeClass('nav-dropdown-active');
+      });
+      $(".nav-dropdown").click(function(e){
+        e.stopPropagation();
+      });
+    });
+  </script>
+
+  <style type="text/css">
+
+  /* Theme (user-documented overrideables for nav appearance) */
+
+  .distill-site-nav {
+    color: rgba(255, 255, 255, 0.8);
+    background-color: #0F2E3D;
+    font-size: 15px;
+    font-weight: 300;
+  }
+
+  .distill-site-nav a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .distill-site-nav a:hover {
+    color: white;
+  }
+
+  @media print {
+    .distill-site-nav {
+      display: none;
+    }
+  }
+
+  .distill-site-header {
+
+  }
+
+  .distill-site-footer {
+
+  }
+
+
+  /* Site Header */
+
+  .distill-site-header {
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .distill-site-header .nav-left {
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header .nav-left {
+      margin-left: 0;
+    }
+  }
+
+
+  .distill-site-header .nav-right {
+    float: right;
+    margin-right: 8px;
+  }
+
+  .distill-site-header a,
+  .distill-site-header .title {
+    display: inline-block;
+    text-align: center;
+    padding: 14px 10px 14px 10px;
+  }
+
+  .distill-site-header .title {
+    font-size: 18px;
+    min-width: 150px;
+  }
+
+  .distill-site-header .logo {
+    padding: 0;
+  }
+
+  .distill-site-header .logo img {
+    display: none;
+    max-height: 20px;
+    width: auto;
+    margin-bottom: -4px;
+  }
+
+  .distill-site-header .nav-image img {
+    max-height: 18px;
+    width: auto;
+    display: inline-block;
+    margin-bottom: -3px;
+  }
+
+
+
+  @media screen and (min-width: 1000px) {
+    .distill-site-header .logo img {
+      display: inline-block;
+    }
+    .distill-site-header .nav-left {
+      margin-left: 20px;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 20px;
+    }
+    .distill-site-header .title {
+      padding-left: 12px;
+    }
+  }
+
+
+  .distill-site-header .nav-toggle {
+    display: none;
+  }
+
+  .nav-dropdown {
+    display: inline-block;
+    position: relative;
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 16px 10px;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    margin: 0;
+    margin-top: 1px;
+    z-index: 2;
+  }
+
+  .nav-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    margin-top: 2px;
+    white-space: nowrap;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .nav-dropdown-content hr {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .nav-dropdown-active {
+    display: block;
+  }
+
+  .nav-dropdown-content a, .nav-dropdown-content .nav-dropdown-header {
+    color: black;
+    padding: 6px 24px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .nav-dropdown-content .nav-dropdown-header {
+    display: block;
+    padding: 5px 24px;
+    padding-bottom: 0;
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #999999;
+    white-space: nowrap;
+  }
+
+  .nav-dropdown:hover .nav-dropbtn {
+    color: white;
+  }
+
+  .nav-dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .nav-right .nav-dropdown-content {
+    margin-left: -45%;
+    right: 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header a, .distill-site-header .nav-dropdown  {display: none;}
+    .distill-site-header a.nav-toggle {
+      float: right;
+      display: block;
+    }
+    .distill-site-header .title {
+      margin-left: 0;
+    }
+    .distill-site-header .nav-right {
+      margin-right: 0;
+    }
+    .distill-site-header {
+      overflow: hidden;
+    }
+    .nav-right .nav-dropdown-content {
+      margin-left: 0;
+    }
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-header.responsive {position: relative; min-height: 500px; }
+    .distill-site-header.responsive a.nav-toggle {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+    .distill-site-header.responsive a,
+    .distill-site-header.responsive .nav-dropdown {
+      display: block;
+      text-align: left;
+    }
+    .distill-site-header.responsive .nav-left,
+    .distill-site-header.responsive .nav-right {
+      width: 100%;
+    }
+    .distill-site-header.responsive .nav-dropdown {float: none;}
+    .distill-site-header.responsive .nav-dropdown-content {position: relative;}
+    .distill-site-header.responsive .nav-dropdown .nav-dropbtn {
+      display: block;
+      width: 100%;
+      text-align: left;
+    }
+  }
+
+  /* Site Footer */
+
+  .distill-site-footer {
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 3;
+    margin-top: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  /* Headroom */
+
+  d-title {
+    padding-top: 6rem;
+  }
+
+  @media print {
+    d-title {
+      padding-top: 4rem;
+    }
+  }
+
+  .headroom {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .headroom--transition {
+    transition: all .4s ease-in-out;
+  }
+
+  .headroom--unpinned {
+    top: -100px;
+  }
+
+  .headroom--pinned {
+    top: 0;
+  }
+
+  /* adjust viewport for navbar height */
+  /* helps vertically center bootstrap (non-distill) content */
+  .min-vh-100 {
+    min-height: calc(100vh - 100px) !important;
+  }
+
+  </style>
+
+  <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
+  <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
+  <script src="site_libs/headroom-0.9.4/headroom.min.js"></script>
+  <script src="site_libs/autocomplete-0.37.1/autocomplete.min.js"></script>
+  <script src="site_libs/fuse-6.4.1/fuse.min.js"></script>
+
+  <script type="application/javascript">
+
+  function getMeta(metaName) {
+    var metas = document.getElementsByTagName('meta');
+    for (let i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute('name') === metaName) {
+        return metas[i].getAttribute('content');
+      }
+    }
+    return '';
+  }
+
+  function offsetURL(url) {
+    var offset = getMeta('distill:offset');
+    return offset ? offset + '/' + url : url;
+  }
+
+  function createFuseIndex() {
+
+    // create fuse index
+    var options = {
+      keys: [
+        { name: 'title', weight: 20 },
+        { name: 'categories', weight: 15 },
+        { name: 'description', weight: 10 },
+        { name: 'contents', weight: 5 },
+      ],
+      ignoreLocation: true,
+      threshold: 0
+    };
+    var fuse = new window.Fuse([], options);
+
+    // fetch the main search.json
+    return fetch(offsetURL('search.json'))
+      .then(function(response) {
+        if (response.status == 200) {
+          return response.json().then(function(json) {
+            // index main articles
+            json.articles.forEach(function(article) {
+              fuse.add(article);
+            });
+            // download collections and index their articles
+            return Promise.all(json.collections.map(function(collection) {
+              return fetch(offsetURL(collection)).then(function(response) {
+                if (response.status === 200) {
+                  return response.json().then(function(articles) {
+                    articles.forEach(function(article) {
+                      fuse.add(article);
+                    });
+                  })
+                } else {
+                  return Promise.reject(
+                    new Error('Unexpected status from search index request: ' +
+                              response.status)
+                  );
+                }
+              });
+            })).then(function() {
+              return fuse;
+            });
+          });
+
+        } else {
+          return Promise.reject(
+            new Error('Unexpected status from search index request: ' +
+                        response.status)
+          );
+        }
+      });
+  }
+
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+
+    // get search element (bail if we don't have one)
+    var searchEl = window.document.getElementById('distill-search');
+    if (!searchEl)
+      return;
+
+    createFuseIndex()
+      .then(function(fuse) {
+
+        // make search box visible
+        searchEl.classList.remove('hidden');
+
+        // initialize autocomplete
+        var options = {
+          autoselect: true,
+          hint: false,
+          minLength: 2,
+        };
+        window.autocomplete(searchEl, options, [{
+          source: function(query, callback) {
+            const searchOptions = {
+              isCaseSensitive: false,
+              shouldSort: true,
+              minMatchCharLength: 2,
+              limit: 10,
+            };
+            var results = fuse.search(query, searchOptions);
+            callback(results
+              .map(function(result) { return result.item; })
+            );
+          },
+          templates: {
+            suggestion: function(suggestion) {
+              var img = suggestion.preview && Object.keys(suggestion.preview).length > 0
+                ? `<img src="${offsetURL(suggestion.preview)}"</img>`
+                : '';
+              var html = `
+                <div class="search-item">
+                  <h3>${suggestion.title}</h3>
+                  <div class="search-item-description">
+                    ${suggestion.description || ''}
+                  </div>
+                  <div class="search-item-preview">
+                    ${img}
+                  </div>
+                </div>
+              `;
+              return html;
+            }
+          }
+        }]).on('autocomplete:selected', function(event, suggestion) {
+          window.location.href = offsetURL(suggestion.path);
+        });
+        // remove inline display style on autocompleter (we want to
+        // manage responsive display via css)
+        $('.algolia-autocomplete').css("display", "");
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+
+  });
+
+  </script>
+
+  <style type="text/css">
+
+  .nav-search {
+    font-size: x-small;
+  }
+
+  /* Algolioa Autocomplete */
+
+  .algolia-autocomplete {
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: sub;
+    background-color: white;
+    color: black;
+    padding: 6px;
+    padding-top: 8px;
+    padding-bottom: 0;
+    border-radius: 6px;
+    border: 1px #0F2E3D solid;
+    width: 180px;
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .distill-site-nav .algolia-autocomplete {
+      display: none;
+      visibility: hidden;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete {
+      display: inline-block;
+      visibility: visible;
+    }
+    .distill-site-nav.responsive .algolia-autocomplete .aa-dropdown-menu {
+      margin-left: 0;
+      width: 400px;
+      max-height: 400px;
+    }
+  }
+
+  .algolia-autocomplete .aa-input, .algolia-autocomplete .aa-hint {
+    width: 90%;
+    outline: none;
+    border: none;
+  }
+
+  .algolia-autocomplete .aa-hint {
+    color: #999;
+  }
+  .algolia-autocomplete .aa-dropdown-menu {
+    width: 550px;
+    max-height: 70vh;
+    overflow-x: visible;
+    overflow-y: scroll;
+    padding: 5px;
+    margin-top: 3px;
+    margin-left: -150px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #999;
+    border-top: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion {
+    cursor: pointer;
+    padding: 5px 4px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion:last-of-type {
+    border-bottom: none;
+    margin-bottom: 2px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item {
+    overflow: hidden;
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item h3 {
+    font-size: 1rem;
+    margin-block-start: 0;
+    margin-block-end: 5px;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-description {
+    display: inline-block;
+    overflow: hidden;
+    height: 2.8em;
+    width: 80%;
+    margin-right: 4%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview {
+    display: inline-block;
+    width: 15%;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img {
+    height: 3em;
+    width: auto;
+    display: none;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion .search-item-preview img[src] {
+    display: initial;
+  }
+
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion.aa-cursor {
+    background-color: #eee;
+  }
+  .algolia-autocomplete .aa-dropdown-menu .aa-suggestion em {
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  </style>
+
+
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure img {
+    width: 100%;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace("index.html", "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <style type="text/css">
+  /* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      12px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #000000;
+    --header-color:    rgba(0, 0, 0, 0.8);
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    sans-serif;
+    --mono-font:       monospace;
+    --body-font:       sans-serif;
+    --navbar-font:     sans-serif;  /* websites + blogs only */
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.6rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       0.8rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    18px;
+    --contents-size:   13px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+  </style>
+  <style type="text/css">/* base variables */
+
+  /* Edit the CSS properties in this file to create a custom
+     Distill theme. Only edit values in the right column
+     for each row; values shown are the CSS defaults.
+     To return any property to the default,
+     you may set its value to: unset
+     All rows must end with a semi-colon.                      */
+
+  /* Optional: embed custom fonts here with `@import`          */
+  /* This must remain at the top of this file.                 */
+
+  /* Fonts */
+  @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500&display=swap');
+
+  html {
+    /*-- Main font sizes --*/
+    --title-size:      50px;
+    --body-size:       1.06rem;
+    --code-size:       14px;
+    --aside-size:      13px;
+    --fig-cap-size:    13px;
+    /*-- Main font colors --*/
+    --title-color:     #122140;
+    --header-color:    #122140;
+    --body-color:      rgba(0, 0, 0, 0.8);
+    --aside-color:     rgba(0, 0, 0, 0.6);
+    --fig-cap-color:   rgba(0, 0, 0, 0.6);
+    /*-- Specify custom fonts ~~~ must be imported above   --*/
+    --heading-font:    "Lora", sans-serif;
+    --mono-font:       "Fira Code", monospace;
+    --body-font:       "Source Sans Pro", sans-serif;
+    --navbar-font:     "Lora", sans-serif;  /* websites + blogs only */
+  }
+
+  /*-- ARTICLE METADATA --*/
+  d-byline {
+    --heading-size:    0.9rem;
+    --heading-color:   rgba(0, 0, 0, 0.5);
+    --body-size:       1rem;
+    --body-color:      rgba(0, 0, 0, 0.8);
+  }
+
+  /*-- ARTICLE TABLE OF CONTENTS --*/
+  .d-contents {
+    --heading-size:    20px;
+    --contents-size:   16px;
+  }
+
+  /*-- ARTICLE APPENDIX --*/
+  d-appendix {
+    --heading-size:    15px;
+    --heading-color:   rgba(0, 0, 0, 0.65);
+    --text-size:       0.8em;
+    --text-color:      rgba(0, 0, 0, 0.5);
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  /* These properties only apply to Distill sites and blogs  */
+
+  .distill-site-header {
+    --title-size:       18px;
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        16px;
+    --hover-color:      white;
+    --bkgd-color:       #122140;
+  }
+
+  .distill-site-footer {
+    --text-color:       rgba(255, 255, 255, 0.8);
+    --text-size:        15px;
+    --hover-color:      white;
+    --bkgd-color:       #0F2E3D;
+  }
+
+  /*-- Additional custom styles --*/
+  /* Add any additional CSS rules below                      */
+
+  /* Change bullets */
+  ul > li::marker {
+    font-size: 1.125em;
+    color: #e5bf00;
+  }
+
+  /* Change link appearance */
+  d-article a {
+    border-bottom: 1.5px solid #e5bf00;
+    text-decoration: none;
+  }
+
+  /* Change navbar header appearance */
+  .distill-site-header {
+    font-weight: 500;
+    letter-spacing: 0.06em;
+  }
+
+  .distill-site-header a:hover {
+    text-decoration: underline;
+  }
+
+  /* Change site description appearance */
+  d-title p {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  /* Change site metadata appearance */
+  d-byline .byline h3 {
+    font-family: 'Lora';
+    letter-spacing: 0.07em;
+  }
+
+  d-byline a:hover {
+    text-decoration: underline;
+  }
+
+  /*-- Code --*/
+  code, pre {
+      font-family: "Source Code Pro", "Lucida Console",
+      Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }</style>
+  <style type="text/css">
+  /* base style */
+
+  /* FONT FAMILIES */
+
+  :root {
+    --heading-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono-default: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    --body-default: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  body,
+  .posts-list .post-preview p,
+  .posts-list .description p {
+    font-family: var(--body-font), var(--body-default);
+  }
+
+  h1, h2, h3, h4, h5, h6,
+  .posts-list .post-preview h2,
+  .posts-list .description h2 {
+    font-family: var(--heading-font), var(--heading-default);
+  }
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: var(--mono-font), var(--mono-default);
+  }
+
+
+  /*-- TITLE --*/
+  d-title h1,
+  .posts-list > h1 {
+    color: var(--title-color, black);
+  }
+
+  d-title h1 {
+    font-size: var(--title-size, 50px);
+  }
+
+  /*-- HEADERS --*/
+  d-article h1,
+  d-article h2,
+  d-article h3,
+  d-article h4,
+  d-article h5,
+  d-article h6 {
+    color: var(--header-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- BODY --*/
+  d-article > p,  /* only text inside of <p> tags */
+  d-article > ul, /* lists */
+  d-article > ol {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+    font-size: var(--body-size, 1.06rem);
+  }
+
+
+  /*-- CODE --*/
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-size: var(--code-size, 14px);
+  }
+
+  /*-- ASIDE --*/
+  d-article aside {
+    font-size: var(--aside-size, 12px);
+    color: var(--aside-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- FIGURE CAPTIONS --*/
+  figure .caption,
+  figure figcaption,
+  .figure .caption {
+    font-size: var(--fig-cap-size, 13px);
+    color: var(--fig-cap-color, rgba(0, 0, 0, 0.6));
+  }
+
+  /*-- METADATA --*/
+  d-byline h3 {
+    font-size: var(--heading-size, 0.6rem);
+    color: var(--heading-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-byline {
+    font-size: var(--body-size, 0.8rem);
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  d-byline a,
+  d-article d-byline a {
+    color: var(--body-color, rgba(0, 0, 0, 0.8));
+  }
+
+  /*-- TABLE OF CONTENTS --*/
+  .d-contents nav h3 {
+    font-size: var(--heading-size, 18px);
+  }
+
+  .d-contents nav a {
+    font-size: var(--contents-size, 13px);
+  }
+
+  /*-- APPENDIX --*/
+  d-appendix h3 {
+    font-size: var(--heading-size, 15px);
+    color: var(--heading-color, rgba(0, 0, 0, 0.65));
+  }
+
+  d-appendix {
+    font-size: var(--text-size, 0.8em);
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  d-appendix d-footnote-list a.footnote-backlink {
+    color: var(--text-color, rgba(0, 0, 0, 0.5));
+  }
+
+  /*-- WEBSITE HEADER + FOOTER --*/
+  .distill-site-header .title {
+    font-size: var(--title-size, 18px);
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .distill-site-header a,
+  .nav-dropdown .nav-dropbtn {
+    font-family: var(--navbar-font), var(--heading-default);
+  }
+
+  .nav-dropdown .nav-dropbtn {
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    font-size: var(--text-size, 15px);
+  }
+
+  .distill-site-header a:hover,
+  .nav-dropdown:hover .nav-dropbtn {
+    color: var(--hover-color, white);
+  }
+
+  .distill-site-header {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer {
+    font-size: var(--text-size, 15px);
+    color: var(--text-color, rgba(255, 255, 255, 0.8));
+    background-color: var(--bkgd-color, #0F2E3D);
+  }
+
+  .distill-site-footer a:hover {
+    color: var(--hover-color, white);
+  }</style>
+  <!--/radix_placeholder_distill-->
+  <script src="site_libs/header-attrs-2.7/header-attrs.js"></script>
+  <script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+  <script src="site_libs/jquery-3.5.1/jquery.min.js"></script>
+  <link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+  <script src="site_libs/datatables-binding-0.17/datatables.js"></script>
+  <link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+  <link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+  <script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+  <link href="site_libs/dt-plugin-searchhighlight-1.10.20/source.css" rel="stylesheet" />
+  <script src="site_libs/dt-plugin-searchhighlight-1.10.20/jquery.highlight.js"></script>
+  <script src="site_libs/dt-plugin-searchhighlight-1.10.20/source.min.js"></script>
+  <link href="site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+  <script src="site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+  <script src="site_libs/plotly-binding-4.9.3/plotly.js"></script>
+  <script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+  <link href="site_libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet" />
+  <script src="site_libs/plotly-main-1.57.1/plotly-latest.min.js"></script>
+  <link href="site_libs/leaflet-1.3.1/leaflet.css" rel="stylesheet" />
+  <script src="site_libs/leaflet-1.3.1/leaflet.js"></script>
+  <link href="site_libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet" />
+  <script src="site_libs/proj4-2.6.2/proj4.min.js"></script>
+  <script src="site_libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script>
+  <link href="site_libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet" />
+  <script src="site_libs/leaflet-binding-2.0.4.1/leaflet.js"></script>
+  <script src="site_libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script>
+  <script src="site_libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script>
+  <link href="site_libs/leaflet-minimap-3.3.1/Control.MiniMap.min.css" rel="stylesheet" />
+  <script src="site_libs/leaflet-minimap-3.3.1/Control.MiniMap.min.js"></script>
+  <script src="site_libs/leaflet-minimap-3.3.1/Minimap-binding.js"></script>
+  <script src="site_libs/popper-2.6.0/popper.min.js"></script>
+  <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="site_libs/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="site_libs/anchor-4.2.2/anchor.min.js"></script>
+  <script src="site_libs/bowser-1.9.3/bowser.min.js"></script>
+  <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="site_libs/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Operaciones con datos espaciales","authors":[]}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<header class="header header--fixed" role="banner">
+<nav class="distill-site-nav distill-site-header">
+<div class="nav-left">
+<a href="index.html" class="title">GF0604 Procesamiento de datos geograficos 2021-I. Lecciones 15 - 30</a>
+<a href="https://github.com/gf0604-procesamientodatosgeograficos/2021i-leccion-15/">
+<i class="fab fa-github" aria-hidden="true"></i>
+</a>
+<a href="https://www.youtube.com/playlist?list=PL1gEgLSwAJeI-aLFsld3jP47B9REqhUes">
+<i class="fab fa-youtube" aria-hidden="true"></i>
+</a>
+<a href="https://github.com/gf0604-procesamientodatosgeograficos/2021i-datos">
+<i class="fas fa-database" aria-hidden="true"></i>
+</a>
+</div>
+<div class="nav-right">
+<a href="https://gf0604-procesamientodatosgeograficos.github.io/2021i/">GF0604 2021-I</a>
+<a href="https://www.geografia.fcs.ucr.ac.cr/">Escuela de Geografia</a>
+<a href="https://www.ucr.ac.cr/">Universidad de Costa Rica</a>
+<a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
+</div>
+</nav>
+</header>
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Operaciones con datos espaciales</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+
+</div>
+
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#preparativos">Preparativos</a>
+<ul>
+<li><a href="#carga-de-paquetes">Carga de paquetes</a></li>
+<li><a href="#conjuntos-de-datos-utilizados">Conjuntos de datos utilizados</a></li>
+</ul></li>
+<li><a href="#introducción">Introducción</a></li>
+<li><a href="#datos-vectoriales">Datos vectoriales</a>
+<ul>
+<li><a href="#manejo-de-datos-espaciales-con-el-paquete-sf">Manejo de datos espaciales con el paquete sf</a>
+<ul>
+<li><a href="#creación-de-subconjuntos-espaciales">Creación de subconjuntos espaciales</a></li>
+<li><a href="#cruce-de-datos-espaciales">Cruce de datos espaciales</a></li>
+<li><a href="#agregación-de-datos-espaciales">Agregación de datos espaciales</a></li>
+<li><a href="#relaciones-de-distancia">Relaciones de distancia</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#ejemplos-de-visualización">Ejemplos de visualización</a>
+<ul>
+<li><a href="#tabla">Tabla</a></li>
+<li><a href="#gráfico">Gráfico</a></li>
+<li><a href="#mapa">Mapa</a></li>
+</ul></li>
+<li><a href="#ejercicio-de-visualización">Ejercicio de visualización</a></li>
+</ul>
+</nav>
+</div>
+<h1 id="preparativos">Preparativos</h1>
+<h2 id="carga-de-paquetes">Carga de paquetes</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-spatial.github.io/sf/'>sf</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rspatial.org/raster'>raster</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://nowosad.github.io/spData/'>spData</a></span><span class='op'>)</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rstudio.github.io/leaflet/'>leaflet</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://plotly-r.com'>plotly</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/rstudio/DT'>DT</a></span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h2 id="conjuntos-de-datos-utilizados">Conjuntos de datos utilizados</h2>
+<strong>Provincias de Costa Rica</strong><br />
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Carga de la capa de provincias</span>
+<span class='va'>provincias</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_provincias_simp_wgs84.geojson"</span>,
+    quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+
+<span class='co'># Mapa de la capa de provincias</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>provincias</span><span class='op'>$</span><span class='va'>geometry</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>86</span>,<span class='op'>-</span><span class='fl'>82.3</span>, <span class='fl'>8</span>, <span class='fl'>11.3</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Provincias de Costa Rica"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-2-1.png" width="624" /></p>
+</div>
+<strong>Cantones de Costa Rica</strong><br />
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Carga de la capa de cantones</span>
+<span class='va'>cantones</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_cantones_simp_wgs84.geojson"</span>,
+    quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+
+<span class='co'># Mapa de la capa de cantones</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>cantones</span><span class='op'>$</span><span class='va'>geometry</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>86</span>,<span class='op'>-</span><span class='fl'>82.3</span>, <span class='fl'>8</span>, <span class='fl'>11.3</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Cantones de Costa Rica"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
+</div>
+<strong>Áreas silvestres protegidas (ASP) de Costa Rica</strong><br />
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Carga de la capa de ASP</span>
+<span class='va'>asp</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/sinac/asp/asp-wgs84.geojson"</span>,
+    quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+
+<span class='co'># Mapa de la capa de ASP</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>asp</span><span class='op'>$</span><span class='va'>geometry</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>86</span>,<span class='op'>-</span><span class='fl'>82.3</span>, <span class='fl'>8</span>, <span class='fl'>11.3</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Áreas silvestres protegidas (ASP) de Costa Rica"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<strong>Aeródromos de Costa Rica</strong><br />
+
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Carga de la capa de aeródromos</span>
+<span class='va'>aerodromos</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/aerodromos/aerodromos-wgs84.geojson"</span>,
+    quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+
+<span class='co'># Mapa de la capa de aeródromos</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>aerodromos</span><span class='op'>$</span><span class='va'>geometry</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>86</span>,<span class='op'>-</span><span class='fl'>82.3</span>, <span class='fl'>8</span>, <span class='fl'>11.3</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Aeródromos de Costa Rica"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<strong>Vipéridos (<em>tobobas</em>) de Costa Rica</strong>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Carga de la capa de vipéridos</span>
+<span class='va'>viperidos</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/gbif/viperidae-cr-registros.csv"</span>,
+    options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+      <span class='st'>"X_POSSIBLE_NAMES=decimalLongitude"</span>,
+      <span class='st'>"Y_POSSIBLE_NAMES=decimalLatitude"</span>
+    <span class='op'>)</span>,
+    quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+
+<span class='co'># Asignación del sistema de coordenadas</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_crs.html'>st_crs</a></span><span class='op'>(</span><span class='va'>viperidos</span><span class='op'>)</span> <span class='op'>=</span> <span class='fl'>4326</span>
+
+<span class='co'># Mapa de la capa de vipéridos</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>viperidos</span><span class='op'>$</span><span class='va'>geometry</span>,
+  pch <span class='op'>=</span> <span class='fl'>16</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>86</span>,<span class='op'>-</span><span class='fl'>82.3</span>, <span class='fl'>8</span>, <span class='fl'>11.3</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Registros de Viperidae (tobobas) en Costa Rica"</span>,
+  col <span class='op'>=</span> <span class='st'>"green"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+</div>
+<h1 id="introducción">Introducción</h1>
+<p>Esta lección brinda una visión general de las operaciones espaciales en datos vectoriales implementadas en el paquete <a href="https://r-spatial.github.io/sf/">sf</a> y en datos raster implementadas en el paquete <a href="https://rspatial.org/raster">raster</a>.</p>
+<h1 id="datos-vectoriales">Datos vectoriales</h1>
+<p>Las operaciones espaciales en datos vectoriales incluyen:</p>
+<ul>
+<li>Creación de subconjuntos espaciales (<em>spatial subsetting</em>).<br />
+</li>
+<li>Cruce de datos espaciales (<em>spatial joining</em>).</li>
+<li>Agregación espacial (<em>spatial aggregation</em>).<br />
+</li>
+<li>Relaciones de distancia.</li>
+</ul>
+<h2 id="manejo-de-datos-espaciales-con-el-paquete-sf">Manejo de datos espaciales con el paquete sf</h2>
+<h3 id="creación-de-subconjuntos-espaciales">Creación de subconjuntos espaciales</h3>
+<p>Es el proceso de selección de objetos espaciales con base en su relación con otros objetos espaciales. Estas relaciones se expresan como <a href="https://en.wikipedia.org/wiki/DE-9IM">predicados espaciales</a>, los cuales están implementados como <a href="https://r-spatial.github.io/sf/reference/geos_binary_pred.html">métodos de sf</a>.</p>
+<p>La creación de subconjuntos espaciales es análoga a la creación de subconjuntos por datos de atributos. Puede realizarse a través de los operadores <code>[</code> y <code>$</code> del paquete base de R o por medio de la función <a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a> de dplyr.</p>
+<p>En los dos ejemplos siguientes, se utiliza el método <code>st_within()</code> para filtrar los puntos contenidos en un polígono. Primero, se utilizan los operadores del paquete base.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Selección de la provincia de Limón (por atributos)</span>
+<span class='va'>limon</span> <span class='op'>&lt;-</span> <span class='va'>provincias</span><span class='op'>[</span><span class='va'>provincias</span><span class='op'>$</span><span class='va'>provincia</span> <span class='op'>==</span> <span class='st'>"Limón"</span>, <span class='op'>]</span>
+
+<span class='co'># Selección de los aeródromos ubicados en Limón (espacial)</span>
+<span class='va'>aerodromos_limon</span> <span class='op'>&lt;-</span> <span class='va'>aerodromos</span><span class='op'>[</span><span class='va'>limon</span>, , op <span class='op'>=</span> <span class='va'>st_within</span><span class='op'>]</span>
+
+<span class='co'># Mapa de aeródromos</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>limon</span><span class='op'>$</span><span class='va'>geometry</span>,
+  main <span class='op'>=</span> <span class='st'>"Aeródromos de Limón (1)"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  reset <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>aerodromos_limon</span><span class='op'>$</span><span class='va'>geometry</span>, pch<span class='op'>=</span><span class='fl'>16</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-7-1.png" width="624" /></p>
+</div>
+<p>El mismo resultado se obtiene con las funciones y operadores de Tidyverse.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Selección de la provincia de Limón (por atributos)</span>
+<span class='va'>limon</span> <span class='op'>&lt;-</span>
+  <span class='va'>provincias</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>provincia</span> <span class='op'>==</span> <span class='st'>"Limón"</span><span class='op'>)</span>
+
+<span class='co'># Selección de los aeródromos ubicados en Limón (espacial)</span>
+<span class='va'>aerodromos_limon</span> <span class='op'>&lt;-</span>
+  <span class='va'>aerodromos</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_binary_pred.html'>st_within</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>.</span>, y <span class='op'>=</span> <span class='va'>limon</span>, sparse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Mapa de aeródromos</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>limon</span><span class='op'>$</span><span class='va'>geometry</span>,
+  main <span class='op'>=</span> <span class='st'>"Aeródromos de Limón (2)"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  reset <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>aerodromos_limon</span><span class='op'>$</span><span class='va'>geometry</span>, pch <span class='op'>=</span> <span class='fl'>16</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
+</div>
+<p>En el anterior llamado a <code>filter()</code>, la expresión <code>x = .</code> es equivalente a <code>x = aerodromos</code>. Para una explicación sobre el argumento <code>sparse</code>, por favor lea la sección <a href="https://geocompr.robinlovelace.net/spatial-operations.html#topological-relations">4.2.2. del libro “Geocomputation with R” de R. Lovelace et. al.</a>.</p>
+<p>Además de <code>st_within()</code>, sf implementa predicados espaciales como, entre otros, <code>st_contains()</code>, <code>st_intersects()</code> y <code>st_disjoint()</code>, los cuales se ejemplifican en el siguiente bloque de código.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>## Ejemplo de st_contains: ASP contenidas en Limón</span>
+
+<span class='co'># Selección de las ASP contenidas en Limón</span>
+<span class='va'>asp_limon</span> <span class='op'>&lt;-</span>
+  <span class='va'>asp</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_binary_pred.html'>st_contains</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>limon</span>, y <span class='op'>=</span> <span class='va'>.</span>, sparse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Mapa de ASP contenidas en Limón</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>limon</span><span class='op'>$</span><span class='va'>geometry</span>,
+  main <span class='op'>=</span> <span class='st'>"ASP contenidas en Limón"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  reset <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>asp_limon</span><span class='op'>$</span><span class='va'>geometry</span>, col <span class='op'>=</span> <span class='st'>"green"</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-9-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+
+<span class='co'>## Ejemplo de st_intersects: ASP intersecadas con Limón</span>
+
+<span class='co'># Selección de las ASP intersecadas con Limón</span>
+<span class='va'>asp_limon</span> <span class='op'>&lt;-</span>
+  <span class='va'>asp</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_binary_pred.html'>st_intersects</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>limon</span>, y <span class='op'>=</span> <span class='va'>.</span>, sparse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Mapa de ASP intersecadas con Limón</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>limon</span><span class='op'>$</span><span class='va'>geometry</span>,
+  main <span class='op'>=</span> <span class='st'>"ASP intersecadas con Limón"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  reset <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>asp_limon</span><span class='op'>$</span><span class='va'>geometry</span>, col <span class='op'>=</span> <span class='st'>"green"</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-9-2.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+
+<span class='co'>## Ejemplo de st_disjoint: ASP ubicadas fuera de Limón</span>
+
+<span class='co'># Selección de las ASP ubicadas fuera de Limón</span>
+<span class='va'>asp_fuera_limon</span> <span class='op'>&lt;-</span>
+  <span class='va'>asp</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_binary_pred.html'>st_disjoint</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>limon</span>, y <span class='op'>=</span> <span class='va'>.</span>, sparse <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='co'># Mapa de ASP ubicadas fuera de Limón</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>provincias</span><span class='op'>$</span><span class='va'>geometry</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>86</span>,<span class='op'>-</span><span class='fl'>82.3</span>, <span class='fl'>8</span>, <span class='fl'>11.3</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"ASP ubicadas fuera de Limón"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  reset <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>asp_fuera_limon</span><span class='op'>$</span><span class='va'>geometry</span>, col <span class='op'>=</span> <span class='st'>"green"</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-9-3.png" width="624" /></p>
+</div>
+<h3 id="cruce-de-datos-espaciales">Cruce de datos espaciales</h3>
+<p>El cruce “no espacial” de dos conjuntos de datos se basa en uno o varios campos (llamados llaves o <em>keys</em>) que están presentes en ambos conjuntos. Los cruces espaciales se basan en un principio similar pero, en lugar de campos comunes, la relación entre los conjuntos se realiza a través de una operación topológica, a veces llamada <em>spatial overlay</em>. Al igual que con los datos de atributos, el cruce espacial, ejecutado con el método <a href="https://r-spatial.github.io/sf/reference/st_join.html">st_join()</a>, agrega una o varias columnas al conjunto de datos destino (i.e. el argumento <code>x</code> de la función), provenientes del objeto fuente (i.e. el argumento <code>y</code>).</p>
+<p>En el siguiente ejemplo, se cruzan los registros de presencia de una especie (geometrías de puntos) con la capa de cantones (geomtrías de polígonos), para agregar la columna de nombre del cantón al conjunto de registros de presencia.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Filtrado de los registros de serpientes de terciopelo (Bothrops asper) en el conjunto de vipéridos</span>
+<span class='va'>terciopelos</span> <span class='op'>&lt;-</span>
+  <span class='va'>viperidos</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>species</span> <span class='op'>==</span> <span class='st'>"Bothrops asper"</span><span class='op'>)</span>
+
+<span class='co'># Mapeo de la capa de terciopelos</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>terciopelos</span><span class='op'>$</span><span class='va'>geometry</span>,
+  pch <span class='op'>=</span> <span class='fl'>16</span>,
+  main <span class='op'>=</span> <span class='st'>"Registros de terciopelos (Bothrops asper) en Costa Rica"</span>,
+  col <span class='op'>=</span> <span class='st'>"green"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-10-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Cruce espacial con la tabla de cantones, para obtener el nombre del cantón</span>
+<span class='va'>terciopelos</span> <span class='op'>&lt;-</span> 
+  <span class='va'>terciopelos</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_join.html'>st_join</a></span><span class='op'>(</span><span class='va'>cantones</span><span class='op'>[</span><span class='st'>"canton"</span><span class='op'>]</span><span class='op'>)</span>
+
+<span class='co'># Despliegue de los datos cruzados</span>
+<span class='va'>terciopelos</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_drop_geometry</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/select.html'>select</a></span><span class='op'>(</span><span class='va'>stateProvince</span>, <span class='va'>canton</span>, <span class='va'>locality</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>   stateProvince    canton locality
+1     Puntarenas      &lt;NA&gt;         
+2          Limón Talamanca         
+3       Alajuela     Upala         
+4          Limón Siquirres         
+5        Heredia Sarapiquí         
+6     Puntarenas       Osa         
+7        Heredia Sarapiquí         
+8        Heredia Sarapiquí         
+9     Guanacaste   Liberia         
+10      Alajuela     Upala         </code></pre>
+</div>
+<p>La función <code>st_join()</code> realiza por defecto un <em>left join</em>, pero puede realizar cruces de otros tipos también. Por ejemplo, con el argumento <code>left = FALSE</code>, puede realizarse un <em>inner join</em>. También por defecto, la operación topológica que se aplica es <code>st_intersects()</code>.</p>
+<h3 id="agregación-de-datos-espaciales">Agregación de datos espaciales</h3>
+<p>De manera similar al caso de la agregación de atributos, la agregación espacial es una forma de “condensar” o “resumir” datos. Los datos agregados muestran estadísticas de una variable (ej. promedio, suma) en relación con una variable de agrupación. Esto puede lograrse con el método <a href="https://r-spatial.github.io/sf/reference/aggregate.sf.html">agregate()</a> de sf o con los métodos <a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a> y <a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a> de dplyr, utilizados en combinación con <code>st_join()</code>.</p>
+<p>En el siguiente bloque de código, se utiliza <code>summarize()</code> para mostrar el promedio de altitud de los puntos más altos de Nueva Zelanda en cada región del país. Los datos de los puntos más altos están en el objeto <code>nz_height</code> y los de las regiones de Nueva Zelanda en el objeto <code>nz</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Promedio de altitud de puntos más altos para cada región de NZ</span>
+<span class='va'>nz_altitud_promedio_x_region</span> <span class='op'>&lt;-</span>
+  <span class='va'>nz_height</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>by <span class='op'>=</span> <span class='va'>nz</span>, FUN <span class='op'>=</span> <span class='va'>mean</span><span class='op'>)</span>
+
+<span class='co'># Mapa de altitud promedio en regiones</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>nz_altitud_promedio_x_region</span><span class='op'>[</span><span class='st'>"elevation"</span><span class='op'>]</span>,
+  main <span class='op'>=</span> <span class='st'>"Altitud promedio de los puntos altos en cada región de NZ (1)"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<p>El siguiente bloque de código logra el mismo resultado, con los métodos de dplyr.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nz_altitud_promedio_x_region</span> <span class='op'>&lt;-</span>
+  <span class='va'>nz</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_join.html'>st_join</a></span><span class='op'>(</span><span class='va'>nz_height</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>Name</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>elevation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>elevation</span><span class='op'>)</span><span class='op'>)</span>  
+
+<span class='co'># Mapa de altitud promedio en regiones</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>nz_altitud_promedio_x_region</span><span class='op'>[</span><span class='st'>"elevation"</span><span class='op'>]</span>,
+  main <span class='op'>=</span> <span class='st'>"Altitud promedio de los puntos altos en cada región de NZ (2)"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
+</div>
+<h3 id="relaciones-de-distancia">Relaciones de distancia</h3>
+<p>La distancia entre dos objetos sf se calcula con el método <a href="https://r-spatial.github.io/sf/reference/geos_measures.html">st_distance()</a>. Debe utilizarse un sistema espacial de referencia (SRS, CRS) con unidades apropiadas para la medición (ej. metros).</p>
+<p>En el siguiente ejemplo, se calcula la distancia entre puntos correspondientes a los centroides de dos provincias. Antes, con el método <a href="https://r-spatial.github.io/sf/reference/st_transform.html">st_transform()</a>, la capa de provincias se transforma al CRS CRTM05, que utiliza metros como unidad de medición.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Transformación de la capa de provincias al CRS CRTM05 (EPSG = 5367)</span>
+<span class='va'>provincias_crtm05</span> <span class='op'>&lt;-</span>
+  <span class='va'>provincias</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_transform.html'>st_transform</a></span><span class='op'>(</span><span class='fl'>5367</span><span class='op'>)</span>
+
+<span class='co'># Centroide de la provincia de San José</span>
+<span class='va'>centroide_sanjose</span> <span class='op'>&lt;-</span>
+  <span class='va'>provincias_crtm05</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>provincia</span> <span class='op'>==</span> <span class='st'>"San José"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_centroid</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># Centroide la provincia de Alajuela</span>
+<span class='va'>centroide_alajuela</span> <span class='op'>&lt;-</span>
+  <span class='va'>provincias_crtm05</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>provincia</span> <span class='op'>==</span> <span class='st'>"Alajuela"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_centroid</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># Distancia entre los centroides de San José y Alajuela</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_measures.html'>st_distance</a></span><span class='op'>(</span><span class='va'>centroide_sanjose</span>, <span class='va'>centroide_alajuela</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>Units: [m]
+         [,1]
+[1,] 126235.1</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Mapa de los centroides</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>provincias_crtm05</span><span class='op'>$</span><span class='va'>geometry</span>,
+  main <span class='op'>=</span> <span class='st'>"Centroides de San José y Alajuela"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  reset <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>centroide_sanjose</span><span class='op'>$</span><span class='va'>geometry</span>, pch <span class='op'>=</span> <span class='fl'>16</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>centroide_alajuela</span><span class='op'>$</span><span class='va'>geometry</span>, pch <span class='op'>=</span> <span class='fl'>16</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="03-r-operaciones-espaciales_files/figure-html5/unnamed-chunk-13-1.png" width="624" /></p>
+</div>
+<h1 id="ejemplos-de-visualización">Ejemplos de visualización</h1>
+<p>Se presentan diversas visualizaciones de los registros de presencia de la serpiente <a href="http://www.icp.ucr.ac.cr/index.php/es/informacion-y-materiales/serpientes-venenosas-de-costa-rica/bothrops-asper">terciopelo (<em>Bothrops asper</em>)</a> en Costa Rica, de acuerdo con los datos obtenidos a través de una <a href="https://doi.org/10.15468/dl.728wpr">consulta al portal de la Infraestructura Mundial de Información en Biodiversidad (GBIF)</a>.</p>
+<h2 id="tabla">Tabla</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Tabla de datos de registros de presencia</span>
+<span class='va'>terciopelos</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_drop_geometry</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/select.html'>select</a></span><span class='op'>(</span><span class='va'>stateProvince</span>,
+         <span class='va'>canton</span>,
+         <span class='va'>locality</span>,
+         <span class='va'>year</span>
+         <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>DT</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/DT/man/datatable.html'>datatable</a></span><span class='op'>(</span>
+    colnames <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Provincia"</span>, <span class='st'>"Cantón"</span>, <span class='st'>"Localidad"</span>, <span class='st'>"Año"</span><span class='op'>)</span>,
+    rownames <span class='op'>=</span> <span class='cn'>FALSE</span>,
+    options <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
+      searchHighlight <span class='op'>=</span> <span class='cn'>TRUE</span>
+    <span class='op'>)</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<div id="htmlwidget-f5b830acdeda5bacd28d" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f5b830acdeda5bacd28d">{"x":{"filter":"none","data":[["Puntarenas","Limón","Alajuela","Limón","Heredia","Puntarenas","Heredia","Heredia","Guanacaste","Alajuela","Puntarenas","Alajuela","Alajuela","Puntarenas","Puntarenas","Alajuela","Heredia","Puntarenas","Puntarenas","Alajuela","Puntarenas","Heredia","Puntarenas","Puntarenas","Limón","Limón","Alajuela","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Heredia","Heredia","Puntarenas","Heredia","Puntarenas","Puntarenas","Alajuela","Puntarenas","Heredia","Heredia","Alajuela","Alajuela","Alajuela","Alajuela","Puntarenas","Limón","Heredia","Alajuela","Heredia","Puntarenas","Puntarenas","Heredia","Puntarenas","Heredia","Limón","Heredia","Puntarenas","Puntarenas","Alajuela","Puntarenas","San José","Heredia","Heredia","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Heredia","Heredia","Alajuela","Puntarenas","Heredia","Heredia","Puntarenas","Puntarenas","Limón","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Cartago","Limón","Heredia","Alajuela","Puntarenas","Puntarenas","Puntarenas","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","Alajuela","Heredia","Puntarenas","Heredia","Puntarenas","Alajuela","Heredia","Puntarenas","Puntarenas","Alajuela","Heredia","Puntarenas","Heredia","Heredia","Heredia","Puntarenas","Heredia","Heredia","Puntarenas","Limón","Heredia","Puntarenas","Puntarenas","Puntarenas","Cartago","Alajuela","Puntarenas","Limón","Limón","Heredia","Puntarenas","Alajuela","Puntarenas","Puntarenas","Puntarenas","Puntarenas","San José","Puntarenas","Puntarenas","Alajuela","Puntarenas","Puntarenas","Alajuela","Heredia","Puntarenas","Puntarenas","Heredia","Alajuela","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Heredia","Limón","Cartago","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Heredia","Alajuela","Heredia","Puntarenas","Heredia","Heredia","Puntarenas","Alajuela","Puntarenas","Puntarenas","Alajuela","Puntarenas","Puntarenas","Alajuela","Alajuela","Puntarenas","Guanacaste","Alajuela","Guanacaste","Cartago","Heredia","Guanacaste","Guanacaste","Puntarenas","Limón","Guanacaste","Puntarenas","Alajuela","Alajuela","Alajuela","Alajuela","Alajuela","Alajuela","Alajuela","Alajuela","Alajuela","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Limon","Cartago","Puntarenas","Limón","Limón","Puntarenas","Puntarenas","Heredia","Puntarenas","Puntarenas","Heredia","Puntarenas","Puntarenas","San José","Alajuela","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Heredia","Alajuela","Limón","Heredia","Puntarenas","Puntarenas","Puntarenas","Alajuela","Heredia","Cartago","Guanacaste","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","San José","Heredia","Heredia","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Heredia","Puntarenas","Limón","Puntarenas","Puntarenas","Limón","San José","Puntarenas","Puntarenas","Guanacaste","Heredia","Puntarenas","Limón","Heredia","Guanacaste","Cartago","Puntarenas","Puntarenas","","San José","Alajuela","Heredia","Heredia","","Limón","Puntarenas","Alajuela","Heredia","Heredia","Heredia","Heredia","Heredia","Heredia","Alajuela","Puntarenas","Alajuela","Puntarenas","Alajuela","Puntarenas","Heredia","Cartago","Cartago","Limón","Heredia","Limón","Alajuela","Guanacaste","Puntarenas","Limón","Heredia","Heredia","Heredia","Puntarenas","Limón","Limón","Heredia","Heredia","Puntarenas","Heredia","Heredia","Alajuela","San José","Guanacaste","Heredia","Puntarenas","Guanacaste","Heredia","Heredia","Puntarenas","Heredia","Heredia","Limón","Limón","Puntarenas","Puntarenas","Heredia","Heredia","Heredia","Heredia","Puntarenas","Puntarenas","Heredia","Heredia","Heredia","Heredia","Cartago","Heredia","Heredia","Heredia","Heredia","Heredia","Cartago","","Puntarenas","Limon Province","Puntarenas Province","Guanacaste Province","","Guanacaste Province","Alajuela Province","Limon Province","Limon Province","Puntarenas Province","Guanacaste Province","Guanacaste Province","Guanacaste Province","Guanacaste Province","Cartago Province","Puntarenas Province","Limon Province","Heredia","Heredia","Heredia","Cartago","Alajuela","Puntarenas","Heredia","Puntarenas","Limón","","Heredia","Heredia","Heredia","Heredia","Heredia","Heredia","Puntarenas","Heredia","Puntarenas","","Puntarenas","Limón","Limón","Heredia","Puntarenas","Puntarenas","Cartago","Heredia","Cartago","Guanacaste","Guanacaste","Guanacaste","Guanacaste","Cartago","Cartago","Cartago","Limon","Puntarenas","Heredia","Cartago","Puntarenas","Cartago","Puntarenas","Limón","Puntarenas","Cartago","Cartago","Cartago","Heredia","Puntarenas","Cartago","Guanacaste","Guanacaste","Cartago","Cartago","Limón","Puntarenas","Puntarenas","Cartago","Cartago","Cartago","Guanacaste","Puntarenas","Limón","Puntarenas","Puntarenas","Puntarenas","Puntarenas","Cartago","Puntarenas","Cartago","Alajuela","Cartago","Cartago","Cartago","Limón","Puntarenas","Puntarenas","Limón","Limón","Puntarenas","Limón","Puntarenas","Limón","Puntarenas","Alajuela","Alajuela","Puntarenas","","","","","","","","","","","","","","","","","","","","","","","","","","",""],[null,"Talamanca","Upala","Siquirres","Sarapiquí","Osa","Sarapiquí","Sarapiquí","Liberia","Upala","Quepos","Upala","Upala","Osa","Golfito","Upala","Sarapiquí","Osa","Osa","Guatuso","Puntarenas","Sarapiquí","Osa","Golfito","Talamanca","Talamanca","San Carlos","Golfito","Osa","Osa","Osa","Sarapiquí","Sarapiquí","Golfito","Sarapiquí","Golfito","Golfito","San Carlos","Quepos","Sarapiquí","Sarapiquí","San Carlos","San Carlos","San Carlos","San Carlos","Golfito","Talamanca","Sarapiquí","San Carlos","Sarapiquí","Golfito","Golfito","Sarapiquí","Quepos","Sarapiquí","Pococí","Sarapiquí","Osa","Coto Brus","San Carlos","Golfito","Pérez Zeledón","Sarapiquí","Sarapiquí","Golfito","Golfito","Osa","Golfito","Sarapiquí","Sarapiquí","San Carlos","Corredores","Sarapiquí","Sarapiquí","Golfito","Golfito","Siquirres","Golfito","Golfito","Golfito","Golfito","Golfito","Golfito","Golfito","Turrialba","Talamanca","Sarapiquí","Upala","Golfito","Golfito","Quepos","Osa","Siquirres","Sarapiquí","Matina","Pococí","Sarapiquí","Matina","Sarapiquí","Sarapiquí","Sarapiquí","Pococí","Siquirres","Sarapiquí","Siquirres","Turrialba","Sarapiquí","San Ramón","Siquirres","Pococí","Siquirres","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Turrialba","Sarapiquí","Sarapiquí","San Carlos","Sarapiquí","Sarapiquí","Sarapiquí","Pococí","Osa","Turrialba","Sarapiquí","Sarapiquí","Matina","Pococí","Sarapiquí","Matina","Matina","Siquirres","Garabito","Sarapiquí","Osa","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí",null,"Turrialba","Matina","Pococí","Golfito","Osa","Sarapiquí","Osa","Sarapiquí","Sarapiquí","Golfito","San Ramón","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Pococí","Osa","San Ramón","Sarapiquí","Golfito","Sarapiquí","Garabito","Upala","Sarapiquí","Osa","Osa","Upala","Sarapiquí","Quepos","Sarapiquí","Sarapiquí","Sarapiquí","Quepos","Sarapiquí","Sarapiquí","Golfito","Pococí","Sarapiquí","Golfito","Golfito","Golfito","Turrialba","San Carlos","Golfito","Talamanca","Talamanca","Sarapiquí","Osa","San Carlos","Golfito","Golfito","Golfito","Golfito","Pérez Zeledón","Golfito","Quepos","Upala","Golfito","Golfito","Atenas","Sarapiquí","Golfito","Golfito","Sarapiquí","Atenas","Quepos","Golfito","Golfito","Golfito","Sarapiquí","Pococí","Turrialba","Golfito","Golfito","Golfito","Golfito","Golfito","Golfito","Golfito","Golfito","Coto Brus","Sarapiquí","San Carlos","Sarapiquí","Quepos","Sarapiquí","Sarapiquí","Golfito","San Ramón",null,"Golfito","San Carlos","Golfito","Osa","Upala","Upala","Garabito","Tilarán","San Carlos","Tilarán","Turrialba","Sarapiquí","La Cruz","La Cruz","Golfito","Guácimo","La Cruz","Golfito","San Ramón","San Carlos","Upala","Upala","San Carlos","San Carlos","San Carlos","San Carlos","San Carlos","Quepos","Golfito","Golfito","Golfito","Quepos","Quepos","Pococí","Turrialba","Golfito","Pococí","Pococí","Garabito","Osa","Sarapiquí","Quepos","Golfito","Sarapiquí","Quepos","Golfito","Pérez Zeledón","San Carlos","Quepos","Pérez Zeledón","Pérez Zeledón","Pérez Zeledón","Quepos","Garabito","Sarapiquí","San Ramón","Talamanca","Sarapiquí","Golfito","Parrita","Golfito","San Carlos","Sarapiquí","Turrialba","Tilarán","Osa","Osa","Quepos","Quepos","Golfito","Quepos","San José","Sarapiquí","Sarapiquí","Quepos","Quepos","Golfito","Golfito","Golfito","Quepos","Garabito","Golfito","Sarapiquí","Golfito","Talamanca","Golfito","Golfito","Siquirres","Pococí","Quepos","Quepos","Liberia","Sarapiquí","Golfito","Matina","Sarapiquí","Tilarán","Turrialba","Golfito","Garabito","Vázquez de Coronado","Pococí","San Ramón","Sarapiquí","Sarapiquí","Alajuela","Siquirres","Quepos","San Ramón","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Los Chiles","Golfito","San Ramón","Golfito","San Carlos","Osa","Sarapiquí","Turrialba","Turrialba","Pococí","Sarapiquí","Siquirres","San Carlos","La Cruz","Golfito","Talamanca","Sarapiquí","Sarapiquí","Sarapiquí",null,"Pococí","Pococí","Sarapiquí","Sarapiquí","Osa","Sarapiquí","Sarapiquí","Upala","Mora","Liberia","Sarapiquí","Golfito","Nandayure","Sarapiquí","Sarapiquí","Golfito","Sarapiquí","Sarapiquí","Pococí","Matina","Osa","Golfito","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí",null,"Quepos","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Paraíso","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Turrialba","Vázquez de Coronado","Osa","Pococí","Osa","Pérez Zeledón","Talamanca","Pérez Zeledón","San Carlos","Pococí","Siquirres","Osa","Pérez Zeledón","Pérez Zeledón","Pérez Zeledón","Pérez Zeledón","Turrialba","Esparza","Pococí","Sarapiquí","Sarapiquí","Sarapiquí","Turrialba","San Carlos","Garabito","Sarapiquí",null,"Matina","Turrialba","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Sarapiquí","Garabito","Sarapiquí",null,"Coto Brus","Golfito","Pococí","Pococí","Sarapiquí","Osa",null,"Turrialba","Sarapiquí","Turrialba","Bagaces","Bagaces","Bagaces","Cañas","Turrialba","Turrialba","Turrialba","Pococí","Corredores","Sarapiquí","Turrialba","Osa","Turrialba","Osa","Limón","Osa","Turrialba","Turrialba","Turrialba","Sarapiquí","Corredores","Turrialba","Tilarán","Tilarán","Turrialba","Turrialba","Matina","Golfito","Parrita","Turrialba","Turrialba","Turrialba","Tilarán","Buenos Aires","Limón","Parrita","Parrita","Parrita","Parrita","Turrialba","Osa","Turrialba","San Ramón","Turrialba","Turrialba","Turrialba","Siquirres","Golfito","Osa","Matina",null,"Corredores","Pococí","Golfito","Pococí",null,"San Carlos","San Carlos","Golfito","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado","Vázquez de Coronado"],["","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","Costa Rica - NP Corcovado","Costa Rica - Siquirres","Costa Rica - Sarapiquí","Costa Rica - Matina","Costa Rica - Pococí","Costa Rica - Sarapiquí","Costa Rica - Work with Nature - Reserve","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - La Selva Reserve","Costa Rica - Pococí","Costa Rica - Siquirres","Costa Rica - Sarapiquí","Costa Rica - Siquirres","Costa Rica - Turrialba","Costa Rica - Sarapiquí","Costa Rica - San Ramón","Costa Rica - Siquirres","Costa Rica - Pococí","Costa Rica - Siquirres","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Turrialba","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - San Ramón","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Pococí","Costa Rica - Corcovado NP","Costa Rica - Turrialba","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Work with Nature - Reserve","Costa Rica - Pococí","Costa Rica - Sarapiquí","Costa Rica - Matina","Costa Rica - Matina","Costa Rica - Siquirres","Costa Rica - Carara NP","Costa Rica - Sarapiquí","Costa Rica - NP Corcovado","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Tortuguero NP","Costa Rica - Turrialba","Costa Rica - Matina","Costa Rica - Pococí","Costa Rica - NP Corcovado","Costa Rica - NP Corcovado","Costa Rica - Sarapiquí","Costa Rica - NP Corcovado","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - NP Corcovado","Costa Rica - San Ramón","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Sarapiquí","Costa Rica - Pococí","Costa Rica - Playa Dominical","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","Hotel, 0.75 mi S mouth of Rio Tortuguero on W side of River","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","UTM50_17P_0150_1100","","","","","Turrubares","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","Braulio Carilio NP","","Tortuguero","Rincon de Osa, ca. 1.0 km SW of, Osa Tropical Science Center","Miravalles, Pacific side","No Further Locality Data","Miravalles, Pacific side","Volcan Arenal, Arenal Observatory lodge","Tortuguero, across river from Archie Carr's green turtle camp","Reventazon, ca. 1 km NW of Cairo on linea vieja railroad","Rincon de Osa, ca. 2.5 km SW of, Osa Tropical Science Center","Miravalles, Pacific side","Miravalles, Pacific side","Miravalles, Pacific side","Miravalles","Turrialba","Esparta","Tortuguero","","","","","","","","","","Rio Chitaria [Rio Reventazon] above Hwy 10, Jabillos","La Selva Biological Station","La Selva Biological Station","La Selva Biological Station","La Selva Biological Station","La Selva Biological Station","trail from La Cantarrana Camp to Cascante Camp, Zona Protectora La Selva","","","","San Vita de Java","","","","Puerto Viejo","4.5 km W Rincon de Oso","6 km E Golfito","Moravia de Turrialba","La Virgen","Turrialba","Nameless","Nameless","Nameless","Tenorio, ca Las Flores","Turrialba","Turrialba","Turrialba","Los Diamantes","6.3 km NW of Villa Valley","La Selva, at junction of Sarapiqui River and Puerto Viejo River, near the area called Puerto Viejo de Sarapiqui","Turrialba, IICA station","6 km SW Rincon de Osa","Turrialba, IICA station","5.5 km SW Rincon de Osa","Pandora","Osa Peninsula, Camp Seattle, 4 mi up Rion Rincon","Turrialba, IICA station","Turrialba, IICA station","Turrialba","La Selva, at junction of Sarapiqui River and Puerto Viejo River, near the area called Puerto Viejo de Sarapiqui","Villa Neily near the town of Corredor (both places are few kilometers north of COTO #47)","Turrialba, IICA station","Arenal, Finca Rio Chiquito","Arenal, Finca Rio Chiquito","Turrialba, IICA station","Turrialba","La Lola","4.7 km SE Golfito","Parrita, La Julieta, Finca La Ligia","Turrialba","Turrialba, IICA station","Turrialba, IICA station","Silencio","1.3 km NW of Rio Volcan on Pan Am Hwy, 9 km W of Buenos Aires","1.6 km S Pandora","Parrita, La Julieta, Finca La Ligia","Parrita, La Julieta, Finca La Ligia","Parrita, La Julieta, Finca La Ligia","Parrita, La Julieta, Finca La Ligia","vic Pavores","3.2-4.8 km W of Palmar Norte on road to Puerto Cortes","Turrialba, IICA station","Penas Blancas drainage, ca 0.5 km below Dos Aces","Turrialba, IICA station","Turrialba, IICA station","Turrialba, IICA station","El Tigre, area is 9-14 km from Siquirres on the Petrolera Road to Turrialba","Rio Purruja, 4 mi (6.4 km) SE of Golfito","vic of Rincon de Osa","","Tortuguero National Park, Tortuguero Station","5.6 km by road NW of Villa Neily, nr Rio Nuevo","Tortuguero National Park, Jalova Station","Osa Peninsula, Camp Seattle, 4 mi up Rio Rincon","ca. 29 km (air) W. Tortuguero, Hacienda Tapezco","bridge on main stream ca. 10 m on Carretera al Pasifico from Rincon","Ciudad Quesada","Tesalia, NE Quesada, ~4 mi aling stream below house","8 mi. N Golfito","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica","Limon,Costa Rica"],["2020","2017","2021","2021","2015","2021","2015","2013","2016","2021","2021","2021","2021","2021","2018","2021","2008","2021","2021","2021","2011","2017","2021","2020","2021","2021","2021","2021","2021","2021","2020","2019","2016","2009","2009","2009","2010","2020","2021","2008","2006","2020","2016","2020","2020","2020","2015","2009","2020","2009","2020","2019","2020","2019","2017","2016","2017","2020","2020","2016","2016","2019","2016","2019","2018","2020","2020","2020","2020","2012","2020","2016","2018","2012","2015","2015","2011","2020","2020","2020","2020","2018","2016","2018","2020","2008","2019","2020","2013","2020","2020","2019","2017","2009","2019","2015","2016","2018","2009","2009","2015","2017","2017","2017","2017","2017","2016","2017","2017","2016","2017","2016","2016","2016","2009","2009","2006","2009","2009","2012","2009","2009","2009","2014","2012","2011","2008","2009","2018","2018","2017","2018","2017","2017","2015","2009","2017","2009","2009","2016","2009","2009","2012","2011","2018","2018","2017","2017","2016","2017","2016","2016","2017","2017","2017","2016","2009","2017","2009","2009","2012","2006","2010","2010","2020","2018","2019","2020","2020","2020","2020","2020","2020","2009","2018","2018","2020","2019","2019","2019","2020","2007","2020","2019","2018","2007","2015","2019","2018","2020","2020","2020","2020","2019","2020","2020","2020","2020","2020","2020","2020","2020","2020","2020","2020","2020","2020","2020","2020","2018","2009","2019","2020","2019","2008","2014","2019","2020","2020","2020","2020","2020","2020","2020","2020","2019","2020","2020","2020","2019","2019","2014","2020","2019","2014","2020","2017","2018","2016","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2012","2019","2019","2012","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","1976","2019","2019","2014","2014","2019","2019","2019","2019","2019","2019","2019","2014","2019","2019","2019","2017","2017","2017","2019","2019","2016","2014","2017","2019","2019","2019","2019","2019","2011","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2019","2015","2012","2017","2016","2019","2017","2019","2012","2014","2019","2019","2019","2017","2018","2018","2014","2011","2018","2011","2017","2018","2018","2017","2010","2010","2018","1973","2016","2015","2018","2018","2018","2018","2018","2016","2016","2018","2018","2017","2018","2018","2016","2008","2010","2010","2012","2017","2018","2018","2017","2017","2017","2017","2016","2013","2015","2017","2017","2016","2012","2017","2011","2010","2016","2017","2012","2015","2017","2017","2015","2011","2009","2010","2010","2014","2014","2012","2016","2016","2015","2007","2013","2015","2011","2015","2010","2010","2010","2017","2009","2012","2015","2013","2013","2015","2004","2015","1973","1973","1906","1884","1906","1991","1970","1906","1973","1906","1906","1906","1906","1968","1906","1970","2016","2016","2016","2014","2014","2014","2015","2014","2009","1975","1987","1989","1987","1987","1990","1986","2015","2015","2015","1969","2001","2014","2012","1966","","1965","1961","1961","1954","","","","1952","1951","1950","1951","1947","1964","1959","1962","1973","1964","1973","1964","1962","1960","1961","1960","1959","1962","1960","1964","1964","","1959","1959","1964","1964","1959","1959","1961","1967","1964","1964","1964","1964","1964","1964","1974","1964","1962","1983","1959","1964","1959","1959","1964","1967","1962","1985","1963","1985","1962","1979","1971","1969","1969","1964","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975","1975"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Provincia<\/th>\n      <th>Cantón<\/th>\n      <th>Localidad<\/th>\n      <th>Año<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"searchHighlight":true,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<h2 id="gráfico">Gráfico</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Gráfico de registros de presencia por mes</span>
+<span class='va'>terciopelos</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_drop_geometry</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span>mes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/as.Date.html'>as.Date</a></span><span class='op'>(</span><span class='va'>eventDate</span>, <span class='st'>"%Y-%m-%d"</span><span class='op'>)</span>, <span class='st'>"%m"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>suma_registros <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>mes</span><span class='op'>)</span><span class='op'>)</span>  <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://docs.ropensci.org/plotly/reference/plot_ly.html'>plot_ly</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='op'>~</span> <span class='va'>mes</span>,
+          y <span class='op'>=</span> <span class='op'>~</span> <span class='va'>suma_registros</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://docs.ropensci.org/plotly/reference/layout.html'>layout</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Registros de terciopelos (Bothrops asper) por mes"</span>,
+         xaxis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Mes"</span><span class='op'>)</span>,
+         yaxis <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Cantidad de registros"</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<div id="htmlwidget-4be0b61e7d9b461d296c" style="width:624px;height:384px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4be0b61e7d9b461d296c">{"x":{"visdat":{"25bc4b365c66":["function () ","plotlyVisDat"]},"cur_data":"25bc4b365c66","attrs":{"25bc4b365c66":{"x":{},"y":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Registros de terciopelos (Bothrops asper) por mes","xaxis":{"domain":[0,1],"automargin":true,"title":"Mes","type":"category","categoryorder":"array","categoryarray":["01","02","03","04","05","06","07","08","09","10","11","12"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Cantidad de registros"},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["01","02","03","04","05","06","07","08","09","10","11","12"],"y":[74,83,54,49,48,30,36,34,30,27,28,44],"type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<h2 id="mapa">Mapa</h2>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Mapa de registros de presencia</span>
+<span class='va'>terciopelos</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/select.html'>select</a></span><span class='op'>(</span><span class='va'>stateProvince</span>,
+         <span class='va'>canton</span>,
+         <span class='va'>locality</span>,
+         <span class='va'>eventDate</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/leaflet/man/leaflet.html'>leaflet</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/leaflet/man/addProviderTiles.html'>addProviderTiles</a></span><span class='op'>(</span><span class='va'>providers</span><span class='op'>$</span><span class='va'>OpenStreetMap.Mapnik</span>, group <span class='op'>=</span> <span class='st'>"OpenStreetMap"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/leaflet/man/addProviderTiles.html'>addProviderTiles</a></span><span class='op'>(</span><span class='va'>providers</span><span class='op'>$</span><span class='va'>Stamen.TonerLite</span>, group <span class='op'>=</span> <span class='st'>"Stamen Toner Lite"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/leaflet/man/addProviderTiles.html'>addProviderTiles</a></span><span class='op'>(</span><span class='va'>providers</span><span class='op'>$</span><span class='va'>Esri.WorldImagery</span>, group <span class='op'>=</span> <span class='st'>"Imágenes de ESRI"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/leaflet/man/map-layers.html'>addCircleMarkers</a></span><span class='op'>(</span>
+    stroke <span class='op'>=</span> <span class='cn'>F</span>,
+    radius <span class='op'>=</span> <span class='fl'>4</span>,
+    fillColor <span class='op'>=</span> <span class='st'>'green'</span>,
+    fillOpacity <span class='op'>=</span> <span class='fl'>1</span>,
+    popup <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste</a></span><span class='op'>(</span>
+      <span class='va'>terciopelos</span><span class='op'>$</span><span class='va'>stateProvince</span>,
+      <span class='va'>terciopelos</span><span class='op'>$</span><span class='va'>canton</span>,
+      <span class='va'>terciopelos</span><span class='op'>$</span><span class='va'>locality</span>,
+      <span class='va'>terciopelos</span><span class='op'>$</span><span class='va'>eventDate</span>,
+      sep <span class='op'>=</span> <span class='st'>'&lt;br/&gt;'</span>
+    <span class='op'>)</span>,
+    group <span class='op'>=</span> <span class='st'>"Terciopelos (Bothrops asper)"</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/leaflet/man/addLayersControl.html'>addLayersControl</a></span><span class='op'>(</span>
+    baseGroups <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"OpenStreetMap"</span>, <span class='st'>"Stamen Toner Lite"</span>, <span class='st'>"Imágenes de ESRI"</span><span class='op'>)</span>,
+    overlayGroups <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Terciopelos (Bothrops asper)"</span><span class='op'>)</span>
+  <span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/leaflet/man/addMiniMap.html'>addMiniMap</a></span><span class='op'>(</span>
+    tiles <span class='op'>=</span> <span class='va'>providers</span><span class='op'>$</span><span class='va'>Stamen.OpenStreetMap.Mapnik</span>,
+    position <span class='op'>=</span> <span class='st'>"bottomleft"</span>,
+    toggleDisplay <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+</code></pre>
+</div>
+<div id="htmlwidget-964a6308dfb59c72350d" style="width:624px;height:384px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-964a6308dfb59c72350d">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addProviderTiles","args":["OpenStreetMap.Mapnik",null,"OpenStreetMap",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Stamen.TonerLite",null,"Stamen Toner Lite",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addProviderTiles","args":["Esri.WorldImagery",null,"Imágenes de ESRI",{"errorTileUrl":"","noWrap":false,"detectRetina":false}]},{"method":"addCircleMarkers","args":[[9.412012,9.640383,10.713007,10.120744,10.431129,8.641775,10.431129,10.282675,10.760841,10.720918,9.425673,10.720918,10.720918,8.772154,8.582125,10.769433,10.430285,8.63767,8.642316,10.617632,9.968886,10.42158,8.787172,8.404761,9.640742,9.635697,10.475242,8.412826,8.630966,8.641822,8.642013,10.43642,10.430966,8.662777,10.414534,8.662777,8.661035,10.45457,9.419937,10.432123,10.430769,10.438217,10.43798,10.44457,10.48752,8.560866,9.486764,10.450234,10.496178,10.434714,8.400951,8.478592,10.36315,9.3896,10.4299,10.173488,10.430928,8.64225,8.836489,10.46324,8.539174,9.222482,10.36214,10.406728,8.469723,8.403862,8.8675,8.403405,10.626839,10.430623,10.48752,8.66706,10.450369,10.301924,8.40553,8.634005,10.055098,8.410556,8.593072,8.41,8.591704,8.591722,8.591112,8.59368,9.894142,9.638542,10.429959,10.720918,8.555437,8.405833,9.409262,8.685395,10.054352,10.418809,10.028481,10.58637,10.410139,10.004321,10.41767,10.414926,10.430837,10.586813,10.054472,10.413397,10.057883,9.848789,10.413186,10.421504,10.057645,10.592909,10.053673,10.41422,10.418192,10.411065,10.414757,10.416235,9.8322,10.417965,10.417754,10.444485,10.416319,10.414884,10.415686,10.623037,8.616946,9.901013,10.425352,10.415897,10.004459,10.583038,10.418594,10.029263,10.006589,10.05536,9.790597,10.415601,8.660112,10.415981,10.41539,10.415549,10.415686,10.411634,10.533383,9.901013,10.04306,10.593775,8.577618,8.657806,10.412162,8.663659,10.412225,10.410512,8.573413,10.421376,10.411845,10.41366,10.417332,10.419271,10.418092,10.419485,10.594554,9.261996,10.38329,10.425951,8.560906,10.436431,9.781051,10.720918,10.422249,9.2132,8.64699,10.720918,10.430628,9.439035,10.436946,10.43087,10.430628,9.431868,10.430623,10.430623,8.403588,10.571449,10.431169,8.423071,8.519863,8.700622,9.972058,10.480142,8.698931,9.624067,9.62388,10.361914,8.62427,10.480279,8.409462,8.409462,8.409462,8.409462,9.289689,8.409462,9.409287,10.720918,8.411975,8.404359,10.001863,10.430623,8.409729,8.699769,10.430623,9.998293,9.392308,8.404665,8.495622,8.478528,10.331366,10.693553,9.832018,8.661256,8.571944,8.657831,8.404133,8.527492,8.403271,8.404162,8.404438,8.784406,10.448297,10.461291,10.44873,9.416419,10.354578,10.431425,8.623668,9.993232,8.306114,8.403883,10.313131,8.530011,8.712387,10.720918,10.720918,9.775863,10.450415,10.480279,10.45753,9.894827,10.433372,10.991408,11.010794,8.403704,10.180824,10.991767,8.481961,10.350083,10.461072,10.720665,10.720665,10.461342,10.480797,10.474981,10.480797,10.480797,9.389526,8.408611,8.415328,8.40508,9.392308,9.393369,10.57242,9.886975,8.412897,10.181947,10.377666,9.772724,9.024428,10.431389,9.441086,8.658845,10.433562,9.38948,8.43915,9.254287,10.481908,9.419546,9.385081,9.269834,9.343573,9.281408,9.797417,10.450369,10.043027,9.631242,10.576685,8.412243,9.578587,8.404325,10.493995,10.304613,9.892222,10.37217,9.152828,8.66513,9.389667,9.434075,8.405357,9.394555,9.927662,10.494913,10.527119,9.404383,9.393332,8.606095,8.521108,8.524071,9.273419,9.70357,8.405561,10.4288,8.52568,9.631292,8.406922,8.389711,10.147491,10.161679,9.434833,9.434838,10.797888,10.410317,8.604062,10.046717,10.429959,10.545062,9.92949,8.699264,9.756713,10.163727,10.16,10.38329,10.426199,10.429709,9.9667,10.002473,9.270782,10.309404,10.422841,10.281217,10.291511,10.291069,10.422217,10.432141,10.994035,8.700599,10.253841,8.528611,10.686027,8.689586,10.431219,9.832104,9.832235,10.374362,10.416583,10.033342,10.685802,11.042424,8.444505,9.744095,10.430623,10.430437,10.431345,8.335418,10.157426,10.157993,10.416504,10.404079,9.0281,10.324437,10.429971,10.715242,9.81344,10.773494,10.431541,8.604405,9.860628,10.430754,10.425919,8.516005,10.429633,10.426353,10.594302,10.046204,8.526701,8.376291,10.432588,10.223887,10.442572,10.36298,8.232633,9.264868,10.423268,10.289152,10.289152,10.289152,9.748917,10.430623,10.415708,10.423268,10.323701,10.4289,9.945328,10.149366,8.518427,10.4696427515469,8.7,9.4167,9.2833,9.4167,10.4667,10.5666362120713,10.1226674071942,8.7,9.4167,9.4167,9.4167,9.4167,9.89221437579072,9.98333,10.4696427515469,10.434964,10.43039,10.430415,9.8318,10.686586,9.769276,10.430605,9.77621,10.181437,9.9421,10.43333,10.43333,10.43333,10.43333,10.43333,10.43333,9.773255,10.423268,8.345232,8.833333,8.701051,10.59369,10.352948,10.4667,8.6320063784381,8.5986739368997,9.85,10.41667,9.9,10.5,10.5,10.5,10.6167,9.9,9.9,9.9,10.2132925007578,8.66533545059429,10.4333,9.89221437561759,8.69001925784093,9.89221437561759,8.69183010688157,9.7333,8.69919848694274,9.89221437561759,9.89221437561759,9.9,10.4333,8.65,9.89221437561759,10.4537222541799,10.4537222541799,9.89221437561759,9.9,10.0909488827931,8.61189302239708,9.5167,9.9,9.89221437561759,9.89221437561759,10.4808806861385,9.1807037096851,9.71883,9.5167,9.5167,9.5167,9.5167,9.95,8.96531635806911,9.89221437561759,10.3409389015819,9.89221437561759,9.89221437561759,9.89221437561759,10,8.59867385324436,8.69793856484688,10,10.5833,8.65220233389741,10.3527704723673,8.64867192657459,10.45,8.69866849819647,10.3333,10.3667,8.71533268850035,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10],[-84.603622,-82.783951,-85.040183,-83.558383,-84.00946,-83.72258,-84.00946,-84.049108,-85.302676,-85.01374,-84.153922,-85.01374,-85.01374,-83.637177,-83.505707,-85.274652,-84.007443,-83.723458,-83.724851,-84.878439,-84.738852,-84.013309,-83.20768,-83.346805,-82.77993,-82.815923,-84.747887,-83.322802,-83.684443,-83.72491,-83.72597,-84.00593,-84.005616,-83.284129,-84.118074,-83.284129,-83.279672,-84.73777,-84.1652,-84.005078,-84.007511,-84.672203,-84.710182,-84.732667,-84.754236,-83.464355,-82.969622,-84.068415,-84.750587,-84.005495,-83.335533,-83.594008,-84.103828,-84.142647,-84.009781,-83.913963,-84.006111,-83.725122,-83.07439,-84.664905,-83.574988,-83.677503,-84.1035,-84.110244,-83.273414,-83.336747,-83.413653,-83.340074,-84.043198,-84.006971,-84.754236,-82.915106,-84.069266,-84.034292,-83.341045,-83.156706,-83.55143,-83.345556,-83.098284,-83.350278,-83.098742,-83.099297,-83.098646,-83.099053,-83.656143,-82.797296,-84.006183,-85.01374,-83.592464,-83.339722,-84.155385,-83.694505,-83.549278,-84.117021,-83.350174,-83.526534,-84.119796,-83.355347,-84.119467,-84.119339,-84.003511,-83.52818,-83.54936,-84.121424,-83.547174,-83.615098,-84.120888,-84.755633,-83.548332,-83.529553,-83.545736,-84.12107,-84.118556,-84.121585,-84.120197,-84.119596,-83.6073,-84.116678,-84.11848,-84.59095,-84.117837,-84.119603,-84.119811,-83.538528,-83.7333,-83.681747,-84.015884,-84.119081,-83.355186,-83.528308,-84.117071,-83.351882,-83.354984,-83.550603,-84.598385,-84.118351,-83.65002,-84.120197,-84.118566,-84.12078,-84.119811,-84.12127,-83.497467,-83.681747,-83.285553,-83.527772,-83.48562,-83.649461,-84.121499,-83.652083,-84.119182,-84.115315,-83.484346,-84.754591,-84.122057,-84.118495,-84.118609,-84.117422,-84.117794,-84.117965,-83.532886,-83.861117,-84.617912,-84.016251,-83.464355,-84.006081,-84.606198,-85.01374,-84.060905,-83.796844,-83.717574,-85.01374,-84.006979,-84.142946,-84.005477,-84.007119,-84.006979,-84.161908,-84.006971,-84.006971,-83.3366,-83.51974,-84.007973,-83.073772,-83.42522,-83.202148,-83.464355,-84.765916,-83.202464,-82.620033,-82.620017,-84.103056,-83.732761,-84.765519,-83.337912,-83.337912,-83.337912,-83.337912,-83.851619,-83.337912,-84.155385,-85.01374,-83.336586,-83.33854,-84.37103,-84.006971,-83.333932,-83.329831,-84.006971,-84.368731,-84.136988,-83.335986,-83.378435,-83.593967,-83.911896,-83.650168,-83.561118,-83.136069,-83.396385,-83.135239,-83.338496,-83.41012,-83.337184,-83.33853,-83.338522,-82.960309,-84.064484,-84.664017,-84.064644,-84.151314,-83.964506,-84.006055,-83.624522,-84.468869,-83.021107,-83.336587,-84.43391,-83.366934,-83.635115,-85.01374,-85.01374,-84.604798,-84.832269,-84.765519,-84.830895,-83.653575,-84.007727,-85.425653,-85.470119,-83.336601,-83.749022,-85.425247,-83.591174,-84.673156,-84.727663,-85.013848,-85.013848,-84.662374,-84.764654,-84.767372,-84.764654,-84.764654,-84.144354,-83.326942,-83.346428,-83.339522,-84.141717,-84.147131,-83.51667,-83.65344,-83.345933,-83.920161,-83.406558,-84.607325,-83.50872,-84.006944,-84.149651,-83.254517,-84.007243,-84.144403,-83.435727,-83.8086,-84.635342,-84.121187,-83.60974,-83.786621,-83.687431,-83.862433,-84.59513,-84.069266,-84.523265,-82.648046,-84.044239,-83.346117,-84.212732,-83.330933,-84.766464,-84.037882,-83.648014,-84.82737,-83.717628,-83.654957,-84.142555,-84.146156,-83.331883,-84.145644,-84.072337,-83.992692,-83.932723,-84.152832,-84.1456,-83.44654,-83.363863,-83.36542,-83.874769,-84.66218,-83.337066,-84.0128,-83.424812,-82.916779,-83.333479,-83.309909,-83.580048,-83.938968,-84.1459,-84.145875,-85.405356,-84.112071,-83.113379,-83.331428,-84.006183,-84.890599,-83.60034,-83.204553,-84.613372,-83.965698,-83.938611,-84.617557,-84.006736,-84.008224,-84.3167,-83.534644,-83.880227,-84.589198,-84.013138,-84.045235,-84.04109,-84.04721,-84.023348,-84.01378,-84.69738,-83.202703,-84.555605,-83.406944,-84.1808,-83.663884,-84.007215,-83.563891,-83.56375,-83.405113,-84.124546,-83.554995,-84.181245,-85.603304,-83.446505,-82.867617,-84.006971,-84.007019,-84.009919,-83.288847,-83.783508,-83.78203,-84.1243,-84.025154,-83.574115,-83.90748,-84.00816,-85.038732,-84.227053,-85.347961,-84.014497,-83.11975,-85.253906,-84.006958,-84.011679,-83.403053,-84.010477,-84.010606,-83.528881,-83.310301,-83.646469,-83.292222,-84.006661,-83.908981,-84.067211,-84.043308,-83.328847,-83.879465,-84.02203,-84.035454,-84.035454,-84.035454,-83.753428,-84.006971,-84.124224,-84.02203,-84.027214,-84.00514,-83.689175,-83.946533,-83.626934,-83.4755562955878,-83.52,-83.6833,-83.0333,-83.6833,-84.7167,-83.5154555941184,-83.5254583015235,-83.52,-83.6833,-83.6833,-83.6833,-83.6833,-83.6502593828224,-84.6667,-83.4755562955878,-84.004222,-84.005357,-84.005873,-83.5637,-84.177589,-84.58911,-84.006824,-84.678757,-83.244953,-83.629303,-84,-84,-84,-84,-84,-84,-84.600928,-84.02203,-83.305354,-82.966667,-83.200493,-83.534073,-83.391956,-84.0167,-83.4980666378582,-83.1314007080384,-83.4333,-84.15,-83.6833,-85.25,-85.25,-85.25,-85.0833,-83.6833,-83.6833,-83.6833,-83.7717271948881,-82.9980677161737,-83.9833,-83.6502293828904,-83.5085113170466,-83.6502293828904,-83.5044243173466,-82.9667,-83.4866863212594,-83.6502293828904,-83.6502293828904,-83.6833,-83.9833,-82.933333,-83.6502293828904,-84.8509736883856,-84.8509736883856,-83.6502293828904,-83.6833,-83.3967787982642,-83.1393676205877,-84.3167,-83.6833,-83.6502293828904,-83.6502293828904,-84.9019534402487,-83.436463898776,-82.9667,-84.3167,-84.3167,-84.3167,-84.3167,-83.61667,-83.4813979466,-83.6502293828904,-84.6573846997834,-83.6502293828904,-83.6502293828904,-83.6502293828904,-83.55,-83.1147347508661,-83.4841863336159,-83.2167,-83.5167,-82.9851248174567,-83.3977772057686,-83.4480666711488,-83.783333,-83.4813993364445,-84.4333,-84.4167,-83.1647340275674,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84,-84],4,null,"Terciopelos (Bothrops asper)",{"interactive":true,"className":"","stroke":false,"color":"#03F","weight":5,"opacity":0.5,"fill":true,"fillColor":"green","fillOpacity":1},null,null,["Puntarenas<br/>NA<br/><br/>2020-11-29T22:55:00","Limón<br/>Talamanca<br/><br/>2017-11-07T09:19:00","Alajuela<br/>Upala<br/><br/>2021-05-17T19:59:00","Limón<br/>Siquirres<br/><br/>2021-05-10T09:00:00","Heredia<br/>Sarapiquí<br/><br/>2015-03-10T08:45:00","Puntarenas<br/>Osa<br/><br/>2021-04-29T22:36:52","Heredia<br/>Sarapiquí<br/><br/>2015-03-22T03:11:00","Heredia<br/>Sarapiquí<br/><br/>2013-02-28T00:00:00","Guanacaste<br/>Liberia<br/><br/>2016-12-27T10:00:08","Alajuela<br/>Upala<br/><br/>2021-04-22T08:08:00","Puntarenas<br/>Quepos<br/><br/>2021-04-13T21:34:35","Alajuela<br/>Upala<br/><br/>2021-04-09T08:06:00","Alajuela<br/>Upala<br/><br/>2021-04-11T08:46:00","Puntarenas<br/>Osa<br/><br/>2021-04-11T12:25:48","Puntarenas<br/>Golfito<br/><br/>2018-03-26T18:24:00","Alajuela<br/>Upala<br/><br/>2021-03-31T19:10:29","Heredia<br/>Sarapiquí<br/><br/>2008-06-14T13:17:00","Puntarenas<br/>Osa<br/><br/>2021-03-28T20:30:40","Puntarenas<br/>Osa<br/><br/>2021-03-23T13:22:15","Alajuela<br/>Guatuso<br/><br/>2021-03-21T23:18:00","Puntarenas<br/>Puntarenas<br/><br/>2011-01-10T19:48:00","Heredia<br/>Sarapiquí<br/><br/>2017-01-11T16:42:34","Puntarenas<br/>Osa<br/><br/>2021-01-24T20:14:50","Puntarenas<br/>Golfito<br/><br/>2020-09-06T04:52:00","Limón<br/>Talamanca<br/><br/>2021-02-24T20:01:36","Limón<br/>Talamanca<br/><br/>2021-02-23T19:18:02","Alajuela<br/>San Carlos<br/><br/>2021-02-21T00:48:15","Puntarenas<br/>Golfito<br/><br/>2021-01-23T10:00:00","Puntarenas<br/>Osa<br/><br/>2021-01-28T10:16:00","Puntarenas<br/>Osa<br/><br/>2021-02-14T19:34:46","Puntarenas<br/>Osa<br/><br/>2020-11-20T22:39:35","Heredia<br/>Sarapiquí<br/><br/>2019-03-17T18:10:00","Heredia<br/>Sarapiquí<br/><br/>2016-03-12T20:47:00","Puntarenas<br/>Golfito<br/><br/>2009-04-10T00:00:00","Heredia<br/>Sarapiquí<br/><br/>2009-08-11T15:11:00","Puntarenas<br/>Golfito<br/><br/>2009-04-10T00:00:00","Puntarenas<br/>Golfito<br/><br/>2010-04-07T22:28:00","Alajuela<br/>San Carlos<br/><br/>2020-11-08T01:07:12","Puntarenas<br/>Quepos<br/><br/>2021-01-22T09:06:57","Heredia<br/>Sarapiquí<br/><br/>2008-03-03T00:00:00","Heredia<br/>Sarapiquí<br/><br/>2006-03-03T00:00:00","Alajuela<br/>San Carlos<br/><br/>2020-11-06T20:22:26","Alajuela<br/>San Carlos<br/><br/>2016-01-14T00:00:00","Alajuela<br/>San Carlos<br/><br/>2020-11-07T18:33:56","Alajuela<br/>San Carlos<br/><br/>2020-12-25T11:52:53","Puntarenas<br/>Golfito<br/><br/>2020-12-19T00:00:00","Limón<br/>Talamanca<br/><br/>2015-04-22T21:05:00","Heredia<br/>Sarapiquí<br/><br/>2009-01-03T19:20:00","Alajuela<br/>San Carlos<br/><br/>2020-12-20T11:02:14","Heredia<br/>Sarapiquí<br/><br/>2009-01-02T19:22:00","Puntarenas<br/>Golfito<br/><br/>2020-12-11T19:00:00","Puntarenas<br/>Golfito<br/><br/>2019-12-09T09:43:00","Heredia<br/>Sarapiquí<br/><br/>2020-12-08T11:05:31","Puntarenas<br/>Quepos<br/><br/>2019-03-21T10:18:21","Heredia<br/>Sarapiquí<br/><br/>2017-05-20T22:07:00","Limón<br/>Pococí<br/><br/>2016-04-29T12:44:00","Heredia<br/>Sarapiquí<br/><br/>2017-12-31T20:01:38","Puntarenas<br/>Osa<br/><br/>2020-11-17T09:40:00","Puntarenas<br/>Coto Brus<br/><br/>2020-11-15T11:45:21","Alajuela<br/>San Carlos<br/><br/>2016-05-06T15:39:00","Puntarenas<br/>Golfito<br/><br/>2016-09-22T18:12:57","San José<br/>Pérez Zeledón<br/><br/>2019-03-01T05:23:42","Heredia<br/>Sarapiquí<br/><br/>2016-12-31T20:19:00","Heredia<br/>Sarapiquí<br/><br/>2019-11-23T14:23:00","Puntarenas<br/>Golfito<br/><br/>2018-01-04T11:54:00","Puntarenas<br/>Golfito<br/><br/>2020-10-23T19:51:45","Puntarenas<br/>Osa<br/><br/>2020-01-11T12:23:49","Puntarenas<br/>Golfito<br/><br/>2020-01-06T21:32:00","Heredia<br/>Sarapiquí<br/><br/>2020-09-29T16:32:40","Heredia<br/>Sarapiquí<br/><br/>2012-08-27T14:28:00","Alajuela<br/>San Carlos<br/><br/>2020-09-16T20:13:56","Puntarenas<br/>Corredores<br/><br/>2016-03-12T08:33:00","Heredia<br/>Sarapiquí<br/><br/>2018-09-11T02:46:00","Heredia<br/>Sarapiquí<br/><br/>2012-08-24T05:02:00","Puntarenas<br/>Golfito<br/><br/>2015-12-13T03:11:00","Puntarenas<br/>Golfito<br/><br/>2015-12-11T10:54:00","Limón<br/>Siquirres<br/><br/>2011-03-06T19:30:00","Puntarenas<br/>Golfito<br/><br/>2020-08-24T11:28:50","Puntarenas<br/>Golfito<br/><br/>2020-01-27T13:20:22","Puntarenas<br/>Golfito<br/><br/>2020-09-04T07:08:34","Puntarenas<br/>Golfito<br/><br/>2020-01-27T13:20:22","Puntarenas<br/>Golfito<br/><br/>2018-08-02T22:49:42","Puntarenas<br/>Golfito<br/><br/>2016-10-01T01:09:10","Puntarenas<br/>Golfito<br/><br/>2018-03-23T23:31:22","Cartago<br/>Turrialba<br/><br/>2020-08-23T19:25:51","Limón<br/>Talamanca<br/><br/>2008-01-19T08:19:00","Heredia<br/>Sarapiquí<br/><br/>2019-02-24T03:19:00","Alajuela<br/>Upala<br/><br/>2020-08-07T15:06:00","Puntarenas<br/>Golfito<br/><br/>2013-07-14T20:26:00","Puntarenas<br/>Golfito<br/><br/>2020-06-30T20:08:50","Puntarenas<br/>Quepos<br/><br/>2020-02-24T00:00:00","<br/>Osa<br/>Costa Rica - NP Corcovado<br/>2019-08-13T00:00:00","<br/>Siquirres<br/>Costa Rica - Siquirres<br/>2017-05-18T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-05-07T00:00:00","<br/>Matina<br/>Costa Rica - Matina<br/>2019-09-08T00:00:00","<br/>Pococí<br/>Costa Rica - Pococí<br/>2015-02-07T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-10-04T00:00:00","<br/>Matina<br/>Costa Rica - Work with Nature - Reserve<br/>2018-12-11T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-20T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-03T00:00:00","<br/>Sarapiquí<br/>Costa Rica - La Selva Reserve<br/>2015-02-27T00:00:00","<br/>Pococí<br/>Costa Rica - Pococí<br/>2017-04-21T00:00:00","<br/>Siquirres<br/>Costa Rica - Siquirres<br/>2017-05-19T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2017-01-28T00:00:00","<br/>Siquirres<br/>Costa Rica - Siquirres<br/>2017-05-19T00:00:00","<br/>Turrialba<br/>Costa Rica - Turrialba<br/>2017-07-27T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-12-29T00:00:00","<br/>San Ramón<br/>Costa Rica - San Ramón<br/>2017-02-20T00:00:00","<br/>Siquirres<br/>Costa Rica - Siquirres<br/>2017-05-18T00:00:00","<br/>Pococí<br/>Costa Rica - Pococí<br/>2016-05-05T00:00:00","<br/>Siquirres<br/>Costa Rica - Siquirres<br/>2017-02-05T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-12-27T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-10-06T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-11-26T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-05-06T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-05-06T00:00:00","<br/>Turrialba<br/>Costa Rica - Turrialba<br/>2006-01-19T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-06-03T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-06-17T00:00:00","<br/>San Carlos<br/>Costa Rica - San Ramón<br/>2012-07-18T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-05-29T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-03-17T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-20T00:00:00","<br/>Pococí<br/>Costa Rica - Pococí<br/>2014-08-06T00:00:00","<br/>Osa<br/>Costa Rica - Corcovado NP<br/>2012-08-25T00:00:00","<br/>Turrialba<br/>Costa Rica - Turrialba<br/>2011-10-29T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2008-01-06T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-03T00:00:00","<br/>Matina<br/>Costa Rica - Work with Nature - Reserve<br/>2018-12-11T00:00:00","<br/>Pococí<br/>Costa Rica - Pococí<br/>2018-06-14T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2017-01-02T00:00:00","<br/>Matina<br/>Costa Rica - Matina<br/>2018-02-25T00:00:00","<br/>Matina<br/>Costa Rica - Matina<br/>2017-07-03T00:00:00","<br/>Siquirres<br/>Costa Rica - Siquirres<br/>2017-02-05T00:00:00","<br/>Garabito<br/>Costa Rica - Carara NP<br/>2015-02-07T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-05-30T00:00:00","<br/>Osa<br/>Costa Rica - NP Corcovado<br/>2017-06-03T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-23T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-10T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-12-29T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-23T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-02-25T00:00:00","<br/>NA<br/>Costa Rica - Tortuguero NP<br/>2012-07-18T00:00:00","<br/>Turrialba<br/>Costa Rica - Turrialba<br/>2011-10-29T00:00:00","<br/>Matina<br/>Costa Rica - Matina<br/>2018-12-10T00:00:00","<br/>Pococí<br/>Costa Rica - Pococí<br/>2018-06-21T00:00:00","<br/>Golfito<br/>Costa Rica - NP Corcovado<br/>2017-06-01T00:00:00","<br/>Osa<br/>Costa Rica - NP Corcovado<br/>2017-06-03T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-12-09T00:00:00","<br/>Osa<br/>Costa Rica - NP Corcovado<br/>2017-06-03T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-12-15T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-11-28T00:00:00","<br/>Golfito<br/>Costa Rica - NP Corcovado<br/>2017-05-31T00:00:00","<br/>San Ramón<br/>Costa Rica - San Ramón<br/>2017-02-19T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2017-01-03T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2016-12-07T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-03T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2017-02-07T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-23T00:00:00","<br/>Sarapiquí<br/>Costa Rica - Sarapiquí<br/>2009-04-23T00:00:00","<br/>Pococí<br/>Costa Rica - Pococí<br/>2012-11-15T00:00:00","<br/>Osa<br/>Costa Rica - Playa Dominical<br/>2006-10-28T00:00:00","Alajuela<br/>San Ramón<br/><br/>2010-11-08T22:41:00","Heredia<br/>Sarapiquí<br/><br/>2010-09-16T12:11:00","Puntarenas<br/>Golfito<br/><br/>2020-02-14T09:01:00","Heredia<br/>Sarapiquí<br/><br/>2018-07-04T19:00:55","Puntarenas<br/>Garabito<br/><br/>2019-11-19T11:46:00","Alajuela<br/>Upala<br/><br/>2020-07-06T15:10:00","Heredia<br/>Sarapiquí<br/><br/>2020-06-24T08:55:00","Puntarenas<br/>Osa<br/><br/>2020-02-06T17:26:00","Puntarenas<br/>Osa<br/><br/>2020-01-31T15:02:00","Alajuela<br/>Upala<br/><br/>2020-06-01T17:30:00","Heredia<br/>Sarapiquí<br/><br/>2020-01-21T19:10:00","Puntarenas<br/>Quepos<br/><br/>2009-03-03T16:00:28","Heredia<br/>Sarapiquí<br/><br/>2018-06-15T21:31:08","Heredia<br/>Sarapiquí<br/><br/>2018-06-05T11:30:44","Heredia<br/>Sarapiquí<br/><br/>2020-01-21T20:11:00","Puntarenas<br/>Quepos<br/><br/>2019-12-25T18:06:00","Heredia<br/>Sarapiquí<br/><br/>2019-12-22T22:38:00","Heredia<br/>Sarapiquí<br/><br/>2019-12-22T21:47:00","Puntarenas<br/>Golfito<br/><br/>2020-05-02T16:37:04","Limón<br/>Pococí<br/><br/>2007-02-05T17:34:00","Heredia<br/>Sarapiquí<br/><br/>2020-01-02T22:00:26","Puntarenas<br/>Golfito<br/><br/>2019-01-17T18:40:56","Puntarenas<br/>Golfito<br/><br/>2018-03-18T07:08:00","Puntarenas<br/>Golfito<br/><br/>2007-02-21T20:35:00","Cartago<br/>Turrialba<br/><br/>2015-10-05T20:03:00","Alajuela<br/>San Carlos<br/><br/>2019-05-05T22:17:00","Puntarenas<br/>Golfito<br/><br/>2018-02-22T23:10:00","Limón<br/>Talamanca<br/><br/>2020-03-25T08:54:55","Limón<br/>Talamanca<br/><br/>2020-03-25T08:50:52","Heredia<br/>Sarapiquí<br/><br/>2020-03-06T00:17:31","Puntarenas<br/>Osa<br/><br/>2020-01-31T19:05:00","Alajuela<br/>San Carlos<br/><br/>2019-05-09T21:48:00","Puntarenas<br/>Golfito<br/><br/>2020-02-04T19:11:00","Puntarenas<br/>Golfito<br/><br/>2020-02-04T18:57:00","Puntarenas<br/>Golfito<br/><br/>2020-02-04T18:52:00","Puntarenas<br/>Golfito<br/><br/>2020-02-04T19:08:00","San José<br/>Pérez Zeledón<br/><br/>2020-02-06T21:18:00","Puntarenas<br/>Golfito<br/><br/>2020-02-04T18:52:00","Puntarenas<br/>Quepos<br/><br/>2020-03-05T22:11:19","Alajuela<br/>Upala<br/><br/>2020-03-05T16:50:00","Puntarenas<br/>Golfito<br/><br/>2020-02-04T00:00:00","Puntarenas<br/>Golfito<br/><br/>2020-01-11T18:58:00","Alajuela<br/>Atenas<br/><br/>2020-01-18T23:25:00","Heredia<br/>Sarapiquí<br/><br/>2020-01-21T23:08:00","Puntarenas<br/>Golfito<br/><br/>2020-02-23T09:59:24","Puntarenas<br/>Golfito<br/><br/>2020-02-12T19:45:39","Heredia<br/>Sarapiquí<br/><br/>2020-01-22T00:09:00","Alajuela<br/>Atenas<br/><br/>2018-02-04T16:32:01","Puntarenas<br/>Quepos<br/><br/>2009-07-28T00:00:00","Puntarenas<br/>Golfito<br/><br/>2019-02-14T21:02:47","Puntarenas<br/>Golfito<br/><br/>2020-01-19T20:08:00","Puntarenas<br/>Golfito<br/><br/>2019-12-26T10:57:00","Heredia<br/>Sarapiquí<br/><br/>2008-01-26T13:32:00","Limón<br/>Pococí<br/><br/>2014-03-22T17:57:00","Cartago<br/>Turrialba<br/><br/>2019-12-30T12:54:00","Puntarenas<br/>Golfito<br/><br/>2020-01-07T18:55:00","Puntarenas<br/>Golfito<br/><br/>2020-01-22T15:00:35","Puntarenas<br/>Golfito<br/><br/>2020-01-07T19:03:00","Puntarenas<br/>Golfito<br/><br/>2020-01-10T00:00:00","Puntarenas<br/>Golfito<br/><br/>2020-01-04T21:27:53","Puntarenas<br/>Golfito<br/><br/>2020-01-11T19:04:00","Puntarenas<br/>Golfito<br/><br/>2020-01-11T14:56:09","Puntarenas<br/>Golfito<br/><br/>2020-01-09T13:04:00","Puntarenas<br/>Coto Brus<br/><br/>2019-07-16T22:16:00","Heredia<br/>Sarapiquí<br/><br/>2020-01-03T20:01:16","Alajuela<br/>San Carlos<br/><br/>2020-01-06T19:37:55","Heredia<br/>Sarapiquí<br/><br/>2020-01-03T08:14:00","Puntarenas<br/>Quepos<br/><br/>2019-12-27T18:44:00","Heredia<br/>Sarapiquí<br/><br/>2019-12-26T11:34:56","Heredia<br/>Sarapiquí<br/><br/>2014-06-08T00:00:00","Puntarenas<br/>Golfito<br/><br/>2020-01-04T19:26:00","Alajuela<br/>San Ramón<br/><br/>2019-09-03T03:42:00","Puntarenas<br/>NA<br/><br/>2014-03-03T12:33:00","Puntarenas<br/>Golfito<br/><br/>2020-01-02T08:36:55","Alajuela<br/>San Carlos<br/><br/>2017-12-18T10:49:00","Puntarenas<br/>Golfito<br/><br/>2018-05-14T14:43:00","Puntarenas<br/>Osa<br/><br/>2016-02-08T00:00:00","Alajuela<br/>Upala<br/><br/>2019-01-22T00:00:00","Alajuela<br/>Upala<br/><br/>2019-11-24T00:00:00","Puntarenas<br/>Garabito<br/><br/>2019-11-25T13:01:41","Guanacaste<br/>Tilarán<br/><br/>2019-11-10T01:55:00","Alajuela<br/>San Carlos<br/><br/>2019-05-05T21:17:00","Guanacaste<br/>Tilarán<br/><br/>2019-11-10T01:56:15","Cartago<br/>Turrialba<br/><br/>2019-11-14T07:50:22","Heredia<br/>Sarapiquí<br/><br/>2019-11-09T23:19:00","Guanacaste<br/>La Cruz<br/><br/>2019-10-07T06:29:38","Guanacaste<br/>La Cruz<br/><br/>2019-10-07T07:41:04","Puntarenas<br/>Golfito<br/><br/>2019-11-07T09:10:25","Limón<br/>Guácimo<br/><br/>2019-10-26T09:50:00","Guanacaste<br/>La Cruz<br/><br/>2019-10-07T07:26:09","Puntarenas<br/>Golfito<br/><br/>2019-06-08T15:03:26","Alajuela<br/>San Ramón<br/><br/>2019-10-08T22:29:00","Alajuela<br/>San Carlos<br/><br/>2012-12-18T08:39:00","Alajuela<br/>Upala<br/><br/>2019-09-12T00:00:00","Alajuela<br/>Upala<br/><br/>2019-09-26T00:00:00","Alajuela<br/>San Carlos<br/><br/>2012-12-16T20:09:00","Alajuela<br/>San Carlos<br/><br/>2019-05-06T20:21:00","Alajuela<br/>San Carlos<br/><br/>2019-05-05T22:16:00","Alajuela<br/>San Carlos<br/><br/>2019-05-06T21:32:00","Alajuela<br/>San Carlos<br/><br/>2019-05-07T20:33:00","Puntarenas<br/>Quepos<br/><br/>2019-08-02T13:19:23","Puntarenas<br/>Golfito<br/><br/>2019-10-15T09:55:29","Puntarenas<br/>Golfito<br/><br/>2019-09-14T09:43:38","Puntarenas<br/>Golfito<br/><br/>2019-10-03T19:05:40","Puntarenas<br/>Quepos<br/><br/>2019-10-04T09:46:57","Puntarenas<br/>Quepos<br/><br/>2019-04-05T15:30:00","Limon<br/>Pococí<br/>Hotel, 0.75 mi S mouth of Rio Tortuguero on W side of River<br/>1976-07-20T00:00:00","Cartago<br/>Turrialba<br/><br/>2019-09-24T13:10:23","Puntarenas<br/>Golfito<br/><br/>2019-09-14T19:57:33","Limón<br/>Pococí<br/><br/>2014-01-03T14:46:00","Limón<br/>Pococí<br/><br/>2014-07-17T16:29:00","Puntarenas<br/>Garabito<br/><br/>2019-08-28T10:14:11","Puntarenas<br/>Osa<br/><br/>2019-08-21T19:55:08","Heredia<br/>Sarapiquí<br/><br/>2019-08-10T21:43:00","Puntarenas<br/>Quepos<br/><br/>2019-08-10T09:07:16","Puntarenas<br/>Golfito<br/><br/>2019-07-29T06:40:54","Heredia<br/>Sarapiquí<br/><br/>2019-07-16T21:36:00","Puntarenas<br/>Quepos<br/><br/>2019-07-28T10:41:34","Puntarenas<br/>Golfito<br/><br/>2014-09-27T13:18:00","San José<br/>Pérez Zeledón<br/><br/>2019-07-07T10:29:28","Alajuela<br/>San Carlos<br/><br/>2019-05-27T07:18:00","Puntarenas<br/>Quepos<br/><br/>2019-06-03T15:06:00","Puntarenas<br/>Pérez Zeledón<br/><br/>2017-12-23T21:09:00","Puntarenas<br/>Pérez Zeledón<br/><br/>2017-12-23T21:05:00","Puntarenas<br/>Pérez Zeledón<br/><br/>2017-12-23T20:46:00","Puntarenas<br/>Quepos<br/><br/>2019-04-03T19:15:21","Puntarenas<br/>Garabito<br/><br/>2019-06-10T10:14:27","Heredia<br/>Sarapiquí<br/><br/>2016-08-19T15:31:00","Alajuela<br/>San Ramón<br/><br/>2014-02-21T15:40:00","Limón<br/>Talamanca<br/><br/>2017-09-08T10:20:00","Heredia<br/>Sarapiquí<br/><br/>2019-05-27T22:58:00","Puntarenas<br/>Golfito<br/><br/>2019-05-29T17:15:41","Puntarenas<br/>Parrita<br/><br/>2019-04-04T20:32:00","Puntarenas<br/>Golfito<br/><br/>2019-05-13T06:56:06","Alajuela<br/>San Carlos<br/><br/>2019-05-09T21:25:11","Heredia<br/>Sarapiquí<br/><br/>2011-02-02T02:54:00","Cartago<br/>Turrialba<br/><br/>2019-01-03T10:31:00","Guanacaste<br/>Tilarán<br/><br/>2019-02-06T10:53:35","Puntarenas<br/>Osa<br/><br/>2019-04-11T13:33:22","Puntarenas<br/>Osa<br/><br/>2019-03-05T19:44:00","Puntarenas<br/>Quepos<br/><br/>2019-04-02T09:13:15","Puntarenas<br/>Quepos<br/><br/>2019-03-13T19:00:00","Puntarenas<br/>Golfito<br/><br/>2019-04-01T08:28:35","Puntarenas<br/>Quepos<br/><br/>2019-04-05T19:39:08","San José<br/>San José<br/><br/>2019-03-31T20:55:49","Heredia<br/>Sarapiquí<br/><br/>2019-03-23T13:57:58","Heredia<br/>Sarapiquí<br/><br/>2019-03-23T13:57:59","Puntarenas<br/>Quepos<br/><br/>2019-02-28T18:27:34","Puntarenas<br/>Quepos<br/><br/>2019-02-28T18:28:00","Puntarenas<br/>Golfito<br/><br/>2019-02-27T19:53:00","Puntarenas<br/>Golfito<br/><br/>2019-03-01T20:41:12","Puntarenas<br/>Golfito<br/><br/>2019-03-01T20:37:18","Puntarenas<br/>Quepos<br/><br/>2015-02-23T19:58:00","Puntarenas<br/>Garabito<br/><br/>2012-01-28T00:00:00","Puntarenas<br/>Golfito<br/><br/>2017-03-18T00:00:00","Heredia<br/>Sarapiquí<br/><br/>2016-06-16T13:49:00","Puntarenas<br/>Golfito<br/><br/>2019-02-05T10:53:05","Limón<br/>Talamanca<br/><br/>2017-10-17T08:42:21","Puntarenas<br/>Golfito<br/><br/>2019-01-17T19:52:00","Puntarenas<br/>Golfito<br/><br/>2012-12-29T16:47:00","Limón<br/>Siquirres<br/><br/>2014-04-19T05:47:23","San José<br/>Pococí<br/><br/>2019-01-23T14:01:00","Puntarenas<br/>Quepos<br/><br/>2019-01-21T18:04:00","Puntarenas<br/>Quepos<br/><br/>2019-01-21T18:00:35","Guanacaste<br/>Liberia<br/><br/>2017-02-22T00:42:00","Heredia<br/>Sarapiquí<br/><br/>2018-10-26T14:49:54","Puntarenas<br/>Golfito<br/><br/>2018-12-17T00:00:00","Limón<br/>Matina<br/><br/>2014-04-20T06:09:12","Heredia<br/>Sarapiquí<br/><br/>2011-06-01T00:10:00","Guanacaste<br/>Tilarán<br/><br/>2018-02-24T00:00:00","Cartago<br/>Turrialba<br/><br/>2011-05-07T19:38:00","Puntarenas<br/>Golfito<br/><br/>2017-01-20T20:39:00","Puntarenas<br/>Garabito<br/><br/>2018-07-21T21:33:44","<br/>Vázquez de Coronado<br/>UTM50_17P_0150_1100<br/>2018-03-01T00:00:00","San José<br/>Pococí<br/><br/>2017-04-01T17:55:00","Alajuela<br/>San Ramón<br/><br/>2010-11-11T22:43:00","Heredia<br/>Sarapiquí<br/><br/>2010-09-16T12:13:42","Heredia<br/>Sarapiquí<br/><br/>2018-04-23T19:52:00","<br/>Alajuela<br/>Turrubares<br/>1973-12-15T00:00:00","Limón<br/>Siquirres<br/><br/>2016-06-13T20:38:00","Puntarenas<br/>Quepos<br/><br/>2015-02-25T03:25:00","Alajuela<br/>San Ramón<br/><br/>2018-05-25T07:39:00","Heredia<br/>Sarapiquí<br/><br/>2018-03-04T14:41:25","Heredia<br/>Sarapiquí<br/><br/>2018-03-07T16:31:30","Heredia<br/>Sarapiquí<br/><br/>2018-03-08T10:36:17","Heredia<br/>Sarapiquí<br/><br/>2018-03-08T09:46:48","Heredia<br/>Sarapiquí<br/><br/>2016-07-20T11:51:00","Heredia<br/>Sarapiquí<br/><br/>2016-07-15T18:58:00","Alajuela<br/>Los Chiles<br/><br/>2018-03-04T15:22:33","Puntarenas<br/>Golfito<br/><br/>2018-02-20T00:00:00","Alajuela<br/>San Ramón<br/><br/>2017-06-23T18:11:24","Puntarenas<br/>Golfito<br/><br/>2018-03-02T18:48:54","Alajuela<br/>San Carlos<br/><br/>2018-03-03T20:56:58","Puntarenas<br/>Osa<br/><br/>2016-08-06T22:27:00","Heredia<br/>Sarapiquí<br/><br/>2008-08-07T00:00:00","Cartago<br/>Turrialba<br/><br/>2010-02-10T00:00:00","Cartago<br/>Turrialba<br/><br/>2010-03-26T00:00:00","Limón<br/>Pococí<br/><br/>2012-10-20T00:00:00","Heredia<br/>Sarapiquí<br/><br/>2017-10-24T11:53:00","Limón<br/>Siquirres<br/><br/>2018-01-27T18:30:00","Alajuela<br/>San Carlos<br/><br/>2018-01-07T10:30:00","Guanacaste<br/>La Cruz<br/><br/>2017-05-27T07:23:43","Puntarenas<br/>Golfito<br/><br/>2017-12-21T04:50:00","Limón<br/>Talamanca<br/><br/>2017-12-31T14:50:43","Heredia<br/>Sarapiquí<br/><br/>2017-12-09T10:57:00","Heredia<br/>Sarapiquí<br/><br/>2016-07-13T18:25:02","Heredia<br/>Sarapiquí<br/><br/>2013-03-10T18:37:33","Puntarenas<br/>NA<br/><br/>2015-01-06T00:00:00","Limón<br/>Pococí<br/><br/>2017-10-01T00:00:00","Limón<br/>Pococí<br/><br/>2017-10-01T00:00:00","Heredia<br/>Sarapiquí<br/><br/>2016-02-27T14:19:00","Heredia<br/>Sarapiquí<br/><br/>2012-03-14T00:00:00","Puntarenas<br/>Osa<br/><br/>2017-11-09T11:13:02","Heredia<br/>Sarapiquí<br/><br/>2011-04-16T09:58:00","Heredia<br/>Sarapiquí<br/><br/>2010-04-13T07:35:00","Alajuela<br/>Upala<br/><br/>2016-08-14T17:45:00","San José<br/>Mora<br/><br/>2017-09-30T23:33:21","Guanacaste<br/>Liberia<br/><br/>2012-11-23T10:00:00","Heredia<br/>Sarapiquí<br/><br/>2015-04-05T21:58:26","Puntarenas<br/>Golfito<br/><br/>2017-04-01T16:08:37","Guanacaste<br/>Nandayure<br/><br/>2017-04-21T11:16:00","Heredia<br/>Sarapiquí<br/><br/>2015-10-24T18:07:00","Heredia<br/>Sarapiquí<br/><br/>2011-03-26T10:07:00","Puntarenas<br/>Golfito<br/><br/>2009-07-11T21:07:00","Heredia<br/>Sarapiquí<br/><br/>2010-06-01T08:52:00","Heredia<br/>Sarapiquí<br/><br/>2010-05-16T08:32:00","Limón<br/>Pococí<br/><br/>2014-08-18T00:00:00","Limón<br/>Matina<br/><br/>2014-04-18T21:42:35","Puntarenas<br/>Osa<br/><br/>2012-01-17T13:00:00","Puntarenas<br/>Golfito<br/><br/>2016-02-16T12:16:34","Heredia<br/>Sarapiquí<br/><br/>2016-03-02T12:15:12","Heredia<br/>Sarapiquí<br/><br/>2015-09-06T06:02:45","Heredia<br/>Sarapiquí<br/><br/>2007-05-20T00:00:00","Heredia<br/>Sarapiquí<br/><br/>2013-05-27T00:00:00","Puntarenas<br/>NA<br/><br/>2015-01-06T00:00:00","Puntarenas<br/>Quepos<br/><br/>2011-11-09T00:00:00","Heredia<br/>Sarapiquí<br/><br/>2015-04-05T19:58:00","Heredia<br/>Sarapiquí<br/><br/>2010-09-07T13:37:00","Heredia<br/>Sarapiquí<br/><br/>2010-09-16T09:07:00","Heredia<br/>Sarapiquí<br/><br/>2010-08-25T12:59:00","Cartago<br/>Paraíso<br/><br/>2017-01-07T11:02:00","Heredia<br/>Sarapiquí<br/><br/>2009-10-03T00:00:00","Heredia<br/>Sarapiquí<br/><br/>2012-05-28T11:59:00","Heredia<br/>Sarapiquí<br/><br/>2015-02-25T23:06:00","Heredia<br/>Sarapiquí<br/><br/>2013-03-12T17:08:00","Heredia<br/>Sarapiquí<br/><br/>2013-06-09T20:04:00","Cartago<br/>Turrialba<br/><br/>2015-07-19T00:00:00","<br/>Vázquez de Coronado<br/>Braulio Carilio NP<br/>2004-12-06T00:00:00","Puntarenas<br/>Osa<br/><br/>2015-03-13T00:40:00","Limon Province<br/>Pococí<br/>Tortuguero<br/>1973-07-20T00:00:00","Puntarenas Province<br/>Osa<br/>Rincon de Osa, ca. 1.0 km SW of, Osa Tropical Science Center<br/>1973-08-22T00:00:00","Guanacaste Province<br/>Pérez Zeledón<br/>Miravalles, Pacific side<br/>1906-05-30T00:00:00","<br/>Talamanca<br/>No Further Locality Data<br/>1884-10-04T00:00:00","Guanacaste Province<br/>Pérez Zeledón<br/>Miravalles, Pacific side<br/>1906-05-30T00:00:00","Alajuela Province<br/>San Carlos<br/>Volcan Arenal, Arenal Observatory lodge<br/>1991-04-10T00:00:00","Limon Province<br/>Pococí<br/>Tortuguero, across river from Archie Carr's green turtle camp<br/>1970-08-13T00:00:00","Limon Province<br/>Siquirres<br/>Reventazon, ca. 1 km NW of Cairo on linea vieja railroad<br/>1906-01-01T00:00:00","Puntarenas Province<br/>Osa<br/>Rincon de Osa, ca. 2.5 km SW of, Osa Tropical Science Center<br/>1973-07-29T00:00:00","Guanacaste Province<br/>Pérez Zeledón<br/>Miravalles, Pacific side<br/>1906-05-30T00:00:00","Guanacaste Province<br/>Pérez Zeledón<br/>Miravalles, Pacific side<br/>1906-05-30T00:00:00","Guanacaste Province<br/>Pérez Zeledón<br/>Miravalles, Pacific side<br/>1906-05-30T00:00:00","Guanacaste Province<br/>Pérez Zeledón<br/>Miravalles<br/>1906-05-30T00:00:00","Cartago Province<br/>Turrialba<br/>Turrialba<br/>1968-05-29T00:00:00","Puntarenas Province<br/>Esparza<br/>Esparta<br/>1906-01-01T00:00:00","Limon Province<br/>Pococí<br/>Tortuguero<br/>1970-08-15T00:00:00","Heredia<br/>Sarapiquí<br/><br/>2016-01-11T17:20:00","Heredia<br/>Sarapiquí<br/><br/>2016-07-13T20:58:12","Heredia<br/>Sarapiquí<br/><br/>2016-07-13T17:41:24","Cartago<br/>Turrialba<br/><br/>2014-03-18T11:39:24","Alajuela<br/>San Carlos<br/><br/>2014-04-02T00:00:00","Puntarenas<br/>Garabito<br/><br/>2014-12-18T12:05:00","Heredia<br/>Sarapiquí<br/><br/>2015-09-26T20:42:09","Puntarenas<br/>NA<br/><br/>2014-02-25T00:00:00","Limón<br/>Matina<br/><br/>2009-09-06T00:00:00","<br/>Turrialba<br/>Rio Chitaria [Rio Reventazon] above Hwy 10, Jabillos<br/>1975-04-12T00:00:00","Heredia<br/>Sarapiquí<br/>La Selva Biological Station<br/>1987-11-29T00:00:00","Heredia<br/>Sarapiquí<br/>La Selva Biological Station<br/>1989-07-26T00:00:00","Heredia<br/>Sarapiquí<br/>La Selva Biological Station<br/>1987-12-04T00:00:00","Heredia<br/>Sarapiquí<br/>La Selva Biological Station<br/>1987-12-02T00:00:00","Heredia<br/>Sarapiquí<br/>La Selva Biological Station<br/>1990-06-22T00:00:00","Heredia<br/>Sarapiquí<br/>trail from La Cantarrana Camp to Cascante Camp, Zona Protectora La Selva<br/>1986-04-05T00:00:00","Puntarenas<br/>Garabito<br/><br/>2015-07-25T11:21:00","Heredia<br/>Sarapiquí<br/><br/>2015-02-27T00:00:00","Puntarenas<br/>NA<br/><br/>2015-01-05T00:00:00","<br/>Coto Brus<br/>San Vita de Java<br/>1969-12-30T00:00:00","Puntarenas<br/>Golfito<br/><br/>2001-09-25T00:00:00","Limón<br/>Pococí<br/><br/>2014-04-08T00:00:00","Limón<br/>Pococí<br/><br/>2012-05-19T00:00:00","Heredia<br/>Sarapiquí<br/>Puerto Viejo<br/>1966-06-21T00:00:00","Puntarenas<br/>Osa<br/>4.5 km W Rincon de Oso<br/>","Puntarenas<br/>NA<br/>6 km E Golfito<br/>1965-02-15T00:00:00","Cartago<br/>Turrialba<br/>Moravia de Turrialba<br/>1961-06-08T00:00:00","Heredia<br/>Sarapiquí<br/>La Virgen<br/>1961-04-15T00:00:00","Cartago<br/>Turrialba<br/>Turrialba<br/>1954-01-01T00:00:00","Guanacaste<br/>Bagaces<br/>Nameless<br/>","Guanacaste<br/>Bagaces<br/>Nameless<br/>","Guanacaste<br/>Bagaces<br/>Nameless<br/>","Guanacaste<br/>Cañas<br/>Tenorio, ca Las Flores<br/>1952-08-25T00:00:00","Cartago<br/>Turrialba<br/>Turrialba<br/>1951-08-01T00:00:00","Cartago<br/>Turrialba<br/>Turrialba<br/>1950-01-01T00:00:00","Cartago<br/>Turrialba<br/>Turrialba<br/>1951-01-01T00:00:00","Limon<br/>Pococí<br/>Los Diamantes<br/>1947-09-04T00:00:00","Puntarenas<br/>Corredores<br/>6.3 km NW of Villa Valley<br/>1964-01-07T00:00:00","Heredia<br/>Sarapiquí<br/>La Selva, at junction of Sarapiqui River and Puerto Viejo River, near the area called Puerto Viejo de Sarapiqui<br/>1959-03-30T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1962-08-24T00:00:00","Puntarenas<br/>Osa<br/>6 km SW Rincon de Osa<br/>1973-07-03T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1964-02-01T00:00:00","Puntarenas<br/>Osa<br/>5.5 km SW Rincon de Osa<br/>1973-07-07T00:00:00","Limón<br/>Limón<br/>Pandora<br/>1964-04-30T00:00:00","Puntarenas<br/>Osa<br/>Osa Peninsula, Camp Seattle, 4 mi up Rion Rincon<br/>1962-01-01T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1960-10-27T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1961-05-15T00:00:00","Cartago<br/>Turrialba<br/>Turrialba<br/>1960-04-04T00:00:00","Heredia<br/>Sarapiquí<br/>La Selva, at junction of Sarapiqui River and Puerto Viejo River, near the area called Puerto Viejo de Sarapiqui<br/>1959-03-31T00:00:00","Puntarenas<br/>Corredores<br/>Villa Neily near the town of Corredor (both places are few kilometers north of COTO #47)<br/>1962-04-12T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1960-11-07T00:00:00","Guanacaste<br/>Tilarán<br/>Arenal, Finca Rio Chiquito<br/>1964-07-29T00:00:00","Guanacaste<br/>Tilarán<br/>Arenal, Finca Rio Chiquito<br/>1964-07-29T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>","Cartago<br/>Turrialba<br/>Turrialba<br/>1959-08-13T00:00:00","Limón<br/>Matina<br/>La Lola<br/>1959-05-11T00:00:00","Puntarenas<br/>Golfito<br/>4.7 km SE Golfito<br/>1964-03-31T00:00:00","Puntarenas<br/>Parrita<br/>Parrita, La Julieta, Finca La Ligia<br/>1964-09-08T00:00:00","Cartago<br/>Turrialba<br/>Turrialba<br/>1959-11-28T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1959-10-14T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1961-05-22T00:00:00","Guanacaste<br/>Tilarán<br/>Silencio<br/>1967-06-25T00:00:00","Puntarenas<br/>Buenos Aires<br/>1.3 km NW of Rio Volcan on Pan Am Hwy, 9 km W of Buenos Aires<br/>1964-01-08T00:00:00","Limón<br/>Limón<br/>1.6 km S Pandora<br/>1964-08-04T00:00:00","Puntarenas<br/>Parrita<br/>Parrita, La Julieta, Finca La Ligia<br/>1964-09-08T00:00:00","Puntarenas<br/>Parrita<br/>Parrita, La Julieta, Finca La Ligia<br/>1964-09-08T00:00:00","Puntarenas<br/>Parrita<br/>Parrita, La Julieta, Finca La Ligia<br/>1964-09-16T00:00:00","Puntarenas<br/>Parrita<br/>Parrita, La Julieta, Finca La Ligia<br/>1964-09-08T00:00:00","Cartago<br/>Turrialba<br/>vic Pavores<br/>1974-08-29T00:00:00","Puntarenas<br/>Osa<br/>3.2-4.8 km W of Palmar Norte on road to Puerto Cortes<br/>1964-01-04T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1962-02-07T00:00:00","Alajuela<br/>San Ramón<br/>Penas Blancas drainage, ca 0.5 km below Dos Aces<br/>1983-01-28T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1959-03-09T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1964-02-01T00:00:00","Cartago<br/>Turrialba<br/>Turrialba, IICA station<br/>1959-07-01T00:00:00","Limón<br/>Siquirres<br/>El Tigre, area is 9-14 km from Siquirres on the Petrolera Road to Turrialba<br/>1959-08-23T00:00:00","Puntarenas<br/>Golfito<br/>Rio Purruja, 4 mi (6.4 km) SE of Golfito<br/>1964-01-05T00:00:00","Puntarenas<br/>Osa<br/>vic of Rincon de Osa<br/>1967-07-01T00:00:00","Limón<br/>Matina<br/><br/>1962-01-01T00:00:00","Limón<br/>NA<br/>Tortuguero National Park, Tortuguero Station<br/>1985-06-30T00:00:00","Puntarenas<br/>Corredores<br/>5.6 km by road NW of Villa Neily, nr Rio Nuevo<br/>1963-08-09T00:00:00","Limón<br/>Pococí<br/>Tortuguero National Park, Jalova Station<br/>1985-06-19T00:00:00","Puntarenas<br/>Golfito<br/>Osa Peninsula, Camp Seattle, 4 mi up Rio Rincon<br/>1962-08-15T00:00:00","Limón<br/>Pococí<br/>ca. 29 km (air) W. Tortuguero, Hacienda Tapezco<br/>1979-08-13T00:00:00","Puntarenas<br/>NA<br/>bridge on main stream ca. 10 m on Carretera al Pasifico from Rincon<br/>1971-05-14T00:00:00","Alajuela<br/>San Carlos<br/>Ciudad Quesada<br/>1969-07-12T00:00:00","Alajuela<br/>San Carlos<br/>Tesalia, NE Quesada, ~4 mi aling stream below house<br/>1969-07-03T00:00:00","Puntarenas<br/>Golfito<br/>8 mi. N Golfito<br/>1964-07-22T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00","<br/>Vázquez de Coronado<br/>Limon,Costa Rica<br/>1975-02-01T00:00:00"],null,null,{"interactive":false,"permanent":false,"direction":"auto","opacity":1,"offset":[0,0],"textsize":"10px","textOnly":false,"className":"","sticky":true},null]},{"method":"addLayersControl","args":[["OpenStreetMap","Stamen Toner Lite","Imágenes de ESRI"],"Terciopelos (Bothrops asper)",{"collapsed":true,"autoZIndex":true,"position":"topright"}]},{"method":"addMiniMap","args":[null,null,"bottomleft",150,150,19,19,-5,false,false,false,true,false,false,{"color":"#ff7800","weight":1,"clickable":false},{"color":"#000000","weight":1,"clickable":false,"opacity":0,"fillOpacity":0},{"hideText":"Hide MiniMap","showText":"Show MiniMap"},[]]}],"limits":{"lat":[8.232633,11.042424],"lng":[-85.603304,-82.620017]}},"evals":[],"jsHooks":[]}</script>
+</div>
+<h1 id="ejercicio-de-visualización">Ejercicio de visualización</h1>
+<p>Utilizando <a href="https://rmarkdown.rstudio.com/">R Markdown</a>, genere un documento HTML para visualizar datos sobre el <a href="https://ebird.org/species/voljun1">junco de los páramos (<em>Junco vulcani</em>)</a> y publíquelo como un sitio web en <a href="https://pages.github.com/">GitHub Pages</a>. Puede encontrar registros de presencia de la especie en el <a href="https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/gbif/junco_vulcani-cr-registros.csv">repositorio de datos del curso</a>. Estos registros fueron obtenidos a través de una <a href="https://doi.org/10.15468/dl.qspemr">consulta al portal de la Infraestructura Mundial de Información en Biodiversidad (GBIF)</a>.</p>
+<p>El sitio web debe contener visualizaciones en forma de:</p>
+<ul>
+<li>Tablas.</li>
+<li>Gráficos estadísticos.</li>
+<li>Mapas.</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/gf0604-procesamientodatosgeograficos/2021i-leccion-15/issues/new">create an issue</a> on the source repository.</p>
+<h3 id="reuse">Reuse</h3>
+<p>Text and figures are licensed under Creative Commons Attribution <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Source code is available at <a href="https://github.com/gf0604-procesamientodatosgeograficos/2021i-leccion-15/">https://github.com/gf0604-procesamientodatosgeograficos/2021i-leccion-15/</a>, unless otherwise noted. The figures that have been reused from other sources don't fall under this license and can be recognized by a note in their caption: "Figure from ...".</p>
+</div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>
