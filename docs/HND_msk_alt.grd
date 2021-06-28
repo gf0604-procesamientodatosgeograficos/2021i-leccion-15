@@ -1,0 +1,27 @@
+[general] 
+creator=R package 'raster' 
+created= 2011-11-12 14:48:59 
+[georeference] 
+nrows= 444 
+ncols= 768 
+xmin= -89.5 
+ymin= 12.9 
+xmax= -83.1 
+ymax= 16.6 
+projection= +proj=longlat +ellps=WGS84 
+[data] 
+datatype= INT2S 
+byteorder= little 
+nbands= 1 
+bandorder= BIL 
+categorical= FALSE 
+minvalue= -1 
+maxvalue= 2725 
+nodatavalue= -9999 
+[legend] 
+legendtype=  
+values=  
+color=  
+[description] 
+layername= HND_msk_alt 
+history=  

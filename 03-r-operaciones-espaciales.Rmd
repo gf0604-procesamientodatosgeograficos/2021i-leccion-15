@@ -363,6 +363,318 @@ plot(centroide_sanjose$geometry, pch = 16, add = TRUE)
 plot(centroide_alajuela$geometry, pch = 16, add = TRUE)
 ```
 
+# Datos raster
+Las operaciones espaciales en datos raster incluyen:
+
+- Creación de subconjuntos espaciales (_spatial subsetting_).  
+- Álgebra de mapas (_map algebra_). 
+- Unión de capas raster (_raster merging_).  
+
+## Manejo de datos espaciales con el paquete raster
+En los siguientes ejemplos, se utilizarán los conjuntos de datos ```elev``` y ```grain``` que se crearon en la lección sobre datos de atributos, los cuales están también incluidos en el paquete ```spData```.
+
+```{r}
+# Mapeo de los conjuntos de datos de ejemplo
+
+# Elevación
+plot(elev)
+
+# Tipos de granos
+plot(grain)
+```
+
+Para mayor facilidad de manipulación y visualización, ambos conjuntos de datos pueden grabarse en disco.
+
+```{r eval=FALSE}
+# Especificación del directorio de trabajo (debe ser una ruta existente)
+setwd("C:/Users/mfvargas/Downloads")
+
+# Escritura de los objetos raster
+writeRaster(elev, filename = "elev.asc", overwrite = TRUE)
+writeRaster(grain, filename = "grain.asc", overwrite = TRUE)
+```
+
+### Creación de subconjuntos espaciales
+En la lección sobre operaciones con atributos, se explicó como recuperar subconjuntos de objetos raster, ya sea mediante su ID o su posición en filas y columnas. Los subconjuntos de objetos raster también pueden obtenerse mediante la especificación de coordenadas o de otros objetos espaciales.
+
+```{r}
+# La función cellFromXY() retorna el ID de la celda correspondiente a una coordenada
+id <- cellFromXY(elev, xy = c(0.1, 0.1))
+elev[id]
+
+# El mismo resultado puede obtenerse con raster::extract()
+raster::extract(elev, data.frame(x = 0.1, y = 0.1))
+```
+
+También es posible consultar las celdas contenidas en la extensión (i.e. los límites) otro raster.
+
+```{r}
+clip <- raster(
+  xmn = 0.9,
+  xmx = 1.8,
+  ymn = -0.45,
+  ymx = 0.45,
+  res = 0.3,
+  vals = rep(1, 9)
+)
+
+# Celdas de elev contenidas en la extensión de clip
+elev[clip]
+
+# El mismo resultado puede obtenerse con raster::extract
+raster::extract(elev, extent(clip))
+```
+
+Los métodos explicados anteriormente solo retornan ID y valores de celdas. Con el operador ```[``` y el argumento ```drop = FALSE``` pueden retornarse objetos raster.
+
+```{r}
+# Objeto raster creado a partir de un rango de ID de celdas
+elev[1:2, drop = FALSE]
+
+# Objeto raster creado a partir de posiciones de filas y columnas
+elev[1, 1:2, drop = FALSE]
+```
+
+Por último, también es posible obtener subconjuntos raster mediante la aplicación en un objeto raster de una "máscara" (*mask*) con la misma extensión y resolución, y que contenga valores lógicos o ```NA```.
+
+```{r}
+# Creación de una "máscara"
+rmask = elev 
+values(rmask) = sample(c(NA, TRUE), 36, replace = TRUE)
+
+
+# Creación de subconjuntos espaciales mediante la máscara
+
+# Con el operador []
+elev[rmask, drop = FALSE]           
+
+# Con la función mask()
+mask(elev, rmask)                   
+
+# Con la función overlay()
+overlay(elev, rmask, fun = "max")   
+```
+
+**Ejemplos de creación de subconjuntos raster de la capa de altitud de Costa Rica**
+
+```{r}
+# Especificación del directorio de trabajo (debe ser una ruta existente)
+setwd("C:/Users/mfvargas/Downloads")
+
+# Capa vectorial de provincias de Costa Rica
+provincias <-
+  st_read(
+    "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_provincias_simp_wgs84.geojson",
+    quiet = TRUE
+  )
+
+# Obtención de la capa de altitud
+alt <- getData(
+  "worldclim",
+  var = "alt",
+  res = .5,
+  lon = -84,
+  lat = 10
+)
+
+# Recorte de la capa de altitud
+altitud_cr <-
+  alt %>%
+  mask(provincias) %>%
+  crop(provincias)
+
+plot(altitud_cr)
+
+# Altitud del punto (-84, 10)
+altitud_cr[cellFromXY(altitud_cr, xy = c(-84, 10))]
+
+# Altitud del Cerro Chirripó
+altitud_cr[cellFromXY(altitud_cr, xy = c(-83.488667, 9.484083))]
+
+# Altitud de la Catedral Metropolitana de San José
+altitud_cr[cellFromXY(altitud_cr, xy = c(-84.078758, 9.932684))]
+
+# Creación de un raster ubicado en el centro del país, alrededor de (-84, 10)
+clip_centro_cr <-
+  raster(
+    xmn = -84.10,
+    xmx = -83.90,
+    ymn = 9.90,
+    ymx = 10.10,
+    res = 0.1
+  )
+
+# Recorte de la capa de altitud con base en el raster del centro del país
+altitud_centro_cr <- altitud_cr[clip_centro_cr, drop = FALSE]
+plot(altitud_centro_cr)
+
+# Mapeo con leaflet()
+leaflet() %>%
+  setView(lng = -84.0, lat = 10.0, zoom = 7) %>%
+  addTiles(group = "OpenStreetMap") %>%
+  addRasterImage(altitud_cr, colors = "YlGnBu", group = "Altitud") %>%
+  addRasterImage(altitud_centro_cr, colors = "YlOrRd", group = "Altitud del centro del país") %>%
+  addLayersControl(
+    baseGroups = c("OpenStreetMap"),
+    overlayGroups = c("Altitud", "Altitud del centro del país")
+  )
+```
+
+Se recomienda el uso de las funciones [calc()](https://rdrr.io/pkg/raster/man/calc.html) y [overlay()](https://rdrr.io/pkg/raster/man/overlay.html) sobre los operadores aritméticos, por ser más eficientes y manejar mejor conjuntos grandes.
+
+### Álgebra de mapas
+
+El álgebra de mapas divide las operaciones raster en cuatro clases:
+
+- **Operaciones locales o de "celda por celda"**.  
+- **Operaciones focales o de "vecindario" (*neighborhood*)**. Generalmente, el valor de salida de cada celda proviene de un bloque de entrada de 3 x 3 celdas.  
+- **Operaciones zonales**. Son similares a las focales, pero el bloque de entrada puede tener tamaños y formas irregulares.  
+- **Operaciones globales**. Los valores de salida de cada celda provienen de uno o varios objetos raster completos.
+
+Esta clasificación se basa en la cantidad o forma de las celdas utilizadas por cada pixel durante el procesamiento. Otras clasificaciones pueden estar basadas en el área de aplicación del análisis (ej. terreno, hidrología, teledetección).
+
+#### Operaciones locales
+Son operaciones realizadas celda por celda en una o varias capas raster. 
+
+```{r}
+# Reclasificación de una capa raster
+rcl <-
+  matrix(c(0, 12, 1, 12, 24, 2, 24, 36, 3), ncol = 3, byrow = TRUE)
+recl <- reclassify(elev, rcl = rcl)
+plot(recl)
+
+# Álgebra raster con operadores aritméticos
+elev_doble <- elev + elev
+plot(elev_doble)
+
+elev_cuadrado <- elev * elev
+plot(elev_cuadrado)
+
+elev_mayor_30 <- elev > 30
+plot(elev_mayor_30)
+
+# Álgebra raster con calc()
+elev_triple <- calc(
+  elev,
+  fun = function(x) {
+    x * 3
+  }
+)
+plot(elev_triple)
+
+# Álgebra raster con overlay()
+elev_cubo <- overlay(
+  elev,
+  fun = function(x) {
+    x ^ 3
+  }
+)
+plot(elev_cubo)
+```
+
+#### Operaciones focales
+En este tipo de operaciones, el valor de salida de cada pixel procesado depende de un bloque compuesto por una celda central y sus vecinas. Este "vecindario" (también llamado *kernel*, filtro o "ventana móvil") es típicamente de 3 x 3 celdas, pero puede tomar otras formas y tamaños. Una operación focal aplica una función de agregación (ej. promedio, mínimo, máximo) a todas las celdas del vecindario, utiliza la salida como nuevo valor de la celda central correspondiente y se mueve a la celda siguiente.
+
+```{r}
+# Uso de focal() para obtener el valor mínimo en un vecindario de 3 x 3
+r_focal <- focal(elev, w = matrix(1, nrow = 3, ncol = 3), fun = min)
+plot(r_focal)
+```
+
+Las operaciones focales tienen aplicaciones en áreas como procesamiento de imágenes (ej. remoción de valores extremos) o análisis de terreno (ej. cálculo de pendiente o dirección de flujo).
+
+#### Operaciones zonales
+De manera similar a las focales, las operaciones zonales aplicación de agregación a múltiples celdas raster. Sin embargo, en el caso de las zonales, generalmente se usa un raster categórico que define las zonas, a diferencia de la ventana predefinida que se emplea en las focales. Por lo tanto, las celdas que definen el filtro zonal no deben ser necesariamente vecinas.
+
+```{r}
+# Uso de zonal() para encontrar la elevación promedio de cada tipo de grano
+zonal(elev, grain, fun = "mean") %>%
+  as.data.frame()
+```
+
+El siguiente bloque de código muestra como utilizar ```raster::extract()``` para calcular una estadística zonal con base en una capa vectorial.
+
+```{r}
+# Cálculo de la altitud media en cada provincia
+altitud_cr %>%
+  raster::extract(provincias["provincia"], fun = mean, na.rm = TRUE)
+
+# Capa vectorial de provincias + columna de altitud media
+provincias_altitud <-
+  provincias %>%
+  mutate(altitud_media = raster::extract(altitud_cr, provincias["provincia"], fun = mean, na.rm = TRUE))
+
+# Mapeo
+colores <-
+  colorNumeric(
+    palette = "YlGnBu",
+    domain = provincias_altitud$altitud_media,
+    na.color = "transparent"
+  )
+
+leaflet() %>%
+  setView(lng = -84.0, lat = 10.0, zoom = 7) %>%
+  addTiles(group = "OpenStreetMap") %>%
+  addPolygons(
+    data = provincias_altitud,
+    fillColor = ~ colores(provincias_altitud$altitud_media),
+    fillOpacity = 0.7,
+    stroke = TRUE,
+    color = "black",
+    weight = 1,
+    popup = paste(
+      paste("<strong>Provincia:</strong>", provincias_altitud$provincia),
+      paste(
+        "<strong>Altitud media:</strong>",
+        round(provincias_altitud$altitud_media, digits = 2)
+      ),
+      sep = '<br/>'
+    ),
+    group = "Provincias - altitud media"
+  ) %>%
+  addLayersControl(
+    baseGroups = c("OpenStreetMap"),
+    overlayGroups = c("Provincias - altitud media")
+  ) %>%
+  addLegend(
+    position = "bottomleft",
+    pal = colores,
+    values = provincias_altitud$altitud_media,
+    group = "Provincias - altitud media",
+    title = "Altitud media"
+  )
+```
+
+#### Operaciones globales
+Las operaciones globales pueden considerarse un caso particular de las operaciones zonales, en las cuales un raster completo corresponde a una zona. Las operaciones globales más comunes incluyen estadísticas descriptivas para todo un conjunto raster.
+
+```{r}
+# Estadísticas descriptivas
+cellStats(altitud_cr, mean)
+
+# Resumen
+summary(altitud_cr)
+
+# Histograma
+hist(altitud_cr)
+```
+
+Otras operaciones globales incluyen cálculos de distancia y rasters de "peso" (*weight rasters*) (ej. distancia de cada celda a una celda objetivo, costo en combustible de cada celda a una celda objetivo).
+
+### Unión de capas raster
+La función [merge()](https://rdrr.io/cran/raster/man/merge.html) une dos capas raster. 
+
+```{r}
+# Unión de los rasters de altitud de Haití y República Dominicana
+altitud_hti <- getData("alt", country = "HTI", mask = TRUE)
+altitud_dom <- getData("alt", country = "DOM", mask = TRUE)
+altitud_hti_dom <- merge(altitud_hti, altitud_dom)
+
+plot(altitud_hti_dom)
+```
+
+Si hay traslape entre las capas, se utiliza la del primer argumento de la función. El uso de esta función y de otras similares, como [mosaic()](https://rdrr.io/pkg/raster/man/mosaic.html), es frecuente, por ejemplo, en procesamiento de imágenes, cuando deben combinarse escenas tomadas en fechas diferentes.
+
 # Ejemplos de visualización
 Se presentan diversas visualizaciones de los registros de presencia de la serpiente [terciopelo (*Bothrops asper*)](http://www.icp.ucr.ac.cr/index.php/es/informacion-y-materiales/serpientes-venenosas-de-costa-rica/bothrops-asper) en Costa Rica, de acuerdo con los datos obtenidos a través de una [consulta al portal de la Infraestructura Mundial de Información en Biodiversidad (GBIF)](https://doi.org/10.15468/dl.728wpr).
 
