@@ -35,6 +35,7 @@ En estas lecciones, se cubren las capacidades geoespaciales del lenguaje de prog
 [01 El ecosistema espacial de R](01-r-ecosistemaespacial.html).  
 [02 Operaciones con datos de atributos](02-r-operaciones-atributos.html).  
 [03 Operaciones con datos espaciales](03-r-operaciones-espaciales.html).  
+[04 Operaciones con geometrías](04-r-operaciones-geometrias.html).  
 
 [Ejercicio de procesamiento y visualización de datos - registros de presencia de *Junco vulcani* (junco de los páramos) en Costa Rica](https://gf0604-procesamientodatosgeograficos.github.io/junco_vulcani-cr/) [(**código fuente**)](https://github.com/gf0604-procesamientodatosgeograficos/junco_vulcani-cr)  
 
