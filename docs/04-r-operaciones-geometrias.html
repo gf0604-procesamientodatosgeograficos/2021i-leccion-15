@@ -2461,6 +2461,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li><a href="#operaciones-con-geometrías-con-el-paquete-sf">Operaciones con geometrías con el paquete sf</a>
 <ul>
 <li><a href="#simplificación">Simplificación</a></li>
+<li><a href="#centroides">Centroides</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -2493,6 +2494,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='va'>cantones</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
     <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_cantones_simp_wgs84.geojson"</span>,
+    quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
+  <span class='op'>)</span>
+
+<span class='co'># Carga de la capa de red vial</span>
+<span class='va'>red_vial</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/red-vial/cr-redvial-simp-wgs84.geojson"</span>,
     quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
   <span class='op'>)</span>
 
@@ -2541,8 +2549,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,  
   main <span class='op'>=</span> <span class='st'>"Provincias (geometrías no simplificadas)"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-3-1.png" width="624" />
@@ -2559,8 +2566,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,  
   main <span class='op'>=</span> <span class='st'>"Provincias (simplificadas sin preservación de topología)"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-3-2.png" width="624" />
@@ -2577,8 +2583,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,  
   main <span class='op'>=</span> <span class='st'>"Provincias (simplificadas con preservación de topología)"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-3-3.png" width="624" />
@@ -2604,13 +2609,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <pre><code>70400 bytes</code></pre>
 </div>
-<p>La función <a href="https://rdrr.io/pkg/rmapshaper/man/ms_simplify.html">rmapshaper::ms_simplify()</a> proporciona un método alternativo para la simplificación de geometrías.</p>
+<p>La función <a href="https://rdrr.io/pkg/rmapshaper/man/ms_simplify.html">rmapshaper::ms_simplify()</a> proporciona un método alternativo para la simplificación de geometrías, el cual preserva la topología.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Simplificación con rmapshaper::ms_simplify()</span>
 <span class='va'>provincias_simp</span> <span class='op'>&lt;-</span>
   <span class='va'>provincias</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://rdrr.io/pkg/rmapshaper/man/ms_simplify.html'>ms_simplify</a></span><span class='op'>(</span>keep <span class='op'>=</span> <span class='fl'>0.1</span>, keep_shapes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='fu'>rmapshaper</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/rmapshaper/man/ms_simplify.html'>ms_simplify</a></span><span class='op'>(</span>keep <span class='op'>=</span> <span class='fl'>0.1</span>, keep_shapes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
 <span class='co'># Mapa de la capa de provincias con simplificación mediante rmapshaper::ms_simplify()</span>
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
@@ -2618,13 +2623,80 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,  
   main <span class='op'>=</span> <span class='st'>"Provincias (simplificadas con rmapshaper::ms_simplify())"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
-<span class='op'>)</span>
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-4-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Tamaño de la capa simplificada con rmapshaper::ms_simplify()</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/object.size.html'>object.size</a></span><span class='op'>(</span><span class='va'>provincias_simp</span><span class='op'>)</span>
+</code></pre>
 </div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<pre><code>115016 bytes</code></pre>
+</div>
+<h3 id="centroides">Centroides</h3>
+<p>Un centroide es un punto que identifica el centro de un objeto geográfico. Puede calcularse para geometrías de líneas y de polígonos y se utilizan para brindar una representación simplificada de geometrías más complejas. Existen varios métodos para calcularlos.</p>
+<p>El paquete <code>sf</code> incluye la función <a href="https://r-spatial.github.io/sf/reference/geos_unary.html">st_centroid()</a> la cual calcula el <em>centroide geográfico</em> (comúnmente llamado “el centroide”). Es posible que el centroide geográfico se ubique fuera de la geometría “padre” (ej. en una con forma de rosca). Para evitar este resultado, la función <a href="https://r-spatial.github.io/sf/reference/geos_unary.html">st_point_on_surface()</a> se asegura de que el centroide esté siempre dentro de la geometría “padre”.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Provincias de Costa Rica y sus centroides calculados con st_centroid() y st_point_on_surface()</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>provincias</span><span class='op'>$</span><span class='va'>geometry</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,    
+  main <span class='op'>=</span> <span class='st'>"Provincias centroides st_centroid (rojo) st_point_on_surface (verde)"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_centroid</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span>,
+     add <span class='op'>=</span> <span class='cn'>TRUE</span>,
+     pch <span class='op'>=</span> <span class='fl'>16</span>,
+     col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_point_on_surface</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span>,
+  add <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  pch <span class='op'>=</span> <span class='fl'>16</span>,
+  col <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-5-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Ruta 32 y sus centroides calculados con st_centroid() y st_point_on_surface()</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>provincias</span><span class='op'>$</span><span class='va'>geometry</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,    
+  main <span class='op'>=</span> <span class='st'>"Ruta 32 y centroides st_centroid (rojo) y st_point_on_surface (verde)"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='va'>ruta_32</span> <span class='op'>&lt;-</span>
+  <span class='va'>red_vial</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>num_ruta</span> <span class='op'>==</span> <span class='st'>"32"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_transform.html'>st_transform</a></span><span class='op'>(</span>crs <span class='op'>=</span> <span class='fl'>5367</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>ruta_32</span><span class='op'>$</span><span class='va'>geometry</span>,
+  add <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  col <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_centroid</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>ruta_32</span><span class='op'>)</span><span class='op'>)</span>,
+  add <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  pch <span class='op'>=</span> <span class='fl'>16</span>,
+  col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_point_on_surface</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>ruta_32</span><span class='op'>)</span><span class='op'>)</span>,
+  add <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  pch <span class='op'>=</span> <span class='fl'>16</span>,
+  col <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-5-2.png" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

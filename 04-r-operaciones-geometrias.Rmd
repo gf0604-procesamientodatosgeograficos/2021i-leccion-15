@@ -40,6 +40,13 @@ cantones <-
     quiet = TRUE
   )
 
+# Carga de la capa de red vial
+red_vial <-
+  st_read(
+    "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/red-vial/cr-redvial-simp-wgs84.geojson",
+    quiet = TRUE
+  )
+
 # Carga de la capa de mamíferos
 mamiferos <-
   st_read(
@@ -84,8 +91,7 @@ plot(
   extent = extent(280000, 660000, 880000, 1250000),  
   main = "Provincias (geometrías no simplificadas)",
   axes = TRUE,
-  graticule = TRUE
-)
+  graticule = TRUE)
 
 # Simplificación sin preservación de topología
 provincias_simp <-
@@ -98,8 +104,7 @@ plot(
   extent = extent(280000, 660000, 880000, 1250000),  
   main = "Provincias (simplificadas sin preservación de topología)",
   axes = TRUE,
-  graticule = TRUE
-)
+  graticule = TRUE)
 
 # Simplificación con preservación de topología
 provincias_simp_topo <-
@@ -112,8 +117,7 @@ plot(
   extent = extent(280000, 660000, 880000, 1250000),  
   main = "Provincias (simplificadas con preservación de topología)",
   axes = TRUE,
-  graticule = TRUE
-)
+  graticule = TRUE)
 
 # Tamaño de la capa original
 object.size(provincias)
@@ -125,13 +129,13 @@ object.size(provincias_simp)
 object.size(provincias_simp_topo)
 ```
 
-La función [rmapshaper::ms_simplify()](https://rdrr.io/pkg/rmapshaper/man/ms_simplify.html) proporciona un método alternativo para la simplificación de geometrías.
+La función [rmapshaper::ms_simplify()](https://rdrr.io/pkg/rmapshaper/man/ms_simplify.html) proporciona un método alternativo para la simplificación de geometrías, el cual preserva la topología.
 
 ```{r collapse=TRUE}
 # Simplificación con rmapshaper::ms_simplify()
 provincias_simp <-
   provincias %>%
-  ms_simplify(keep = 0.1, keep_shapes = TRUE)
+  rmapshaper::ms_simplify(keep = 0.1, keep_shapes = TRUE)
 
 # Mapa de la capa de provincias con simplificación mediante rmapshaper::ms_simplify()
 plot(
@@ -139,6 +143,66 @@ plot(
   extent = extent(280000, 660000, 880000, 1250000),  
   main = "Provincias (simplificadas con rmapshaper::ms_simplify())",
   axes = TRUE,
-  graticule = TRUE
-)
+  graticule = TRUE)
+
+# Tamaño de la capa simplificada con rmapshaper::ms_simplify()
+object.size(provincias_simp)
 ```
+
+### Centroides
+Un centroide es un punto que identifica el centro de un objeto geográfico. Puede calcularse para geometrías de líneas y de polígonos y se utilizan para brindar una representación simplificada de geometrías más complejas. Existen varios métodos para calcularlos. 
+
+El paquete  ```sf```  incluye la función [st_centroid()](https://r-spatial.github.io/sf/reference/geos_unary.html) la cual calcula el *centroide geográfico* (comúnmente llamado "el centroide"). Es posible que el centroide geográfico se ubique fuera de la geometría "padre" (ej. en una con forma de rosca). Para evitar este resultado, la función [st_point_on_surface()](https://r-spatial.github.io/sf/reference/geos_unary.html) se asegura de que el centroide esté siempre dentro de la geometría "padre".
+
+```{r collapse=TRUE}
+# Provincias de Costa Rica y sus centroides calculados con st_centroid() y st_point_on_surface()
+plot(
+  provincias$geometry,
+  extent = extent(280000, 660000, 880000, 1250000),    
+  main = "Provincias centroides st_centroid (rojo) st_point_on_surface (verde)",
+  axes = TRUE,
+  graticule = TRUE)
+
+plot(st_centroid(provincias),
+     add = TRUE,
+     pch = 16,
+     col = "red")
+
+plot(
+  st_point_on_surface(provincias),
+  add = TRUE,
+  pch = 16,
+  col = "green")
+
+# Ruta 32 y sus centroides calculados con st_centroid() y st_point_on_surface()
+plot(
+  provincias$geometry,
+  extent = extent(280000, 660000, 880000, 1250000),    
+  main = "Ruta 32 y centroides st_centroid (rojo) y st_point_on_surface (verde)",
+  axes = TRUE,
+  graticule = TRUE)
+
+ruta_32 <-
+  red_vial %>%
+  filter(num_ruta == "32") %>%
+  st_transform(crs = 5367)
+
+plot(
+  ruta_32$geometry,
+  add = TRUE,
+  col = "blue")
+
+plot(
+  st_centroid(st_union(ruta_32)),
+  add = TRUE,
+  pch = 16,
+  col = "red")
+
+plot(
+  st_point_on_surface(st_union(ruta_32)),
+  add = TRUE,
+  pch = 16,
+  col = "green")
+```
+
+
