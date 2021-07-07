@@ -33,6 +33,13 @@ provincias <-
     quiet = TRUE
   )
 
+# Carga de la capa de cantones
+cantones <-
+  st_read(
+    "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_cantones_simp_wgs84.geojson",
+    quiet = TRUE
+  )
+
 # Carga de la capa de áreas silvestres protegidas (ASP)
 asp <-
   st_read(
@@ -72,6 +79,7 @@ Las operaciones con geometrías en datos vectoriales incluyen:
 - Centroides. 
 - Áreas de amortiguamiento (_buffers_).  
 - Recortes (_clipping_).  
+- Uniones de geometrías.  
 
 ## Operaciones con geometrías con el paquete sf
 Estas operaciones modifican las geometrías de objetos vectoriales (```sf```).
@@ -301,6 +309,7 @@ mamiferos_buffer_ruta_32 %>%
 ```
 
 ### Recortes (*clipping*)
+El recorte de una geometría con base en la forma de otra puede realizarse con el método [st_intersection()](https://r-spatial.github.io/sf/reference/geos_binary_ops.html), el cual retorna la intersección entre dos geometrías.
 
 ```{r collapse=TRUE}
 # Recorte de la sección del Parque Internacional La Amistad (PILA) ubicada en Puntarenas
@@ -345,4 +354,31 @@ plot(
   puntarenas_limon$geometry,
   add = TRUE
 )
+```
+
+### Uniones de geometrías
+En lecciones anteriores, se ha mostrado como agregar geometrías mediante los métodos [agregate()](https://r-spatial.github.io/sf/reference/aggregate.sf.html) y [summarize()](https://dplyr.tidyverse.org/reference/summarise.html). Internamente, ambos métodos utilizan la función [st_union()](https://r-spatial.github.io/sf/reference/geos_combine.html) para combinar las geometrías y disolver sus límites.
+
+```{r collapse=TRUE}
+# Cantones de la provincia de San José
+cantones_sanjose <-
+  cantones %>%
+  filter(provincia == "San José")
+
+plot(
+  cantones_sanjose$geometry,
+  main = "Cantones de San José",
+  axes = TRUE,
+  graticule = TRUE)  
+
+# Cantones de la provincia de San José unificados
+cantones_sanjose_unificados <- 
+  st_union(cantones_sanjose)
+
+plot(
+  cantones_sanjose_unificados,
+  main = "Cantones de San José unificados",
+  axes = TRUE,
+  graticule = TRUE)  
+
 ```
