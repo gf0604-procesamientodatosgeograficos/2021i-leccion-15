@@ -33,10 +33,10 @@ provincias <-
     quiet = TRUE
   )
 
-# Carga de la capa de cantones
-cantones <-
+# Carga de la capa de áreas silvestres protegidas (ASP)
+asp <-
   st_read(
-    "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_cantones_simp_wgs84.geojson",
+    "https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/sinac/asp/asp-wgs84.geojson",
     quiet = TRUE
   )
 
@@ -155,6 +155,37 @@ Un centroide es un punto que identifica el centro de un objeto geográfico. Pued
 El paquete  ```sf```  incluye la función [st_centroid()](https://r-spatial.github.io/sf/reference/geos_unary.html) la cual calcula el *centroide geográfico* (comúnmente llamado "el centroide"). Es posible que el centroide geográfico se ubique fuera de la geometría "padre" (ej. en una con forma de rosca). Para evitar este resultado, la función [st_point_on_surface()](https://r-spatial.github.io/sf/reference/geos_unary.html) se asegura de que el centroide esté siempre dentro de la geometría "padre".
 
 ```{r collapse=TRUE}
+# Costa Rica y sus centroides calculados con st_centroid() y st_point_on_surface()
+plot(
+  st_union(provincias),
+  main = "Costa Rica centroides st_centroid (rojo) st_point_on_surface (verde)",
+  axes = TRUE,
+  graticule = TRUE)
+
+plot(st_centroid(st_union(provincias)),
+     add = TRUE,
+     pch = 16,
+     col = "red")
+
+plot(
+  st_point_on_surface(st_union(provincias)),
+  add = TRUE,
+  pch = 16,
+  col = "green")
+
+# Coordenadas del centroide calculado con st_centroid()
+# CRTM05
+st_coordinates(st_centroid(st_union(provincias)))
+# WGS84
+st_coordinates(st_transform(st_centroid(st_union(provincias)), crs = 4326))
+
+# Coordenadas del centroide calculado con st_point_on_surface()
+# CRTM05
+st_coordinates(st_point_on_surface(st_union(provincias)))
+# WGS84
+st_coordinates(st_transform(st_point_on_surface(st_union(provincias)), crs = 4326))
+
+
 # Provincias de Costa Rica y sus centroides calculados con st_centroid() y st_point_on_surface()
 plot(
   provincias$geometry,
@@ -173,6 +204,7 @@ plot(
   add = TRUE,
   pch = 16,
   col = "green")
+
 
 # Ruta 32 y sus centroides calculados con st_centroid() y st_point_on_surface()
 plot(
@@ -205,4 +237,112 @@ plot(
   col = "green")
 ```
 
+### Áreas de amortiguamiento (*buffers*)
+Los *buffers* son polígonos creados alrededor de otra geometría, ya sea otro polígono, una línea o un punto. El paquete ```sf``` incluye la función [st_buffer()]() para la generación de *buffers*.
 
+```{r collapse=TRUE}
+# Buffer alrededor de la ruta 32
+plot(
+  st_buffer(st_union(ruta_32), 5000),
+  main = "Buffer alrededor de la ruta 32",
+  axes = TRUE,
+  graticule = TRUE)
+
+plot(
+  ruta_32$geometry,
+  col = "blue",
+  add = TRUE
+)
+```
+
+Es común el uso de *buffers* en análisis de datos, para responder preguntas como, por ejemplo, "¿cuántos puntos hay alrededor de una línea?" o "¿cuáles especies pueden encontrarse en las márgenes de un río?".
+
+```{r collapse=TRUE}
+# Registros de presencia de mamíferos terrestres ubicados alrededor de la ruta 32
+mamiferos <-
+  mamiferos %>%
+  filter(order != "Chiroptera") %>% # se excluye el orden de los murciélagos
+  st_transform(crs = 5367)
+
+buffer_ruta_32 <-
+  ruta_32 %>%
+  st_buffer(dist = 5000)
+
+mamiferos_buffer_ruta_32 <-
+  st_join(mamiferos, buffer_ruta_32) %>%
+  filter(!is.na(codigo))
+
+plot(
+  st_union(buffer_ruta_32),
+  main = "Mamíferos terrestres alrededor de la ruta 32",
+  axes = TRUE,
+  graticule = TRUE
+)
+
+plot(ruta_32$geometry,
+     col = "blue",
+     add = TRUE)
+
+plot(
+  mamiferos_buffer_ruta_32,
+  pch = 16,
+  col = "orange",
+  add = TRUE
+)
+
+# 10 especies con mayor cantidad de registros
+mamiferos_buffer_ruta_32 %>% 
+  st_drop_geometry() %>%
+  filter(!is.na(species) & species != "") %>%
+  group_by(species) %>% 
+  summarise(registros = n()) %>%
+  arrange(desc(registros)) %>%
+  slice(1:10)
+```
+
+### Recortes (*clipping*)
+
+```{r collapse=TRUE}
+# Recorte de la sección del Parque Internacional La Amistad (PILA) ubicada en Puntarenas
+pila <-
+  asp %>%
+  filter(nombre_asp == "Internacional La Amistad") %>%
+  st_transform(crs = 5367)
+
+puntarenas_limon <-
+  provincias %>%
+  filter(provincia == "Puntarenas" | provincia == "Limón")
+
+# Mapa de Puntarenas, Limón y el PILA
+plot(
+  puntarenas_limon$geometry,
+  main = "Puntarenas, Limón y el PILA",
+  extent = extent(350000, 660000, 880000, 1200000),
+  axes = TRUE,
+  graticule = TRUE)
+
+plot(
+  pila$geometry,
+  border = "green",
+  add = TRUE)
+
+puntarenas <-
+  provincias %>%
+  filter(provincia == "Puntarenas")
+
+# Recorte de la sección del PILA ubicada en Puntarenas
+pila_puntarenas <- st_intersection(pila, puntarenas)
+
+# Mapa de la sección recortada
+plot(
+  pila_puntarenas$geometry,
+  main = "Sección del PILA ubicada en Puntarenas",
+  col = "red",
+  axes = TRUE,
+  graticule = TRUE)
+
+plot(
+  puntarenas_limon$geometry,
+  add = TRUE
+)
+```

@@ -2462,6 +2462,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <ul>
 <li><a href="#simplificación">Simplificación</a></li>
 <li><a href="#centroides">Centroides</a></li>
+<li><a href="#áreas-de-amortiguamiento-buffers">Áreas de amortiguamiento (<em>buffers</em>)</a></li>
+<li><a href="#recortes-clipping">Recortes (<em>clipping</em>)</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -2490,10 +2492,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
   <span class='op'>)</span>
 
-<span class='co'># Carga de la capa de cantones</span>
-<span class='va'>cantones</span> <span class='op'>&lt;-</span>
+<span class='co'># Carga de la capa de áreas silvestres protegidas (ASP)</span>
+<span class='va'>asp</span> <span class='op'>&lt;-</span>
   <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_read.html'>st_read</a></span><span class='op'>(</span>
-    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/ign/delimitacion-territorial-administrativa/cr_cantones_simp_wgs84.geojson"</span>,
+    <span class='st'>"https://raw.githubusercontent.com/gf0604-procesamientodatosgeograficos/2021i-datos/main/sinac/asp/asp-wgs84.geojson"</span>,
     quiet <span class='op'>=</span> <span class='cn'>TRUE</span>
   <span class='op'>)</span>
 
@@ -2640,7 +2642,62 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>El paquete <code>sf</code> incluye la función <a href="https://r-spatial.github.io/sf/reference/geos_unary.html">st_centroid()</a> la cual calcula el <em>centroide geográfico</em> (comúnmente llamado “el centroide”). Es posible que el centroide geográfico se ubique fuera de la geometría “padre” (ej. en una con forma de rosca). Para evitar este resultado, la función <a href="https://r-spatial.github.io/sf/reference/geos_unary.html">st_point_on_surface()</a> se asegura de que el centroide esté siempre dentro de la geometría “padre”.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Provincias de Costa Rica y sus centroides calculados con st_centroid() y st_point_on_surface()</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Costa Rica y sus centroides calculados con st_centroid() y st_point_on_surface()</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Costa Rica centroides st_centroid (rojo) st_point_on_surface (verde)"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_centroid</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span><span class='op'>)</span>,
+     add <span class='op'>=</span> <span class='cn'>TRUE</span>,
+     pch <span class='op'>=</span> <span class='fl'>16</span>,
+     col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_point_on_surface</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span><span class='op'>)</span>,
+  add <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  pch <span class='op'>=</span> <span class='fl'>16</span>,
+  col <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-5-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Coordenadas del centroide calculado con st_centroid()</span>
+<span class='co'># CRTM05</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_centroid</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>       X       Y
+1 478674 1102734</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># WGS84</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_transform.html'>st_transform</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_centroid</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span><span class='op'>)</span>, crs <span class='op'>=</span> <span class='fl'>4326</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>          X        Y
+1 -84.19452 9.972735</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># Coordenadas del centroide calculado con st_point_on_surface()</span>
+<span class='co'># CRTM05</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_point_on_surface</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>         X       Y
+1 539376.2 1065149</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># WGS84</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_coordinates.html'>st_coordinates</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_transform.html'>st_transform</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_point_on_surface</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span><span class='op'>)</span>, crs <span class='op'>=</span> <span class='fl'>4326</span><span class='op'>)</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>          X        Y
+1 -83.64122 9.632758</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+
+<span class='co'># Provincias de Costa Rica y sus centroides calculados con st_centroid() y st_point_on_surface()</span>
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>provincias</span><span class='op'>$</span><span class='va'>geometry</span>,
   extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,    
@@ -2660,9 +2717,10 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   col <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-5-1.png" width="624" />
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-5-2.png" width="624" />
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r">
+
 <span class='co'># Ruta 32 y sus centroides calculados con st_centroid() y st_point_on_surface()</span>
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>provincias</span><span class='op'>$</span><span class='va'>geometry</span>,
@@ -2694,9 +2752,145 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   col <span class='op'>=</span> <span class='st'>"green"</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-5-2.png" width="624" /></p>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-5-3.png" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h3 id="áreas-de-amortiguamiento-buffers">Áreas de amortiguamiento (<em>buffers</em>)</h3>
+<p>Los <em>buffers</em> son polígonos creados alrededor de otra geometría, ya sea otro polígono, una línea o un punto. El paquete <code>sf</code> incluye la función <a href="">st_buffer()</a> para la generación de <em>buffers</em>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Buffer alrededor de la ruta 32</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_buffer</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>ruta_32</span><span class='op'>)</span>, <span class='fl'>5000</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Buffer alrededor de la ruta 32"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>ruta_32</span><span class='op'>$</span><span class='va'>geometry</span>,
+  col <span class='op'>=</span> <span class='st'>"blue"</span>,
+  add <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-6-1.png" width="624" /></p>
+</div>
+<p>Es común el uso de <em>buffers</em> en análisis de datos, para responder preguntas como, por ejemplo, “¿cuántos puntos hay alrededor de una línea?” o “¿cuáles especies pueden encontrarse en las márgenes de un río?”.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Registros de presencia de mamíferos terrestres ubicados alrededor de la ruta 32</span>
+<span class='va'>mamiferos</span> <span class='op'>&lt;-</span>
+  <span class='va'>mamiferos</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>order</span> <span class='op'>!=</span> <span class='st'>"Chiroptera"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='co'># se excluye el orden de los murciélagos</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_transform.html'>st_transform</a></span><span class='op'>(</span>crs <span class='op'>=</span> <span class='fl'>5367</span><span class='op'>)</span>
+
+<span class='va'>buffer_ruta_32</span> <span class='op'>&lt;-</span>
+  <span class='va'>ruta_32</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_unary.html'>st_buffer</a></span><span class='op'>(</span>dist <span class='op'>=</span> <span class='fl'>5000</span><span class='op'>)</span>
+
+<span class='va'>mamiferos_buffer_ruta_32</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_join.html'>st_join</a></span><span class='op'>(</span><span class='va'>mamiferos</span>, <span class='va'>buffer_ruta_32</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>codigo</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_combine.html'>st_union</a></span><span class='op'>(</span><span class='va'>buffer_ruta_32</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Mamíferos terrestres alrededor de la ruta 32"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>ruta_32</span><span class='op'>$</span><span class='va'>geometry</span>,
+     col <span class='op'>=</span> <span class='st'>"blue"</span>,
+     add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>mamiferos_buffer_ruta_32</span>,
+  pch <span class='op'>=</span> <span class='fl'>16</span>,
+  col <span class='op'>=</span> <span class='st'>"orange"</span>,
+  add <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-7-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='co'># 10 especies con mayor cantidad de registros</span>
+<span class='va'>mamiferos_buffer_ruta_32</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_geometry.html'>st_drop_geometry</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='op'>!</span><span class='fu'><a href='https://rdrr.io/r/base/NA.html'>is.na</a></span><span class='op'>(</span><span class='va'>species</span><span class='op'>)</span> <span class='op'>&amp;</span> <span class='va'>species</span> <span class='op'>!=</span> <span class='st'>""</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>species</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/tidyverse.html'>summarise</a></span><span class='op'>(</span>registros <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/arrange.html'>arrange</a></span><span class='op'>(</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/desc.html'>desc</a></span><span class='op'>(</span><span class='va'>registros</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 10 x 2
+   species                  registros
+   &lt;chr&gt;                        &lt;int&gt;
+ 1 Sciurus variegatoides           84
+ 2 Bradypus variegatus             81
+ 3 Heteromys desmarestianus        48
+ 4 Choloepus hoffmanni             47
+ 5 Peromyscus mexicanus            38
+ 6 Melanomys caliginosus           30
+ 7 Alouatta palliata               20
+ 8 Orthogeomys cherriei            20
+ 9 Didelphis marsupialis           16
+10 Cebus capucinus                 15</code></pre>
+</div>
+<h3 id="recortes-clipping">Recortes (<em>clipping</em>)</h3>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Recorte de la sección del Parque Internacional La Amistad (PILA) ubicada en Puntarenas</span>
+<span class='va'>pila</span> <span class='op'>&lt;-</span>
+  <span class='va'>asp</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>nombre_asp</span> <span class='op'>==</span> <span class='st'>"Internacional La Amistad"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_transform.html'>st_transform</a></span><span class='op'>(</span>crs <span class='op'>=</span> <span class='fl'>5367</span><span class='op'>)</span>
+
+<span class='va'>puntarenas_limon</span> <span class='op'>&lt;-</span>
+  <span class='va'>provincias</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>provincia</span> <span class='op'>==</span> <span class='st'>"Puntarenas"</span> <span class='op'>|</span> <span class='va'>provincia</span> <span class='op'>==</span> <span class='st'>"Limón"</span><span class='op'>)</span>
+
+<span class='co'># Mapa de Puntarenas, Limón y el PILA</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>puntarenas_limon</span><span class='op'>$</span><span class='va'>geometry</span>,
+  main <span class='op'>=</span> <span class='st'>"Puntarenas, Limón y el PILA"</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>350000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1200000</span><span class='op'>)</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>pila</span><span class='op'>$</span><span class='va'>geometry</span>,
+  border <span class='op'>=</span> <span class='st'>"green"</span>,
+  add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-8-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r">
+<span class='va'>puntarenas</span> <span class='op'>&lt;-</span>
+  <span class='va'>provincias</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>provincia</span> <span class='op'>==</span> <span class='st'>"Puntarenas"</span><span class='op'>)</span>
+
+<span class='co'># Recorte de la sección del PILA ubicada en Puntarenas</span>
+<span class='va'>pila_puntarenas</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://r-spatial.github.io/sf/reference/geos_binary_ops.html'>st_intersection</a></span><span class='op'>(</span><span class='va'>pila</span>, <span class='va'>puntarenas</span><span class='op'>)</span>
+
+<span class='co'># Mapa de la sección recortada</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>pila_puntarenas</span><span class='op'>$</span><span class='va'>geometry</span>,
+  main <span class='op'>=</span> <span class='st'>"Sección del PILA ubicada en Puntarenas"</span>,
+  col <span class='op'>=</span> <span class='st'>"red"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>puntarenas_limon</span><span class='op'>$</span><span class='va'>geometry</span>,
+  add <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-8-2.png" width="624" /></p>
+</div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
