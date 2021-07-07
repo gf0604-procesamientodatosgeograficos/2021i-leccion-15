@@ -2477,8 +2477,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <pre class="sourceCode r"><code class="sourceCode r"><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://r-spatial.github.io/sf/'>sf</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rspatial.org/raster'>raster</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
-<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://nowosad.github.io/spData/'>spData</a></span><span class='op'>)</span>
-
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ateucher/rmapshaper'>rmapshaper</a></span><span class='op'>)</span>
 </code></pre>
 </div>
@@ -2559,7 +2557,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>provincias</span><span class='op'>$</span><span class='va'>geometry</span>,
   extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,  
-  main <span class='op'>=</span> <span class='st'>"Provincias (geometrías no simplificadas)"</span>,
+  main <span class='op'>=</span> <span class='st'>"Provincias con geometrías no simplificadas"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
   graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
@@ -2576,7 +2574,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>provincias_simp</span><span class='op'>$</span><span class='va'>geometry</span>,
   extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,  
-  main <span class='op'>=</span> <span class='st'>"Provincias (simplificadas sin preservación de topología)"</span>,
+  main <span class='op'>=</span> <span class='st'>"Provincias simplificadas sin preservación de topología"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
   graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
@@ -2593,7 +2591,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>provincias_simp_topo</span><span class='op'>$</span><span class='va'>geometry</span>,
   extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,  
-  main <span class='op'>=</span> <span class='st'>"Provincias (simplificadas con preservación de topología)"</span>,
+  main <span class='op'>=</span> <span class='st'>"Provincias simplificadas con preservación de topología"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
   graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
@@ -2633,7 +2631,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>provincias_simp</span><span class='op'>$</span><span class='va'>geometry</span>,
   extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,  
-  main <span class='op'>=</span> <span class='st'>"Provincias (simplificadas con rmapshaper::ms_simplify())"</span>,
+  main <span class='op'>=</span> <span class='st'>"Provincias simplificadas con rmapshaper::ms_simplify()"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
   graticule <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>

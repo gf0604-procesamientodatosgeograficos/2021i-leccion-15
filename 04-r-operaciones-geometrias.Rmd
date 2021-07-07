@@ -18,8 +18,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(sf)
 library(raster)
 library(dplyr)
-library(spData)
-
 library(rmapshaper)
 ```
 
@@ -97,7 +95,7 @@ provincias <-
 plot(
   provincias$geometry,
   extent = extent(280000, 660000, 880000, 1250000),  
-  main = "Provincias (geometrías no simplificadas)",
+  main = "Provincias con geometrías no simplificadas",
   axes = TRUE,
   graticule = TRUE)
 
@@ -110,7 +108,7 @@ provincias_simp <-
 plot(
   provincias_simp$geometry,
   extent = extent(280000, 660000, 880000, 1250000),  
-  main = "Provincias (simplificadas sin preservación de topología)",
+  main = "Provincias simplificadas sin preservación de topología",
   axes = TRUE,
   graticule = TRUE)
 
@@ -123,7 +121,7 @@ provincias_simp_topo <-
 plot(
   provincias_simp_topo$geometry,
   extent = extent(280000, 660000, 880000, 1250000),  
-  main = "Provincias (simplificadas con preservación de topología)",
+  main = "Provincias simplificadas con preservación de topología",
   axes = TRUE,
   graticule = TRUE)
 
@@ -149,7 +147,7 @@ provincias_simp <-
 plot(
   provincias_simp$geometry,
   extent = extent(280000, 660000, 880000, 1250000),  
-  main = "Provincias (simplificadas con rmapshaper::ms_simplify())",
+  main = "Provincias simplificadas con rmapshaper::ms_simplify()",
   axes = TRUE,
   graticule = TRUE)
 
