@@ -2467,6 +2467,19 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <li><a href="#uniones-de-geometrías">Uniones de geometrías</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#datos-raster">Datos raster</a>
+<ul>
+<li><a href="#operaciones-con-geometrías-con-el-paquete-raster">Operaciones con geometrías con el paquete raster</a>
+<ul>
+<li><a href="#intersecciones-geométricas">Intersecciones geométricas</a></li>
+<li><a href="#cambio-de-extensión-y-de-origen">Cambio de extensión y de origen</a>
+<ul>
+<li><a href="#cambio-de-extensión">Cambio de extensión</a></li>
+<li><a href="#cambio-de-origen">Cambio de origen</a></li>
+</ul></li>
+<li><a href="#agregación-y-desagregación">Agregación y desagregación</a></li>
+</ul></li>
+</ul></li>
 </ul>
 </nav>
 </div>
@@ -2478,6 +2491,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://rspatial.org/raster'>raster</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://github.com/ateucher/rmapshaper'>rmapshaper</a></span><span class='op'>)</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://nowosad.github.io/spData/'>spData</a></span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2931,7 +2945,272 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-9-2.png" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<h1 id="datos-raster">Datos raster</h1>
+<p>Las operaciones con geometrías en datos raster incluyen:</p>
+<ul>
+<li>Intersecciones geométicas.<br />
+</li>
+<li>Cambio de extensión y de origen.<br />
+</li>
+<li>Agregación y desagregación.</li>
+</ul>
+<h2 id="operaciones-con-geometrías-con-el-paquete-raster">Operaciones con geometrías con el paquete raster</h2>
+<h3 id="intersecciones-geométricas">Intersecciones geométricas</h3>
+<p>En lecciones anteriores, se mostró como extraer valores de un raster al que se sobreponen otros objetos espaciales. Para recuperar otro objeto espacial, solamente debe especificarse el argumento <code>drop = FALSE</code>.</p>
+<p>El siguiente bloque de código retornará un objeto raster en el cual los puntos centrales de la capa de altitud se sobreponen con el de otro objetos raster que lo interseca (o lo recorta).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Especificación del directorio de trabajo (debe ser una ruta existente)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='st'>"C:/Users/mfvargas/Downloads"</span><span class='op'>)</span>
+
+<span class='co'># Obtención de la capa de altitud</span>
+<span class='va'>alt</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/getData.html'>getData</a></span><span class='op'>(</span>
+    <span class='st'>"worldclim"</span>,
+    var <span class='op'>=</span> <span class='st'>"alt"</span>,
+    res <span class='op'>=</span> <span class='fl'>.5</span>,
+    lon <span class='op'>=</span> <span class='op'>-</span><span class='fl'>84</span>,
+    lat <span class='op'>=</span> <span class='fl'>10</span>
+  <span class='op'>)</span>
+
+<span class='co'># Reproyección de la capa de altitud a CRT05</span>
+<span class='va'>alt</span> <span class='op'>&lt;-</span>
+  <span class='va'>alt</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/projectRaster.html'>projectRaster</a></span><span class='op'>(</span>crs <span class='op'>=</span> <span class='fl'>5367</span><span class='op'>)</span>
+
+<span class='co'># Recorte de la capa de altitud</span>
+<span class='va'>altitud</span> <span class='op'>&lt;-</span>
+  <span class='va'>alt</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/mask.html'>mask</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/crop.html'>crop</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>altitud</span>,
+  ext <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Altitud de Costa Rica"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-10-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Objeto raster para intersecar con el de altitud</span>
+<span class='va'>recorte</span> <span class='op'>&lt;-</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span><span class='op'>(</span>
+    xmn <span class='op'>=</span> <span class='op'>-</span><span class='fl'>84.5</span>,
+    xmx <span class='op'>=</span> <span class='op'>-</span><span class='fl'>83.5</span>,
+    ymn <span class='op'>=</span> <span class='fl'>9.5</span>,
+    ymx <span class='op'>=</span> <span class='fl'>10.5</span>,
+    res <span class='op'>=</span> <span class='fl'>0.5</span>
+  <span class='op'>)</span>
+
+<span class='va'>recorte</span> <span class='op'>&lt;-</span>
+  <span class='va'>recorte</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/projectRaster.html'>projectRaster</a></span><span class='op'>(</span>crs <span class='op'>=</span> <span class='fl'>5367</span><span class='op'>)</span>
+
+<span class='co'># Intersección de altitud y recorte</span>
+<span class='va'>altitud_recorte</span> <span class='op'>&lt;-</span> <span class='va'>altitud</span><span class='op'>[</span><span class='va'>recorte</span>, drop <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>]</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>provincias</span><span class='op'>$</span><span class='va'>geometry</span>,
+  extent <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Recorte de altitud de Costa Rica"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  graticule <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>altitud_recorte</span>,
+     add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-10-2.png" width="624" /></p>
+</div>
+<p>El mismo resultado puede obtenerse mediante el uso de las funciones <a href="https://rdrr.io/cran/raster/man/intersect.html">intersect()</a> y <a href="https://rdrr.io/pkg/raster/man/crop.html">crop()</a>.</p>
+<h3 id="cambio-de-extensión-y-de-origen">Cambio de extensión y de origen</h3>
+<p>Muchas operaciones que se realizan con múltiples objetos raster requieren que estos tengan la misma resolución, proyección, origen y extensión. Como ejemplos de estas operaciones pueden mencionarse el álgebra raster y la combinación de imágenes satelitales con diferentes proyecciones y resoluciones. Si hay diferencias en las características de los objetos raster que impiden realizar estas operaciones, deben “alinearse” primero.</p>
+<h4 id="cambio-de-extensión">Cambio de extensión</h4>
+<p>A continuación, se ilustra el caso de objetos raster que difieren solamente en su extensión (i.e. cantidad de filas y columnas). El siguiente bloque de código agrega una fila y dos columnas a los bordes del objeto raster <code>elev</code> del paquete <code>spData</code>, por medio del método <a href="https://rdrr.io/pkg/raster/man/extend.html">extend()</a>. A las nuevas celdas, se les asigna un valor de 1000.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Modificación de la extensión de un objeto raster</span>
+<span class='va'>elev_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extend.html'>extend</a></span><span class='op'>(</span><span class='va'>elev</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev_2</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<p>Al intentar realizar una operación algebraica que requiere que los raster tengan las mismas dimensiones, la operación se ejecuta en la intersección y, además, se muestra una advertencia.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Suma de dos objetos raster no alineados</span>
+<span class='va'>elev_3</span> <span class='op'>&lt;-</span> <span class='va'>elev</span> <span class='op'>+</span> <span class='va'>elev_2</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev_3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-12-1.png" width="624" /></p>
+</div>
+<p>Ambos objetos raster pueden alinearse con <code>extent()</code>. En este caso, no se especifica la cantidad de filas y columnas que se desan añadir a un raster, sino otro raster cuyas dimensiones se utilizan como referencia. Con el argumento <code>value</code>, se especificar el valor de las nuevas celdas (su valor por defecto es <code>NA</code>).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Alineación de la extensión de dos objetos raster</span>
+<span class='va'>elev_4</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extend.html'>extend</a></span><span class='op'>(</span><span class='va'>elev</span>, <span class='va'>elev_2</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev_4</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-13-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Suma de los dos objetos raster alineados</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev</span> <span class='op'>+</span> <span class='va'>elev_4</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-13-2.png" width="624" /></p>
+</div>
+<h4 id="cambio-de-origen">Cambio de origen</h4>
+<p>El origen de un objeto raster es la celda esquinera más cercana a las coordenas (0, 0). La función <a href="https://rdrr.io/cran/raster/man/origin.html">origin()</a> retorna las coordenadas del origen.</p>
+<p>En el ejemplo del siguiente bloque de código, existe una celda con las coordenadas (0, 0), pero ese no siempre es el caso.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Impresión del origen de un objeto raster</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/origin.html'>origin</a></span><span class='op'>(</span><span class='va'>elev</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] 0 0</code></pre>
+</div>
+<p>Seguidamente, se muestra el efecto de cambiar el origen de un objeto raster.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Cambio del origen de un objeto raster</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/origin.html'>origin</a></span><span class='op'>(</span><span class='va'>elev_4</span><span class='op'>)</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.25</span>, <span class='fl'>0.25</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev_4</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-15-1.png" width="624" /></p>
+</div>
+<p>Para realizar operaciones aritméticas con álgebra raster, los orígenes de ambos objetos deben coincidir. Algunas operaciones (ej. cambio de resolución) pueden provocar un cambio en el origen.</p>
+<h3 id="agregación-y-desagregación">Agregación y desagregación</h3>
+<p>La resolución de un raster puede disminuirse con la función <a href="https://rdrr.io/cran/raster/man/aggregate.html">aggregate()</a> o aumentarse con la función <a href="https://rdrr.io/cran/raster/man/disaggregate.html">disaggregate()</a>.</p>
+<p>En el siguiente bloque de código, se utiliza la función <code>aggregate()</code> para disminuir la resolución del raster de altitud de Costa Rica por un factor de 4, como se especifica con el argumento<code>factor = 4</code>. Así, se generará una celda en el raster agrupado por cada ocho celdas del raster original. El argumento <code>fun = mean</code> indica que en el raster agrupado, cada celda será el promedio de las cuatro celdas correspondientes en el raster original.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Capa de altitud de Costa Rica</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>altitud</span>,
+  ext <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Capa de altitud de Costa Rica"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-16-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Agrupación de la capa de altitud de Costa Rica</span>
+<span class='va'>altitud_agregada</span> <span class='op'>&lt;-</span> 
+  <span class='va'>altitud</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>fact <span class='op'>=</span> <span class='fl'>8</span>, fun <span class='op'>=</span> <span class='va'>mean</span><span class='op'>)</span>
+
+<span class='co'># Capa de altitud agrupada de Costa Rica</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>altitud_agregada</span>,
+  ext <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Capa agrupada de altitud de Costa Rica"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-16-2.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Metadatos de la capa original de altitud</span>
+<span class='va'>altitud</span>
+</code></pre>
+</div>
+<pre><code>class      : RasterLayer 
+dimensions : 679, 555, 376845  (nrow, ncol, ncell)
+resolution : 906, 932  (x, y)
+extent     : 156171.6, 659001.6, 608735.2, 1241563  (xmin, xmax, ymin, ymax)
+crs        : +proj=tmerc +lat_0=0 +lon_0=-84 +k=0.9999 +x_0=500000 +y_0=0 +ellps=WGS84 +units=m +no_defs 
+source     : memory
+names      : alt_23 
+values     : -6.604836, 3717.273  (min, max)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Metadatos de la capa agrupada de altitud</span>
+<span class='va'>altitud_agregada</span>
+</code></pre>
+</div>
+<pre><code>class      : RasterLayer 
+dimensions : 85, 70, 5950  (nrow, ncol, ncell)
+resolution : 7248, 7456  (x, y)
+extent     : 156171.6, 663531.6, 607803.2, 1241563  (xmin, xmax, ymin, ymax)
+crs        : +proj=tmerc +lat_0=0 +lon_0=-84 +k=0.9999 +x_0=500000 +y_0=0 +ellps=WGS84 +units=m +no_defs 
+source     : memory
+names      : alt_23 
+values     : 3.816522, 3174.02  (min, max)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Tamaño de la capa original de altitud</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/object.size.html'>object.size</a></span><span class='op'>(</span><span class='va'>altitud</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>3028992 bytes</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Tamaño de la capa agrupada de altitud</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/object.size.html'>object.size</a></span><span class='op'>(</span><span class='va'>altitud_agregada</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>61832 bytes</code></pre>
+</div>
+<p>La función <code>disaggregate()</code> genera varias celdas por cada celda del raster original. Debe especificarse un método con el argumento <code>method</code>. Su valor puede ser <code>""</code>, para copiar los valores de la celda de entrada o <code>bilinear</code>, que es un método de interpolación.</p>
+<p>En el siguiente bloque de código, se desagrega el raster de elevación por un factor de dos.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Desagregación de la capa de elevación</span>
+<span class='va'>elev_desagregada</span> <span class='op'>&lt;-</span> 
+  <span class='va'>elev</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/disaggregate.html'>disaggregate</a></span><span class='op'>(</span>fact <span class='op'>=</span> <span class='fl'>2</span>, method <span class='op'>=</span> <span class='st'>"bilinear"</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev_desagregada</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-17-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Metadatos de la capa original de elevación</span>
+<span class='va'>elev</span>
+</code></pre>
+</div>
+<pre><code>class      : RasterLayer 
+dimensions : 6, 6, 36  (nrow, ncol, ncell)
+resolution : 0.5, 0.5  (x, y)
+extent     : -1.5, 1.5, -1.5, 1.5  (xmin, xmax, ymin, ymax)
+crs        : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 
+source     : memory
+names      : layer 
+values     : 1, 36  (min, max)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Metadatos de la capa desagrupada de elevación</span>
+<span class='va'>elev_desagregada</span>
+</code></pre>
+</div>
+<pre><code>class      : RasterLayer 
+dimensions : 12, 12, 144  (nrow, ncol, ncell)
+resolution : 0.25, 0.25  (x, y)
+extent     : -1.5, 1.5, -1.5, 1.5  (xmin, xmax, ymin, ymax)
+crs        : +proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0 
+source     : memory
+names      : layer 
+values     : -0.75, 37.75  (min, max)</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Tamaño de la capa original de elevación</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/object.size.html'>object.size</a></span><span class='op'>(</span><span class='va'>elev</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>12776 bytes</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Metadatos de la capa desagrupada de elevación</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/object.size.html'>object.size</a></span><span class='op'>(</span><span class='va'>elev_desagregada</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>13784 bytes</code></pre>
+</div>
+<p>El proceso de calcular valores para nuevos pixeles se denomina “remuestreo” (<em>resampling</em>). El paquete <code>raster</code> incluye una función llamada <a href="https://rdrr.io/cran/raster/man/resample.html">resample()</a>, el cual alinea simultáneamente varias propiedades de objetos raster: extensión, origen y resolución.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

@@ -19,6 +19,7 @@ library(sf)
 library(raster)
 library(dplyr)
 library(rmapshaper)
+library(spData)
 ```
 
 ## Conjuntos de datos utilizados
@@ -380,3 +381,200 @@ plot(
   graticule = TRUE)  
 
 ```
+
+# Datos raster
+Las operaciones con geometrías en datos raster incluyen:
+
+- Intersecciones geométicas.  
+- Cambio de extensión y de origen.  
+- Agregación y desagregación.  
+
+## Operaciones con geometrías con el paquete raster
+
+### Intersecciones geométricas
+En lecciones anteriores, se mostró como extraer valores de un raster al que se sobreponen otros objetos espaciales. Para recuperar otro objeto espacial, solamente debe especificarse el argumento ```drop = FALSE```. 
+
+El siguiente bloque de código retornará un objeto raster en el cual los puntos centrales de la capa de altitud se sobreponen con el de otro objetos raster que lo interseca (o lo recorta).
+
+```{r}
+# Especificación del directorio de trabajo (debe ser una ruta existente)
+setwd("C:/Users/mfvargas/Downloads")
+
+# Obtención de la capa de altitud
+alt <-
+  getData(
+    "worldclim",
+    var = "alt",
+    res = .5,
+    lon = -84,
+    lat = 10
+  )
+
+# Reproyección de la capa de altitud a CRT05
+alt <-
+  alt %>%
+  projectRaster(crs = 5367)
+
+# Recorte de la capa de altitud
+altitud <-
+  alt %>%
+  mask(provincias) %>%
+  crop(provincias)
+
+plot(
+  altitud,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "Altitud de Costa Rica",
+  axes = TRUE
+)
+
+# Objeto raster para intersecar con el de altitud
+recorte <-
+  raster(
+    xmn = -84.5,
+    xmx = -83.5,
+    ymn = 9.5,
+    ymx = 10.5,
+    res = 0.5
+  )
+
+recorte <-
+  recorte %>%
+  projectRaster(crs = 5367)
+
+# Intersección de altitud y recorte
+altitud_recorte <- altitud[recorte, drop = FALSE]
+
+plot(
+  provincias$geometry,
+  extent = extent(280000, 660000, 880000, 1250000),
+  main = "Recorte de altitud de Costa Rica",
+  axes = TRUE,
+  graticule = TRUE
+)
+
+plot(altitud_recorte,
+     add = TRUE)
+```
+
+El mismo resultado puede obtenerse mediante el uso de las funciones [intersect()](https://rdrr.io/cran/raster/man/intersect.html) y [crop()](https://rdrr.io/pkg/raster/man/crop.html).
+
+### Cambio de extensión y de origen
+Muchas operaciones que se realizan con múltiples objetos raster requieren que estos tengan la misma resolución, proyección, origen y extensión. Como ejemplos de estas operaciones pueden mencionarse el álgebra raster y la combinación de imágenes satelitales con diferentes proyecciones y resoluciones. Si hay diferencias en las características de los objetos raster que impiden realizar estas operaciones, deben "alinearse" primero.
+
+#### Cambio de extensión
+A continuación, se ilustra el caso de objetos raster que difieren solamente en su extensión (i.e. cantidad de filas y columnas). El siguiente bloque de código agrega una fila y dos columnas a los bordes del objeto raster ```elev``` del paquete ```spData```, por medio del método [extend()](https://rdrr.io/pkg/raster/man/extend.html). A las nuevas celdas, se les asigna un valor de 1000.
+
+```{r}
+# Modificación de la extensión de un objeto raster
+elev_2 <- extend(elev, c(1, 2), value = 1000)
+plot(elev_2)
+```
+
+Al intentar realizar una operación algebraica que requiere que los raster tengan las mismas dimensiones, la operación se ejecuta en la intersección y, además, se muestra una advertencia.
+
+```{r}
+# Suma de dos objetos raster no alineados
+elev_3 <- elev + elev_2
+plot(elev_3)
+```
+
+Ambos objetos raster pueden alinearse con ```extent()```. En este caso, no se especifica la cantidad de filas y columnas que se desan añadir a un raster, sino otro raster cuyas dimensiones se utilizan como referencia. Con el argumento ```value```, se especificar el valor de las nuevas celdas (su valor por defecto es ```NA```).
+
+```{r}
+# Alineación de la extensión de dos objetos raster
+elev_4 <- extend(elev, elev_2)
+plot(elev_4)
+
+# Suma de los dos objetos raster alineados
+plot(elev + elev_4)
+```
+
+#### Cambio de origen
+El origen de un objeto raster es la celda esquinera más cercana a las coordenas (0, 0). La función [origin()](https://rdrr.io/cran/raster/man/origin.html) retorna las coordenadas del origen. 
+
+En el ejemplo del siguiente bloque de código, existe una celda con las coordenadas (0, 0), pero ese no siempre es el caso.
+
+```{r}
+# Impresión del origen de un objeto raster
+origin(elev)
+```
+
+Seguidamente, se muestra el efecto de cambiar el origen de un objeto raster.
+
+```{r}
+# Cambio del origen de un objeto raster
+origin(elev_4) = c(0.25, 0.25)
+
+plot(elev_4)
+plot(elev, add = TRUE)
+```
+
+Para realizar operaciones aritméticas con álgebra raster, los orígenes de ambos objetos deben coincidir. Algunas operaciones (ej. cambio de resolución) pueden provocar un cambio en el origen. 
+
+
+### Agregación y desagregación
+La resolución de un raster puede disminuirse con la función [aggregate()](https://rdrr.io/cran/raster/man/aggregate.html) o aumentarse con la función [disaggregate()](https://rdrr.io/cran/raster/man/disaggregate.html).
+
+En el siguiente bloque de código, se utiliza la función ```aggregate()``` para disminuir la resolución del raster de altitud de Costa Rica por un factor de 4, como se especifica con el argumento```factor = 4```. Así, se generará una celda en el raster agrupado por cada ocho celdas del raster original. El argumento ```fun = mean``` indica que en el raster agrupado, cada celda será el promedio de las cuatro celdas correspondientes en el raster original.
+
+```{r}
+# Capa de altitud de Costa Rica
+plot(
+  altitud,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "Capa de altitud de Costa Rica",
+  axes = TRUE)
+
+# Agrupación de la capa de altitud de Costa Rica
+altitud_agregada <- 
+  altitud %>%
+  aggregate(fact = 8, fun = mean)
+
+# Capa de altitud agrupada de Costa Rica
+plot(
+  altitud_agregada,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "Capa agrupada de altitud de Costa Rica",
+  axes = TRUE)
+
+# Metadatos de la capa original de altitud
+altitud
+
+# Metadatos de la capa agrupada de altitud
+altitud_agregada
+
+# Tamaño de la capa original de altitud
+object.size(altitud)
+
+# Tamaño de la capa agrupada de altitud
+object.size(altitud_agregada)
+```
+
+La función ```disaggregate()``` genera varias celdas por cada celda del raster original. Debe especificarse un método con el argumento ```method```. Su valor puede ser ```""```, para copiar los valores de la celda de entrada o ```bilinear```, que es un método de interpolación.
+
+En el siguiente bloque de código, se desagrega el raster de elevación por un factor de dos.
+
+```{r}
+# Desagregación de la capa de elevación
+elev_desagregada <- 
+  elev %>%
+  disaggregate(fact = 2, method = "bilinear")
+
+plot(elev_desagregada)
+
+# Metadatos de la capa original de elevación
+elev
+
+# Metadatos de la capa desagrupada de elevación
+elev_desagregada
+
+# Tamaño de la capa original de elevación
+object.size(elev)
+
+# Metadatos de la capa desagrupada de elevación
+object.size(elev_desagregada)
+```
+
+El proceso de calcular valores para nuevos pixeles se denomina "remuestreo" (*resampling*). El paquete ```raster``` incluye una función llamada [resample()](https://rdrr.io/cran/raster/man/resample.html), el cual alinea simultáneamente varias propiedades de objetos raster: extensión, origen y resolución.
+
