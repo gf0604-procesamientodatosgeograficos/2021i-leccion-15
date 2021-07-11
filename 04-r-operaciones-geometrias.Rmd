@@ -387,7 +387,7 @@ plot(
 # Datos raster
 Las operaciones con geometrías en datos raster incluyen:
 
-- Intersecciones geométicas.  
+- Intersecciones geométricas.  
 - Cambio de extensión y de origen.  
 - Agregación y desagregación.  
 
@@ -417,7 +417,7 @@ alt <-
   alt %>%
   projectRaster(crs = 5367)
 
-# Recorte de la capa de altitud
+# Recorte de la capa de altitud con base en la capa vectorial de provincias
 altitud <-
   alt %>%
   crop(provincias) %>%
@@ -468,7 +468,10 @@ Muchas operaciones que se realizan con múltiples objetos raster requieren que e
 A continuación, se ilustra el caso de objetos raster que difieren solamente en su extensión (i.e. cantidad de filas y columnas). El siguiente bloque de código agrega una fila y dos columnas a los bordes del objeto raster ```elev``` del paquete ```spData```, por medio del método [extend()](https://rdrr.io/pkg/raster/man/extend.html). A las nuevas celdas, se les asigna un valor de 1000.
 
 ```{r}
-# Modificación de la extensión de un objeto raster
+# Objeto raster de elevación
+plot(elev)
+
+# Modificación de la extensión del objeto raster
 elev_2 <- extend(elev, c(1, 2), value = 1000)
 plot(elev_2)
 ```
@@ -506,7 +509,7 @@ Seguidamente, se muestra el efecto de cambiar el origen de un objeto raster.
 
 ```{r}
 # Cambio del origen de un objeto raster
-origin(elev_4) = c(0.25, 0.25)
+origin(elev_4) <- c(0.25, 0.25)
 
 plot(elev_4)
 plot(elev, add = TRUE)
@@ -638,7 +641,7 @@ El siguiente bloque de código asigna a cada celda de un objeto raster un valor 
 # Plantilla de raster
 raster_plantilla <-
   altitud %>%
-  aggregate(fact = 16)
+  aggregate(fact = 32)
 
 # Rasterización
 mamiferos_raster_presencia <-
@@ -666,7 +669,7 @@ El siguiente bloque de código asigna a cada celda de un objeto raster un valor 
 # Plantilla de raster
 raster_plantilla <-
   altitud %>%
-  aggregate(fact = 8)
+  aggregate(fact = 32)
 
 # Rasterización
 mamiferos_raster_registros <-
@@ -695,7 +698,7 @@ El siguiente bloque de código asigna a cada celda de un objeto raster un valor 
 # Plantilla de raster
 raster_plantilla <-
   altitud %>%
-  aggregate(fact = 64)
+  aggregate(fact = 32)
 
 # Rasterización
 mamiferos_raster_especies <-
@@ -754,7 +757,11 @@ sombra = hillShade(
   aspect = terrain(altitud_recorte, "aspect")
 )
 
-plot(sombra, col = gray(0:100 / 100), legend = FALSE)
+plot(
+  sombra, 
+  main = "Sombra de montañas y líneas de contorno",
+  col = gray(0:100 / 100), 
+  legend = FALSE)
 plot(
   altitud_recorte,
   col = terrain.colors(25),

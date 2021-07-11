@@ -2956,7 +2956,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <h1 id="datos-raster">Datos raster</h1>
 <p>Las operaciones con geometrías en datos raster incluyen:</p>
 <ul>
-<li>Intersecciones geométicas.<br />
+<li>Intersecciones geométricas.<br />
 </li>
 <li>Cambio de extensión y de origen.<br />
 </li>
@@ -2986,7 +2986,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <span class='va'>alt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/raster/man/projectRaster.html'>projectRaster</a></span><span class='op'>(</span>crs <span class='op'>=</span> <span class='fl'>5367</span><span class='op'>)</span>
 
-<span class='co'># Recorte de la capa de altitud</span>
+<span class='co'># Recorte de la capa de altitud con base en la capa vectorial de provincias</span>
 <span class='va'>altitud</span> <span class='op'>&lt;-</span>
   <span class='va'>alt</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/pkg/raster/man/crop.html'>crop</a></span><span class='op'>(</span><span class='va'>provincias</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
@@ -3040,12 +3040,18 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>A continuación, se ilustra el caso de objetos raster que difieren solamente en su extensión (i.e. cantidad de filas y columnas). El siguiente bloque de código agrega una fila y dos columnas a los bordes del objeto raster <code>elev</code> del paquete <code>spData</code>, por medio del método <a href="https://rdrr.io/pkg/raster/man/extend.html">extend()</a>. A las nuevas celdas, se les asigna un valor de 1000.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Modificación de la extensión de un objeto raster</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Objeto raster de elevación</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev</span><span class='op'>)</span>
+</code></pre>
+</div>
+<img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-11-1.png" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Modificación de la extensión del objeto raster</span>
 <span class='va'>elev_2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extend.html'>extend</a></span><span class='op'>(</span><span class='va'>elev</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, value <span class='op'>=</span> <span class='fl'>1000</span><span class='op'>)</span>
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev_2</span><span class='op'>)</span>
 </code></pre>
 </div>
-<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+<p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-11-2.png" width="624" /></p>
 </div>
 <p>Al intentar realizar una operación algebraica que requiere que los raster tengan las mismas dimensiones, la operación se ejecuta en la intersección y, además, se muestra una advertencia.</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3088,7 +3094,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># Cambio del origen de un objeto raster</span>
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/origin.html'>origin</a></span><span class='op'>(</span><span class='va'>elev_4</span><span class='op'>)</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.25</span>, <span class='fl'>0.25</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/origin.html'>origin</a></span><span class='op'>(</span><span class='va'>elev_4</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0.25</span>, <span class='fl'>0.25</span><span class='op'>)</span>
 
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev_4</span><span class='op'>)</span>
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>elev</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
@@ -3305,7 +3311,7 @@ Projected CRS: CR05 / CRTM05
 <span class='co'># Plantilla de raster</span>
 <span class='va'>raster_plantilla</span> <span class='op'>&lt;-</span>
   <span class='va'>altitud</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>fact <span class='op'>=</span> <span class='fl'>16</span><span class='op'>)</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>fact <span class='op'>=</span> <span class='fl'>32</span><span class='op'>)</span>
 
 <span class='co'># Rasterización</span>
 <span class='va'>mamiferos_raster_presencia</span> <span class='op'>&lt;-</span>
@@ -3335,7 +3341,7 @@ Projected CRS: CR05 / CRTM05
 <span class='co'># Plantilla de raster</span>
 <span class='va'>raster_plantilla</span> <span class='op'>&lt;-</span>
   <span class='va'>altitud</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>fact <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>fact <span class='op'>=</span> <span class='fl'>32</span><span class='op'>)</span>
 
 <span class='co'># Rasterización</span>
 <span class='va'>mamiferos_raster_registros</span> <span class='op'>&lt;-</span>
@@ -3366,7 +3372,7 @@ Projected CRS: CR05 / CRTM05
 <span class='co'># Plantilla de raster</span>
 <span class='va'>raster_plantilla</span> <span class='op'>&lt;-</span>
   <span class='va'>altitud</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>fact <span class='op'>=</span> <span class='fl'>64</span><span class='op'>)</span>
+  <span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span>fact <span class='op'>=</span> <span class='fl'>32</span><span class='op'>)</span>
 
 <span class='co'># Rasterización</span>
 <span class='va'>mamiferos_raster_especies</span> <span class='op'>&lt;-</span>
@@ -3430,7 +3436,11 @@ Projected CRS: CR05 / CRTM05
   aspect <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/terrain.html'>terrain</a></span><span class='op'>(</span><span class='va'>altitud_recorte</span>, <span class='st'>"aspect"</span><span class='op'>)</span>
 <span class='op'>)</span>
 
-<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>sombra</span>, col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/gray.html'>gray</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>100</span> <span class='op'>/</span> <span class='fl'>100</span><span class='op'>)</span>, legend <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>sombra</span>, 
+  main <span class='op'>=</span> <span class='st'>"Sombra de montañas y líneas de contorno"</span>,
+  col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/gray.html'>gray</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>100</span> <span class='op'>/</span> <span class='fl'>100</span><span class='op'>)</span>, 
+  legend <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>altitud_recorte</span>,
   col <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/grDevices/palettes.html'>terrain.colors</a></span><span class='op'>(</span><span class='fl'>25</span><span class='op'>)</span>,
