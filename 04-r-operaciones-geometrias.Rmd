@@ -71,6 +71,8 @@ st_crs(mamiferos) <- 4326
 # Introducción
 Esta lección brinda una visión general de las operaciones con geometrías en datos vectoriales implementadas en el paquete [sf](https://r-spatial.github.io/sf/) y en datos raster implementadas en el paquete [raster](https://rspatial.org/raster). Estas operaciones trabajan con la columna de geometrías (ej. ```geometry```, ```geom```) del paquete ```sf```, para el caso de los datos vectoriales, y con la localización geográfica de los pixeles para el caso de los datos raster.
 
+En la sección final, se muestran varias operaciones de interacción entre los modelos raster y vectorial.
+
 # Datos vectoriales
 Las operaciones con geometrías en datos vectoriales incluyen:
 
@@ -410,7 +412,7 @@ alt <-
     lat = 10
   )
 
-# Reproyección de la capa de altitud a CRT05
+# Reproyección de la capa de altitud a CRTM05
 alt <-
   alt %>%
   projectRaster(crs = 5367)
@@ -418,8 +420,8 @@ alt <-
 # Recorte de la capa de altitud
 altitud <-
   alt %>%
-  mask(provincias) %>%
-  crop(provincias)
+  crop(provincias) %>%
+  mask(provincias)
 
 plot(
   altitud,
@@ -578,3 +580,222 @@ object.size(elev_desagregada)
 
 El proceso de calcular valores para nuevos pixeles se denomina "remuestreo" (*resampling*). El paquete ```raster``` incluye una función llamada [resample()](https://rdrr.io/cran/raster/man/resample.html), el cual alinea simultáneamente varias propiedades de objetos raster: extensión, origen y resolución.
 
+# Interacciones raster-vector
+
+## Recorte (*cropping*) de datos raster
+Los métodos [crop()](https://rdrr.io/cran/raster/man/crop.html) y [mask()](https://rdrr.io/cran/raster/man/mask.html) pueden utilizarse para recortar (*crop*) un objeto raster con base en el contorno de un objeto vectorial.
+
+```{r}
+# crop() a capa de altitud
+altitud <-
+  alt %>%
+  crop(provincias)
+
+plot(
+  altitud,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "crop() a capa de altitud de Costa Rica",
+  axes = TRUE)
+
+# crop() + mask() a capa de altitud
+altitud <-
+  alt %>%
+  crop(provincias) %>%
+  mask(provincias)
+
+plot(
+  altitud,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "crop() + mask() a capa de altitud de Costa Rica",
+  axes = TRUE)
+```
+
+## Extracción de valores raster
+La extracción de valores raster es el proceso de identificar y retornar los valores asociados con una capa raster en localizaciones específicas, generalmente determinadas por objetos vectoriales, ya sean puntos, líneas o polígonos. En el paquete ```raster```, la extracción se implementa a través de la función [extract()](https://rdrr.io/cran/raster/man/extract.html).
+
+El siguiente bloque de código extrae el valor del objeto raster de altitud para cada punto de la capa vectorial de mamíferos de Costa Rica.
+
+```{r}
+# Columna con la altitud de cada registro de mamíferos con base en la capa raster de altitud
+mamiferos$altitud <- raster::extract(altitud, mamiferos)
+
+mamiferos %>%
+  select(order, family, genus, species, altitud) %>%
+  arrange(desc(altitud)) %>%
+  slice(1:10)
+```
+
+**Ejercicio: genere un data frame con la altitud promedio para cada especie de felinos (familia *Felidae*).**
+
+## Rasterización
+La rasterización es la conversión de objetos vectoriales en su representación raster. En el paquete ```raster```, la función [rasterize()](https://rdrr.io/cran/raster/man/rasterize.html) realiza esta labor.
+
+El siguiente bloque de código asigna a cada celda de un objeto raster un valor de 1 si contiene puntos de una capa vectorial y 0 en caso contrario.
+
+```{r}
+# Generación de un raster con celda = 1 si hay presencia, celda = 0 si no hay presencia
+
+# Plantilla de raster
+raster_plantilla <-
+  altitud %>%
+  aggregate(fact = 16)
+
+# Rasterización
+mamiferos_raster_presencia <-
+  rasterize(filter(mamiferos, species == "Puma concolor"),
+            raster_plantilla,
+            field = 1)
+
+# Mapeo
+plot(
+  mamiferos_raster_presencia,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "Presencia de Puma concolor",
+  axes = TRUE
+)
+
+plot(provincias$geometry,
+     add = TRUE)
+```
+
+El siguiente bloque de código asigna a cada celda de un objeto raster un valor correspondiente a la cantidad de puntos ubicados en la celda.
+
+```{r}
+# Generación de un raster con celda = cantidad de registros
+
+# Plantilla de raster
+raster_plantilla <-
+  altitud %>%
+  aggregate(fact = 8)
+
+# Rasterización
+mamiferos_raster_registros <-
+  rasterize(mamiferos,
+            raster_plantilla,
+            field = 1,
+            fun = "count")
+
+# Mapeo
+plot(
+  mamiferos_raster_registros,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "Cantidad de registros",
+  axes = TRUE
+)
+
+plot(provincias$geometry,
+     add = TRUE)
+```
+
+El siguiente bloque de código asigna a cada celda de un objeto raster un valor correspondiente a la cantidad de valores diferentes de un atributo de los puntos ubicados en la celda.
+
+```{r}
+# Generación de un raster con celda = cantidad de especies
+
+# Plantilla de raster
+raster_plantilla <-
+  altitud %>%
+  aggregate(fact = 64)
+
+# Rasterización
+mamiferos_raster_especies <-
+  rasterize(filter(mamiferos, family == "Felidae"),
+            raster_plantilla,
+            field = "species",
+            fun = function(x, ...) {length(unique(na.omit(x)))})
+
+# Mapeo
+plot(
+  mamiferos_raster_especies,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "Cantidad de especies",
+  axes = TRUE
+)
+
+plot(provincias$geometry,
+     add = TRUE)
+```
+
+## Vectorización espacial
+La vectorización es la operación opuesta a la rasterización. Convierte datos raster en vectoriales. En el paquete raster, se implementa a través de operaciones como [rasterToPoints()](https://rdrr.io/cran/raster/man/rasterToPoints.html), [rasterToContour()](https://rdrr.io/cran/raster/man/rasterToContour.html) y [rasterToPolygons()](https://rdrr.io/cran/raster/man/rasterToPolygons.html).
+
+En el siguiente bloque de código se realiza una rasterización a puntos.
+
+```{r}
+# Vectorización a puntos de la capa de altitud de Costa Rica
+altitud_puntos = rasterToPoints(aggregate(altitud, fact = 8), spatial = TRUE) %>%
+  st_as_sf()
+
+plot(altitud_puntos)
+```
+
+En el siguiente bloque de código se realiza una rasterización a líneas de contorno.
+
+```{r}
+# Vectorización a líneas de contorno de la capa de altitud de Costa Rica
+altitud_contorno = rasterToContour(altitud)
+
+plot(
+  altitud,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "Líneas de contorno de altitud",
+  axes = TRUE
+)
+
+plot(altitud_contorno, add = TRUE)
+```
+
+Seguidamente, se utiliza [hillShade()](https://rdrr.io/cran/raster/man/hillShade.html) para generar un efecto de "sombras de montañas" (*hill shading*). Esta función recibe como argumentos ```slope``` y ```aspect```, los cuales pueden calcularse con la función [terrain()](https://rdrr.io/cran/raster/man/terrain.html).
+
+```{r}
+# Creación de una sombra de montañas
+sombra = hillShade(
+  slope = terrain(altitud_recorte, "slope"),
+  aspect = terrain(altitud_recorte, "aspect")
+)
+
+plot(sombra, col = gray(0:100 / 100), legend = FALSE)
+plot(
+  altitud_recorte,
+  col = terrain.colors(25),
+  alpha = 0.5,
+  legend = FALSE,
+  add = TRUE
+)
+contour(altitud_recorte, col = "white", add = TRUE)
+```
+
+Finalmente, se ejemplifica el uso de la función [rasterToPolygons()](https://rdrr.io/cran/raster/man/rasterToPolygons.html), la cual convierte cada celda raster a un polígono.
+
+```{r collapse=TRUE}
+# Capa raster de tipos de granos en el suelo
+plot(
+  grain,
+  main="Raster")
+
+# Celdas raster convertidas a polígonos individuales
+grain_poligonos <-
+  rasterToPolygons(grain) %>% 
+  st_as_sf()
+plot(
+  grain_poligonos,
+  main="Polígonos")
+
+# Celdas raster convertidas a polígonos agrupados
+grain_poligonos_agrupados <-
+  grain_poligonos %>% 
+  group_by(layer) %>%
+  summarize()
+plot(
+  grain_poligonos_agrupados,
+  main="Polígonos agrupados")
+
+# Tamaño del objeto raster
+object.size(grain)
+
+# Tamaño del objeto vectorial de polígonos individuales
+object.size(grain_poligonos)
+
+# Tamaño del objeto vectorial de polígonos agrupados
+object.size(grain_poligonos_agrupados)
+```
