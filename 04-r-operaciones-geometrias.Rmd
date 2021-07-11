@@ -682,7 +682,7 @@ mamiferos_raster_registros <-
 plot(
   mamiferos_raster_registros,
   ext = extent(280000, 660000, 880000, 1250000),
-  main = "Cantidad de registros",
+  main = "Cantidad de registros de mamíferos",
   axes = TRUE
 )
 
@@ -711,7 +711,7 @@ mamiferos_raster_especies <-
 plot(
   mamiferos_raster_especies,
   ext = extent(280000, 660000, 880000, 1250000),
-  main = "Cantidad de especies",
+  main = "Cantidad de especies de felinos",
   axes = TRUE
 )
 
@@ -729,7 +729,11 @@ En el siguiente bloque de código se realiza una rasterización a puntos.
 altitud_puntos = rasterToPoints(aggregate(altitud, fact = 8), spatial = TRUE) %>%
   st_as_sf()
 
-plot(altitud_puntos)
+plot(
+  altitud_puntos,
+  ext = extent(280000, 660000, 880000, 1250000),
+  main = "Centroides de celdas raster",
+  axes = TRUE)
 ```
 
 En el siguiente bloque de código se realiza una rasterización a líneas de contorno.
@@ -744,7 +748,6 @@ plot(
   main = "Líneas de contorno de altitud",
   axes = TRUE
 )
-
 plot(altitud_contorno, add = TRUE)
 ```
 

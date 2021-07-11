@@ -3354,7 +3354,7 @@ Projected CRS: CR05 / CRTM05
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>mamiferos_raster_registros</span>,
   ext <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,
-  main <span class='op'>=</span> <span class='st'>"Cantidad de registros"</span>,
+  main <span class='op'>=</span> <span class='st'>"Cantidad de registros de mamíferos"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
@@ -3385,7 +3385,7 @@ Projected CRS: CR05 / CRTM05
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
   <span class='va'>mamiferos_raster_especies</span>,
   ext <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,
-  main <span class='op'>=</span> <span class='st'>"Cantidad de especies"</span>,
+  main <span class='op'>=</span> <span class='st'>"Cantidad de especies de felinos"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
 
@@ -3404,7 +3404,11 @@ Projected CRS: CR05 / CRTM05
 <span class='va'>altitud_puntos</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/rasterToPoints.html'>rasterToPoints</a></span><span class='op'>(</span><span class='fu'><a href='https://r-spatial.github.io/sf/reference/aggregate.sf.html'>aggregate</a></span><span class='op'>(</span><span class='va'>altitud</span>, fact <span class='op'>=</span> <span class='fl'>8</span><span class='op'>)</span>, spatial <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
   <span class='fu'><a href='https://r-spatial.github.io/sf/reference/st_as_sf.html'>st_as_sf</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>altitud_puntos</span><span class='op'>)</span>
+<span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span>
+  <span class='va'>altitud_puntos</span>,
+  ext <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fl'>280000</span>, <span class='fl'>660000</span>, <span class='fl'>880000</span>, <span class='fl'>1250000</span><span class='op'>)</span>,
+  main <span class='op'>=</span> <span class='st'>"Centroides de celdas raster"</span>,
+  axes <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
 <p><img src="04-r-operaciones-geometrias_files/figure-html5/unnamed-chunk-23-1.png" width="624" /></p>
@@ -3421,7 +3425,6 @@ Projected CRS: CR05 / CRTM05
   main <span class='op'>=</span> <span class='st'>"Líneas de contorno de altitud"</span>,
   axes <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span>
-
 <span class='fu'><a href='https://r-spatial.github.io/sf/reference/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>altitud_contorno</span>, add <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </code></pre>
 </div>
